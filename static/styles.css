@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    background-color: #000;
+    padding-top: 24px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.logo {
+    width: 512px;
+    margin: 0 auto;
+    display: block;
+}
+
+.row {
+    display: flex;
+}
+
+.row .row-item {
+    flex: 1;
+}
+
+/* .radio-toggle-play */
+
+.radio-toggle-play {
+    display: block;
+    outline: none;
+    background-color: #231f20;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    position: relative;
+    cursor: pointer;
+
+    transition: margin-left 0.4s, width 0.4s, height 0.4s;
+}
+
+.radio-toggle-play:active {
+    background-color: #1D1C1C;
+}
+
+.radio-toggle-play.radio-play-btn {
+    width: 96px;
+    height: 96px;
+}
+
+.radio-toggle-play .radio-toggle-play-icon {
+    transition: border 0.4s, left 0.4s, top 0.4s;
+}
+
+.radio-toggle-play.radio-play-btn .radio-toggle-play-icon {
+    position: absolute;
+    left: 36px;
+    top: 24px;
+
+    width: 0;
+    height: 0;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 32px solid #fff;
+    border-right: 0 solid transparent;
+}
+
+.radio-toggle-play.radio-stop-btn .radio-toggle-play-icon {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+
+    width: 0;
+    height: 0;
+    border-top: 10px solid #fff;
+    border-bottom: 10px solid #fff;
+    border-left: 20px solid #fff;
+    border-right: 0 solid #fff;
+    border-radius: 4px;
+}
+
+.radio-toggle-play.radio-stop-btn {
+    border: 2px solid #231f20;
+    background-color: #fff;
+}
+
+.radio-toggle-play.radio-stop-btn .radio-toggle-play-icon {
+    border-color: #231f20;
+}
+
+.radio-toggle-play.radio-stream-loading {
+    animation: radio-toggle-play-loading 0.3s infinite alternate
+}
+
+@keyframes radio-toggle-play-loading {
+    from { border-color: #231f20; }
+    to { border-color: #fff; }
+}
+
+/* .radio-panel */
+
+.radio-panel {
+    width: 640px;
+    margin: 0 auto;
+    margin-top: 48px;
+    position: relative;
+}
+
+.radio-panel .radio-panel-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 96px;
+}
+
+.radio-panel .radio-panel-content {
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 16px;
+    padding-top: 24px;
+    box-shadow: 0 2px 32px rgba(255,255,255,0.25);
+}
+
+.radio-panel .radio-panel-title {
+    transition: opacity 0.3s;
+}
+.radio-panel .radio-panel-content {
+    transition: opacity 0.3s;
+}
+
+.radio-panel.radio-panel-collapsed .radio-panel-title,
+.radio-panel.radio-panel-collapsed .radio-panel-content {
+    opacity: 0;
+}
+
+.radio-panel.radio-panel-extended .radio-panel-title,
+.radio-panel.radio-panel-extended .radio-panel-content {
+    opacity: 1;
+    transition-delay: 0.2s;
+}
+
+/* .radio-panel .radio-panel-button */
+
+.radio-panel .radio-panel-button {
+    z-index: 1;
+    position: absolute;
+    margin-top: -24px;
+}
+
+.radio-panel.radio-panel-collapsed .radio-panel-button {
+    margin-left: calc(50% - 24px);
+}
+
+.radio-panel.radio-panel-extended .radio-panel-button {
+    margin-left: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* .radio-panel - utils */
+
+.radio-panel .radio-panel-content {
+    font-size: 14px;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 256px;
+}
+
+.radio-panel .radio-panel-section-title {
+    margin-top: 16px;
+    color: #c21a29;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.radio-panel .radio-panel-section-title:first-child {
+    margin-top: 16px;
+}
+
+.radio-panel .radio-panel-album-image {
+    float: right;
+    margin-top: -24px;
+    margin-right: -16px;
+    width: 256px;
+    height: 256px;
+}
+
+.radio-panel .radio-panel-album-image.no-album-image {
+    visibility: hidden;
+}
+
+/* .radio-tags */
+
+.radio-tags {
+    margin-top: 12px;
+}
+
+.radio-tags .radio-tag {
+    background-color: #c21a29;
+    color: #fff;
+    display: inline-block;
+    border-radius: 19px;
+    padding: 0 8px;
+    margin: 2px 4px;
+}
