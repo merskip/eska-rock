@@ -39,7 +39,11 @@ class LastFM {
         if (isset($info->track->album)) {
             $songInfo->album = new stdClass();
             $songInfo->album->title = $info->track->album->title;
-            $songInfo->album->image = $info->track->album->image[3]->{'#text'};
+
+            $albumImageUrl = $info->track->album->image[3]->{'#text'};
+            if (!empty($albumImageUrl)) {
+                $songInfo->album->image = $albumImageUrl;
+            }
         }
 
         $tagNames =  array_map(function ($tagInfo) {
@@ -47,7 +51,8 @@ class LastFM {
         }, $info->track->toptags->tag);
         $songInfo->tags = array_values(array_filter($tagNames,
             function ($tag) use ($info) {
-                return strtolower($tag) != strtolower($info->track->artist->name);
+                return strtolower($tag) != strtolower($info->track->artist->name)
+                    && $tag != "rock";
         }));
 
         $songInfoCache = clone($songInfo);

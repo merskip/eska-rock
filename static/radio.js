@@ -6,8 +6,11 @@ $(function () {
             radio.stop();
         }
         else {
-            radio.play();
+            radio.playIfAvailable();
             $(this).addClass("radio-stream-loading");
+
+            $("#radio-toggle-play").removeClass("radio-play-btn").addClass("radio-stop-btn");
+            $(".radio-panel").removeClass("radio-panel-collapsed").addClass("radio-panel-extended");
         }
     });
 
@@ -57,14 +60,19 @@ $(function () {
 
             if ("songDetails" in info && "album" in info["songDetails"]) {
                 $("#radio-album").text(info["songDetails"]["album"]["title"]);
-                $("#radio-album-image")
-                    .removeClass("no-album-image")
-                    .attr("src", info["songDetails"]["album"]["image"]);
+
+                if ("image" in info["songDetails"]["album"]) {
+                    $("#radio-album-image")
+                        .removeClass("no-album-image")
+                        .attr("src", info["songDetails"]["album"]["image"]);
+                }
+                else {
+                    $("#radio-album-image").addClass("no-album-image").attr("src", "");
+                }
             }
             else {
                 $("#radio-album").text("-");
-                $("#radio-album-image")
-                    .addClass("no-album-image").attr("src", "");
+                $("#radio-album-image").addClass("no-album-image").attr("src", "");
             }
 
             if ("songDetails" in info && "duration" in info["songDetails"]) {
@@ -85,6 +93,17 @@ $(function () {
             else {
                 $("#radio-song-tags").html('');
             }
+
+            if ("lyricsUrl" in info) {
+                $("#radio-lyrics-url")
+                    .removeClass("no-lyrics-url")
+                    .attr("href", info["lyricsUrl"]);
+            }
+            else {
+                $("#radio-lyrics-url")
+                    .addClass("no-lyrics-url")
+                    .attr("href", "");
+            }
        });
     }
 });
@@ -96,10 +115,19 @@ class Radio {
         this.url = streamUrl;
     }
 
+    playIfAvailable() {
+        let self = this;
+        this.checkHttpIsOk(this.url, function () {
+            self.play();
+        }, function () {
+
+        });
+    }
+
     play() {
         this.stream.src = this.url;
         this.stream.load();
-        this.stream.play().catch(function(e) {
+        this.stream.play().catch(function (e) {
             // Nothing
         });
     }
@@ -109,6 +137,21 @@ class Radio {
         this.stream.currentTime = 0;
         this.stream.src = '';
         this.stream.onpause(); // bug?
+    }
+
+    checkHttpIsOk(url, onSuccess, onFailed) {
+        let req = new XMLHttpRequest();
+
+        req.onreadystatechange = function () {
+            if (req.readyState === 2) {
+                let isOk = req.status === 200;
+                req.abort();
+                isOk ? onSuccess() : onFailed();
+            }
+        };
+
+        req.open('GET', url, true);
+        req.send(null);
     }
 
     isPlaying() {

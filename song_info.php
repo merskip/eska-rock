@@ -1,6 +1,7 @@
 <?php
 require_once "src/EskaRock.php";
 require_once "src/LastFM.php";
+require_once "src/TekstowoPL.php";
 
 define('LAST_FM_API_KEY', "6afdf0e4de1911f77203f9b28ca17168");
 define('ESKA_ROCK_NO_SONG', "EskaROCK");
@@ -18,6 +19,12 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $songDetails = $lastFm->getCachedSongDetails($metadata->songTitle);
     if ($songDetails != null) {
         $result["songDetails"] = $songDetails;
+    }
+
+    $tekstowoPl = new TekstowoPL();
+    $lyricsUrl = $tekstowoPl->getCachedLyricsUrl($metadata->songTitle);
+    if ($lyricsUrl != null) {
+        $result["lyricsUrl"] = $lyricsUrl;
     }
 }
 

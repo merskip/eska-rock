@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="static/styles.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="static/radio.js"></script>
+    <!--suppress JSUnusedLocalSymbols -->
     <script>
         <?php
         require_once "src/EskaRock.php";
@@ -11,7 +12,7 @@
         $streamUrl = $eskaRock->getCachedStreamUrl();
         $streamTitle = $eskaRock->getStreamTitle($streamUrl);
         ?>
-        var streamUrl = "<?php echo $streamUrl ?>";
+        let streamUrl = "<?php echo $streamUrl ?>";
     </script>
     <title><?php echo $streamTitle ?></title>
 </head>
@@ -49,6 +50,10 @@
         </div>
 
         <div id="radio-song-tags" class="radio-tags"></div>
+
+        <a id="radio-lyrics-url" class="radio-lyrics-url no-lyrics-url " href="" target="_blank">
+            Tekst piosenki
+        </a>
     </div>
 </div>
 <script>
