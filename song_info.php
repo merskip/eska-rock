@@ -8,6 +8,7 @@ define('ESKA_ROCK_NO_SONG', "EskaROCK");
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
+$metadata->songTitle = "LINKIN PARK - New Divide";
 
 $result = [
     "rawSongTitle" => $metadata->songTitle,
@@ -16,9 +17,15 @@ $result = [
 
 if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $lastFm = new LastFM(LAST_FM_API_KEY);
-    $songDetails = $lastFm->getCachedSongDetails($metadata->songTitle);
-    if ($songDetails != null) {
-        $result["songDetails"] = $songDetails;
+    $details = $lastFm->getCachedSongDetails($metadata->songTitle);
+    if ($details != null) {
+        $result["songDetails"] = [
+            "title" => $details->title,
+            "artist" => $details->artist,
+            "duration" => $details->duration
+        ];
+        $result["album"] = $details->album;
+        $result["tags"] = $details->tags;
     }
 
     $tekstowoPl = new TekstowoPL();

@@ -6,10 +6,10 @@ class TekstowoPL {
     const SONG_URL_PREFIX = "http://www.tekstowo.pl/piosenka";
     const SONG_URL_SEPARATOR = ",";
     const SONG_URL_SUFFIX = ".hml";
-    const CACHE_INFO_FILENAME = "tekstowo-pl-lyrics-url";
+    const CACHE_LYRICS_URL_FILENAME = "tekstowo-pl-lyrics-url";
 
     function getCachedLyricsUrl($songTitle) {
-        $cachedLyricsUrl = Cache::getInstance()->getJson(TekstowoPL::CACHE_INFO_FILENAME);
+        $cachedLyricsUrl = Cache::getInstance()->getJson(TekstowoPL::CACHE_LYRICS_URL_FILENAME);
         if ($cachedLyricsUrl != null && $cachedLyricsUrl->id == $songTitle) {
             return $cachedLyricsUrl->url;
         }
@@ -21,7 +21,7 @@ class TekstowoPL {
     function getLyricsUrl($songTitle) {
         $expectedLyricsUrl = $this->generateLyricsUrl($songTitle);
         if ($this->checkHttpStatusIsOk($expectedLyricsUrl)) {
-            Cache::getInstance()->putJson(TekstowoPL::CACHE_INFO_FILENAME, [
+            Cache::getInstance()->putJson(TekstowoPL::CACHE_LYRICS_URL_FILENAME, [
                 "id" => $songTitle,
                 "url" => $expectedLyricsUrl
             ]);
@@ -58,7 +58,6 @@ class TekstowoPL {
         $text = str_replace("?", "_", $text);
         $text = str_replace(",", "_", $text);
         $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
-        var_dump($text);
         return $text;
     }
 

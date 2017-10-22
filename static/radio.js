@@ -58,13 +58,13 @@ $(function () {
             $("#radio-song-title").text(fullSongTitle);
             $("#radio-listeners").text(info["listeners"]);
 
-            if ("songDetails" in info && "album" in info["songDetails"]) {
-                $("#radio-album").text(info["songDetails"]["album"]["title"]);
+            if ("album" in info) {
+                $("#radio-album").text(info["album"]["title"]);
 
-                if ("image" in info["songDetails"]["album"]) {
+                if ("image" in info["album"]) {
                     $("#radio-album-image")
                         .removeClass("no-album-image")
-                        .attr("src", info["songDetails"]["album"]["image"]);
+                        .attr("src", info["album"]["image"]);
                 }
                 else {
                     $("#radio-album-image").addClass("no-album-image").attr("src", "");
@@ -75,16 +75,16 @@ $(function () {
                 $("#radio-album-image").addClass("no-album-image").attr("src", "");
             }
 
-            if ("songDetails" in info && "duration" in info["songDetails"]) {
+            if ("duration" in info["songDetails"]) {
                 $("#radio-song-duration").text(formatDuration(info["songDetails"]["duration"]));
             }
             else {
                 $("#radio-song-duration").text("-");
             }
 
-            if ("songDetails" in info) {
+            if ("tags" in info) {
                 let tags = $("#radio-song-tags").html('');
-                info["songDetails"]["tags"].forEach(function (tag) {
+                info["tags"].forEach(function (tag) {
                     tags.append($("<div></div>")
                         .addClass("radio-tag")
                         .text(tag))
