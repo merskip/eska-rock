@@ -8,7 +8,6 @@ define('ESKA_ROCK_NO_SONG', "EskaROCK");
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
-$metadata->songTitle = "LINKIN PARK - New Divide";
 
 $result = [
     "rawSongTitle" => $metadata->songTitle,
@@ -21,10 +20,14 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     if ($details != null) {
         $result["songDetails"] = [
             "title" => $details->title,
-            "artist" => $details->artist,
-            "duration" => $details->duration
+            "artist" => $details->artist
         ];
-        $result["album"] = $details->album;
+        if (isset($details->duration)) {
+            $result["songDetails"]["duration"] = $details->duration;
+        }
+        if (isset($details->album)) {
+            $result["album"] = $details->album;
+        }
         $result["tags"] = $details->tags;
     }
 
@@ -32,6 +35,9 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $lyricsUrl = $tekstowoPl->getCachedLyricsUrl($metadata->songTitle);
     if ($lyricsUrl != null) {
         $result["lyricsUrl"] = $lyricsUrl;
+
+        $details = $tekstowoPl->getSongDetails($lyricsUrl);
+        $result["youtubeVideoId"] = $details->youtubeVideoId;
     }
 }
 

@@ -1,12 +1,22 @@
 <?php
 require_once 'Cache.php';
+require_once 'utils.php';
 
 class TekstowoPL {
 
     const SONG_URL_PREFIX = "http://www.tekstowo.pl/piosenka";
     const SONG_URL_SEPARATOR = ",";
-    const SONG_URL_SUFFIX = ".hml";
+    const SONG_URL_SUFFIX = "";
     const CACHE_LYRICS_URL_FILENAME = "tekstowo-pl-lyrics-url";
+
+    function getSongDetails($lyricsUrl) {
+        $html = file_get_contents($lyricsUrl);
+        $youtubeVideoId = str_find($html, "miniatura_teledysku,", ".");
+
+        $details = new stdClass;
+        $details->youtubeVideoId = $youtubeVideoId;
+        return $details;
+    }
 
     function getCachedLyricsUrl($songTitle) {
         $cachedLyricsUrl = Cache::getInstance()->getJson(TekstowoPL::CACHE_LYRICS_URL_FILENAME);
@@ -57,6 +67,7 @@ class TekstowoPL {
         $text = str_replace("/", "_", $text);
         $text = str_replace("?", "_", $text);
         $text = str_replace(",", "_", $text);
+        $text = str_replace("'", "_", $text);
         $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
         return $text;
     }

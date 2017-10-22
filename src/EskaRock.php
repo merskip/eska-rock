@@ -1,5 +1,6 @@
 <?php
 require_once 'Cache.php';
+require_once 'utils.php';
 
 class EskaRock {
 
@@ -33,10 +34,7 @@ class EskaRock {
 
     function getStreamAccUrl() {
         $html = file_get_contents(EskaRock::PLAYER_URL);
-        $startPos = strpos($html, EskaRock::STREAM_LINE_PREFIX);
-        $endPos = strpos($html, EskaRock::STREAM_LINE_SUFFIX, $startPos);
-        $url = substr($html, $startPos + strlen(EskaRock::STREAM_LINE_PREFIX),
-                    $endPos - $startPos - strlen(EskaRock::STREAM_LINE_PREFIX));
+        $url = str_find($html, EskaRock::STREAM_LINE_PREFIX, EskaRock::STREAM_LINE_SUFFIX);
 
         Cache::getInstance()->put(EskaRock::CACHE_URL_FILENAME, $url);
         return $url;

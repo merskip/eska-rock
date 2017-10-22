@@ -75,7 +75,7 @@ $(function () {
                 $("#radio-album-image").addClass("no-album-image").attr("src", "");
             }
 
-            if ("duration" in info["songDetails"]) {
+            if ("songDetails" in info && "duration" in info["songDetails"]) {
                 $("#radio-song-duration").text(formatDuration(info["songDetails"]["duration"]));
             }
             else {
@@ -96,15 +96,28 @@ $(function () {
 
             if ("lyricsUrl" in info) {
                 $("#radio-lyrics-url")
-                    .removeClass("no-lyrics-url")
+                    .removeClass("no-url")
                     .attr("href", info["lyricsUrl"]);
             }
             else {
                 $("#radio-lyrics-url")
-                    .addClass("no-lyrics-url")
+                    .addClass("no-url")
                     .attr("href", "");
             }
-       });
+
+            if ("youtubeVideoId" in info) {
+                $("#radio-youtube-url")
+                    .removeClass("no-url")
+                    .attr("href", "https://www.youtube.com/watch?v=" + info["youtubeVideoId"]);
+            }
+            else {
+                $("#radio-youtube-url")
+                    .addClass("no-url")
+                    .attr("href", "");
+            }
+
+
+        });
     }
 });
 

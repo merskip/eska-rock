@@ -51,8 +51,11 @@
 
         <div id="radio-song-tags" class="radio-tags"></div>
 
-        <a id="radio-lyrics-url" class="radio-lyrics-url no-lyrics-url " href="" target="_blank">
+        <a id="radio-lyrics-url" class="radio-url no-url " href="" target="_blank">
             Tekst piosenki
+        </a>
+        <a id="radio-youtube-url" class="radio-url no-url " href="" target="_blank">
+            YouTube
         </a>
     </div>
 </div>
