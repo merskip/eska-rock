@@ -51,11 +51,17 @@
 
         <div id="radio-song-tags" class="radio-tags"></div>
 
-        <a id="radio-lyrics-url" class="radio-url no-url " href="" target="_blank">
-            Tekst piosenki
-        </a>
         <a id="radio-youtube-url" class="radio-url no-url " href="" target="_blank">
             YouTube
+        </a>
+        <a id="radio-lyrics-url" class="radio-url no-url" href="" target="_blank">
+            tekstowo.pl
+        </a>
+        <a id="radio-lyrics-original" class="radio-url no-url" data-content="">
+            oryginalny
+        </a>
+        <a id="radio-lyrics-translation" class="radio-url no-url" data-content="">
+            tłumaczenie
         </a>
     </div>
 </div>

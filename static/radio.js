@@ -34,6 +34,10 @@ $(function () {
         }
     };
 
+    $(".radio-url[data-content]").click(function () {
+       let content = $(this).attr("data-content");
+       alert(content);
+    });
     let refreshingSongInfoId = null;
     function startRefreshSongInfo() {
        refreshStats();
@@ -94,15 +98,19 @@ $(function () {
                 $("#radio-song-tags").html('');
             }
 
-            if ("lyricsUrl" in info) {
+            if ("lyrics" in info) {
                 $("#radio-lyrics-url")
                     .removeClass("no-url")
-                    .attr("href", info["lyricsUrl"]);
+                    .attr("href", info["lyrics"]["url"]);
+                $("#radio-lyrics-original").removeClass("no-url")
+                    .attr("data-content", info["lyrics"]["original"]);
+                $("#radio-lyrics-translation").removeClass("no-url")
+                    .attr("data-content", info["lyrics"]["translation"]);
             }
             else {
-                $("#radio-lyrics-url")
-                    .addClass("no-url")
-                    .attr("href", "");
+                $("#radio-lyrics-url").addClass("no-url").attr("href", "");
+                $("#radio-lyrics-original").addClass("no-url");
+                $("#radio-lyrics-translation").addClass("no-url")
             }
 
             if ("youtubeVideoId" in info) {
@@ -111,9 +119,7 @@ $(function () {
                     .attr("href", "https://www.youtube.com/watch?v=" + info["youtubeVideoId"]);
             }
             else {
-                $("#radio-youtube-url")
-                    .addClass("no-url")
-                    .attr("href", "");
+                $("#radio-youtube-url").addClass("no-url").attr("href", "");
             }
 
 

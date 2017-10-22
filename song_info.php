@@ -8,6 +8,7 @@ define('ESKA_ROCK_NO_SONG', "EskaROCK");
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
+$metadata->songTitle = "SCORPIONS - Rock You Like A Hurricane";
 
 $result = [
     "rawSongTitle" => $metadata->songTitle,
@@ -34,10 +35,14 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $tekstowoPl = new TekstowoPL();
     $lyricsUrl = $tekstowoPl->getCachedLyricsUrl($metadata->songTitle);
     if ($lyricsUrl != null) {
-        $result["lyricsUrl"] = $lyricsUrl;
+        $result["lyrics"] = [
+            "url" => $lyricsUrl
+        ];
 
         $details = $tekstowoPl->getSongDetails($lyricsUrl);
         $result["youtubeVideoId"] = $details->youtubeVideoId;
+        $result["lyrics"]["original"] = $details->lyricsOrginal;
+        $result["lyrics"]["translation"] = $details->lyricsTranslation;
     }
 }
 

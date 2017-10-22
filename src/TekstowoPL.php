@@ -13,8 +13,20 @@ class TekstowoPL {
         $html = file_get_contents($lyricsUrl);
         $youtubeVideoId = str_find($html, "miniatura_teledysku,", ".");
 
+        $lyricsOriginal = str_find($html, "<div class=\"song-text\">", "<p>&nbsp;</p>");
+        $lyricsOriginal = str_remove_prefix_ltrim($lyricsOriginal, "<h2>Tekst piosenki:</h2><br />");
+        $lyricsOriginal = rtrim($lyricsOriginal);
+        $lyricsOriginal = str_replace("<br />", "", $lyricsOriginal);
+
+        $lyricsTranslation = str_find($html, "<div id=\"translation\"", "<p>&nbsp;</p>");
+        $lyricsTranslation = substr($lyricsTranslation, strpos($lyricsTranslation, ">") + 1);
+        $lyricsTranslation = trim($lyricsTranslation);
+        $lyricsTranslation = str_replace("<br />", "", $lyricsTranslation);
+
         $details = new stdClass;
         $details->youtubeVideoId = $youtubeVideoId;
+        $details->lyricsOrginal = $lyricsOriginal;
+        $details->lyricsTranslation = $lyricsTranslation;
         return $details;
     }
 
