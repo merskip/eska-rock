@@ -8,7 +8,6 @@ define('ESKA_ROCK_NO_SONG', "EskaROCK");
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
-$metadata->songTitle = "SCORPIONS - Rock You Like A Hurricane";
 
 $result = [
     "rawSongTitle" => $metadata->songTitle,

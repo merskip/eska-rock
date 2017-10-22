@@ -25,6 +25,7 @@ $(function () {
             .removeClass("radio-stream-loading")
             .addClass("radio-play-btn");
         $(".radio-panel").removeClass("radio-panel-extended").addClass("radio-panel-collapsed");
+        $(".radio-panel-lyrics").addClass("collapsed");
         stopRefreshSongInfo();
     };
     radio.stream.ontimeupdate = function() {
@@ -34,9 +35,14 @@ $(function () {
         }
     };
 
-    $(".radio-url[data-content]").click(function () {
-       let content = $(this).attr("data-content");
-       alert(content);
+    $("#radio-lyrics-show").click(function () {
+       let lyricsContent = $(".radio-panel-lyrics");
+       if (lyricsContent.hasClass("collapsed")) {
+           lyricsContent.removeClass("collapsed");
+       }
+       else {
+           lyricsContent.addClass("collapsed");
+       }
     });
     let refreshingSongInfoId = null;
     function startRefreshSongInfo() {
@@ -102,15 +108,16 @@ $(function () {
                 $("#radio-lyrics-url")
                     .removeClass("no-url")
                     .attr("href", info["lyrics"]["url"]);
-                $("#radio-lyrics-original").removeClass("no-url")
-                    .attr("data-content", info["lyrics"]["original"]);
-                $("#radio-lyrics-translation").removeClass("no-url")
-                    .attr("data-content", info["lyrics"]["translation"]);
+                $("#radio-lyrics-show").removeClass("no-url");
+                $("#radio-lyrics-original").html(info["lyrics"]["original"].split("\n").join("<br />"));
+                $("#radio-lyrics-translation").html(info["lyrics"]["translation"].split("\n").join("<br />"));
             }
             else {
                 $("#radio-lyrics-url").addClass("no-url").attr("href", "");
-                $("#radio-lyrics-original").addClass("no-url");
-                $("#radio-lyrics-translation").addClass("no-url")
+                $("#radio-lyrics-show").addClass("no-url");
+                $(".radio-panel-lyrics").addClass("collapsed");
+                $("#radio-lyrics-original").html("");
+                $("#radio-lyrics-translation").html("");
             }
 
             if ("youtubeVideoId" in info) {
@@ -121,8 +128,6 @@ $(function () {
             else {
                 $("#radio-youtube-url").addClass("no-url").attr("href", "");
             }
-
-
         });
     }
 });

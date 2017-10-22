@@ -217,3 +217,51 @@ body {
 .radio-url.no-url {
     display: none;
 }
+
+/* .radio-panel-lyrics */
+
+.radio-panel-lyrics.collapsed {
+    display: none;
+}
+
+.radio-panel-lyrics {
+    position: relative;
+    display: flex;
+    margin-top: 24px;
+    border-radius: 2px;
+    padding: 16px;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+.radio-panel-lyrics:before {
+    content: '';
+    background-color: #f8f8f8;
+    border-left: solid 1px #e8e8e8;
+    position: absolute;
+    width: 50%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.radio-panel-lyrics div {
+    flex: 1;
+    z-index: 1;
+}
+
+.radio-panel-lyrics .radio-lyrics-original {
+    margin-right: 16px;
+}
+
+.radio-panel-lyrics .radio-lyrics-translation {
+    margin-left: 16px;
+}
+
+.radio-panel-lyrics .radio-panel-lyrics-title {
+    margin-bottom: 8px;
+    color: #c21a29;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}

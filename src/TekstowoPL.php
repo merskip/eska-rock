@@ -76,6 +76,7 @@ class TekstowoPL {
         $text = trim($text);
         $text = strtolower($text);
         $text = str_replace(" ", "_", $text);
+        $text = str_replace(".", "_", $text);
         $text = str_replace("/", "_", $text);
         $text = str_replace("?", "_", $text);
         $text = str_replace(",", "_", $text);

@@ -57,12 +57,19 @@
         <a id="radio-lyrics-url" class="radio-url no-url" href="" target="_blank">
             tekstowo.pl
         </a>
-        <a id="radio-lyrics-original" class="radio-url no-url" data-content="">
-            oryginalny
+        <a id="radio-lyrics-show" class="radio-url no-url">
+            tekst piosenki
         </a>
-        <a id="radio-lyrics-translation" class="radio-url no-url" data-content="">
-            tłumaczenie
-        </a>
+    </div>
+    <div class="radio-panel-lyrics collapsed">
+        <div class="radio-panel-original">
+            <div class="radio-panel-lyrics-title">Tekst piosenki</div>
+            <div id="radio-lyrics-original"></div>
+        </div>
+        <div class="radio-lyrics-translation">
+            <div class="radio-panel-lyrics-title">Tłumaczenie</div>
+            <div id="radio-lyrics-translation"></div>
+        </div>
     </div>
 </div>
 <script>
