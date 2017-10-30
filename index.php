@@ -28,7 +28,16 @@
     <div class="radio-panel-content">
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
 
-        <div class="radio-panel-section-title">Teraz gra</div>
+        <div class="radio-panel-section-title">
+            <div id="radio-refreshing-countdown-timer" class="radio-pie">
+                <div class="radio-pie-spinner"></div>
+                <div class="radio-pie-filler"></div>
+                <div class="radio-pie-mask"></div>
+            </div>
+            <span class="radio-pie-label">
+                Teraz gra
+            </span>
+        </div>
         <span id="radio-song-title"></span>
 
         <div class="radio-panel-section-title">Z albumu</div>

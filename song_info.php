@@ -8,7 +8,6 @@ define('ESKA_ROCK_NO_SONG', "EskaROCK");
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
-
 $result = [
     "rawSongTitle" => $metadata->songTitle,
     "listeners" => $metadata->listeners 

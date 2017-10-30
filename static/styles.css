@@ -163,7 +163,7 @@ body {
 }
 
 .radio-panel .radio-panel-section-title {
-    margin-top: 16px;
+    margin-top: 14px;
     color: #c21a29;
     font-size: 12px;
     font-weight: bold;
@@ -264,4 +264,56 @@ body {
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.05em;
+}
+
+/* .radio-refreshing-pie */
+
+.radio-pie {
+    display: inline-block;
+    position: relative;
+    background: #fff;
+    width: 16px;
+    height: 16px;
+}
+
+.radio-pie-label {
+    margin-left: 4px;
+    position: relative;
+    top: -3px;
+}
+
+.radio-pie, .radio-pie * {
+    box-sizing: border-box;
+}
+
+.radio-pie-spinner,
+.radio-pie-filler {
+    width: 50%;
+    height: 100%;
+    transform-origin: 100% 50%;
+    position: absolute;
+    background: #c21a29;
+}
+
+.radio-pie-spinner {
+    border-radius: 100% 0 0 100% / 50% 0 0 50%;
+    z-index: 200;
+    border-right: none;
+}
+
+.radio-pie-filler {
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    left: 50%;
+    opacity: 0;
+    z-index: 100;
+    border-left: none;
+}
+
+.radio-pie-mask {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    background: inherit;
+    opacity: 1;
+    z-index: 300;
 }

@@ -44,19 +44,44 @@ $(function () {
            lyricsContent.addClass("collapsed");
        }
     });
+
+    let refreshingDuration = 1000 * 15; // in millis
     let refreshingSongInfoId = null;
+    let timer = $("#radio-refreshing-countdown-timer");
+
     function startRefreshSongInfo() {
-       refreshStats();
-       refreshingSongInfoId = setInterval(function() {
-          refreshStats();
-       }, 1000 * 15);
+        refreshStats(function () {
+            startTimer(refreshingDuration, 360 * 0.2, function (progress) {
+                timer.find(".radio-pie-spinner").css("transform", "rotate(" + (progress * 360) + "deg)");
+                timer.find(".radio-pie-filler").css("opacity", progress < 0.5 ? 0 : 1);
+                timer.find(".radio-pie-mask").css("opacity", progress >= 0.5 ? 0 : 1);
+            }, function () {
+                startRefreshSongInfo();
+            });
+        });
     }
- 
+
     function stopRefreshSongInfo() {
         clearInterval(refreshingSongInfoId);
     }
+
+    function startTimer(duration, tickCount, onTick, onFinish) {
+        let deadline = Date.now() + duration;
+        let timerId = setInterval(function () {
+
+            let remainingTime = deadline - Date.now();
+            let progress = (duration - remainingTime) / duration;
+            onTick(progress);
+
+            if (remainingTime <= 0) {
+                onFinish();
+                clearInterval(timerId);
+            }
+        }, duration / tickCount);
+    }
  
-    function refreshStats() {
+    function refreshStats(onCompletion) {
+
         $.get("song_info.php", function(info) {
             console.debug(info);
 
@@ -128,6 +153,8 @@ $(function () {
             else {
                 $("#radio-youtube-url").addClass("no-url").attr("href", "");
             }
+        }).always(function () {
+            onCompletion();
         });
     }
 });
