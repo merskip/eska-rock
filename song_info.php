@@ -1,4 +1,5 @@
 <?php
+$timeStart = microtime(true);
 require_once "src/EskaRock.php";
 require_once "src/LastFM.php";
 require_once "src/TekstowoPL.php";
@@ -43,6 +44,9 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
         $result["lyrics"]["translation"] = $details->lyricsTranslation;
     }
 }
+$timeEnd = microtime(true);
+$responseTime = intval(($timeEnd - $timeStart) * 1000);
+$result["prepareResponseTime"] = $responseTime;
 
 header("Content-Type: application/json");
 echo json_encode($result, JSON_PRETTY_PRINT);
