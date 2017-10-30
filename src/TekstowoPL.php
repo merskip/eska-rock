@@ -7,6 +7,8 @@ class TekstowoPL {
     const SONG_URL_PREFIX = "http://www.tekstowo.pl/piosenka";
     const SONG_URL_SEPARATOR = ",";
     const SONG_URL_SUFFIX = "";
+    const URL_ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyz";
+    const URL_ILLEGAL_CHAR_PLACEHOLDER = "_";
     const CACHE_LYRICS_URL_FILENAME = "tekstowo-pl-lyrics-url";
 
     function getSongDetails($lyricsUrl) {
@@ -42,6 +44,7 @@ class TekstowoPL {
 
     function getLyricsUrl($songTitle) {
         $expectedLyricsUrl = $this->generateLyricsUrl($songTitle);
+        var_dump($expectedLyricsUrl);
         if ($this->checkHttpStatusIsOk($expectedLyricsUrl)) {
             Cache::getInstance()->putJson(TekstowoPL::CACHE_LYRICS_URL_FILENAME, [
                 "id" => $songTitle,
@@ -75,14 +78,21 @@ class TekstowoPL {
     private function convertToUrl($text) {
         $text = trim($text);
         $text = strtolower($text);
-        $text = str_replace(" ", "_", $text);
-        $text = str_replace(".", "_", $text);
-        $text = str_replace("/", "_", $text);
-        $text = str_replace("?", "_", $text);
-        $text = str_replace(",", "_", $text);
-        $text = str_replace("'", "_", $text);
-        $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+        $text = $this->escapedText($text);
         return $text;
     }
 
+    private function escapedText($text) {
+        $result = "";
+        $characters = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
+        foreach ($characters as $index => $char) {
+            if (strpos(TekstowoPL::URL_ALLOWED_CHARS, $char) !== false) {
+                $result .= $char;
+            }
+            else {
+                $result .= TekstowoPL::URL_ILLEGAL_CHAR_PLACEHOLDER;
+            }
+        }
+        return $result;
+    }
 }
