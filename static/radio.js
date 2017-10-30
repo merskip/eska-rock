@@ -120,10 +120,10 @@ $(function () {
                 $("#radio-lyrics-translation").html("");
             }
 
-            if ("youtubeVideoId" in info) {
+            if ("youtube" in info) {
                 $("#radio-youtube-url")
                     .removeClass("no-url")
-                    .attr("href", "https://www.youtube.com/watch?v=" + info["youtubeVideoId"]);
+                    .attr("href", "https://www.youtube.com/watch?v=" + info["youtube"]["videoId"]);
             }
             else {
                 $("#radio-youtube-url").addClass("no-url").attr("href", "");
