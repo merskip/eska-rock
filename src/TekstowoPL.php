@@ -10,6 +10,18 @@ class TekstowoPL {
     const URL_ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyz";
     const URL_ILLEGAL_CHAR_PLACEHOLDER = "_";
     const CACHE_LYRICS_URL_FILENAME = "tekstowo-pl-lyrics-url";
+    const CACHE_SONG_DETAILS_FILENAME = "tekstowo-pl-song-details";
+
+    function getCachedSongDetails($lyricsUrl) {
+        $cachedDetails = Cache::getInstance()->getJson(TekstowoPL::CACHE_SONG_DETAILS_FILENAME);
+        if ($cachedDetails != null && $cachedDetails->id == $lyricsUrl) {
+            unset($cachedDetails->id);
+            return $cachedDetails;
+        }
+        else {
+            return $this->getSongDetails($lyricsUrl);
+        }
+    }
 
     function getSongDetails($lyricsUrl) {
         $html = file_get_contents($lyricsUrl);
@@ -29,6 +41,12 @@ class TekstowoPL {
         $details->youtubeVideoId = $youtubeVideoId;
         $details->lyricsOrginal = $lyricsOriginal;
         $details->lyricsTranslation = $lyricsTranslation;
+
+        // Cache support
+        $detailsCache = clone($details);
+        $detailsCache->id = $lyricsUrl;
+        Cache::getInstance()->putJson(TekstowoPL::CACHE_SONG_DETAILS_FILENAME, $detailsCache);
+
         return $details;
     }
 
@@ -44,7 +62,6 @@ class TekstowoPL {
 
     function getLyricsUrl($songTitle) {
         $expectedLyricsUrl = $this->generateLyricsUrl($songTitle);
-        var_dump($expectedLyricsUrl);
         if ($this->checkHttpStatusIsOk($expectedLyricsUrl)) {
             Cache::getInstance()->putJson(TekstowoPL::CACHE_LYRICS_URL_FILENAME, [
                 "id" => $songTitle,

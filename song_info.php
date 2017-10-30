@@ -38,7 +38,7 @@ if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
             "url" => $lyricsUrl
         ];
 
-        $details = $tekstowoPl->getSongDetails($lyricsUrl);
+        $details = $tekstowoPl->getCachedSongDetails($lyricsUrl);
         $result["youtube"] = ["videoId" => $details->youtubeVideoId];
         $result["lyrics"]["original"] = $details->lyricsOrginal;
         $result["lyrics"]["translation"] = $details->lyricsTranslation;

@@ -55,9 +55,11 @@ class LastFM {
                     && $tag != "rock";
         }));
 
+        // Cache support
         $songInfoCache = clone($songInfo);
         $songInfoCache->id = $songTitle;
         Cache::getInstance()->putJson(LastFM::CACHE_INFO_FILENAME, $songInfoCache);
+
         return $songInfo;
     }
 
