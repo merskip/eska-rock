@@ -229,6 +229,8 @@ body {
     padding: 0 8px;
     margin-right: 4px;
     margin-top: 4px;
+    font-size: 14px;
+    line-height: 22px;
 }
 
 /* .radio-url */
