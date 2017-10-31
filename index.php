@@ -17,15 +17,22 @@
     <title><?php echo $streamTitle ?></title>
 </head>
 <body>
-<?php
-require_once __DIR__ . '/src/Google.php';
-$userInfo = getUserInfo();
-if ($userInfo == null): ?>
-    <a href="sign_in.php"><button>Sign in</button></a>
-<?php else: ?>
-    <div style="color: white">Witaj, <?php echo $userInfo->name ?></div>
-    <a href="logout.php"><button>Logout</button></a>
-<?php endif; ?>
+    <?php
+    require_once __DIR__ . '/src/Google.php';
+    $userInfo = getUserInfo();
+    if ($userInfo == null): ?>
+        <a href="sign_in.php" class="btn-sign-in-google"></a>
+    <?php else: ?>
+        <div class="user-panel row">
+            <img src="<?php echo $userInfo->picture ?>" class="row-item user-avatar">
+            <div class="row-item">
+                <div class="user-name"><?php echo $userInfo->name ?></div>
+                <div class="user-email"><?php echo $userInfo->email ?></div>
+
+                <a href="logout.php" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    <?php endif; ?>
 <img src="static/eska-rock-horizontal-logo.png" class="logo">
 <div class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream">
