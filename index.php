@@ -17,6 +17,15 @@
     <title><?php echo $streamTitle ?></title>
 </head>
 <body>
+<?php
+require_once __DIR__ . '/src/Google.php';
+$userInfo = getUserInfo();
+if ($userInfo == null): ?>
+    <a href="sign_in.php"><button>Sign in</button></a>
+<?php else: ?>
+    <div style="color: white">Witaj, <?php echo $userInfo->name ?></div>
+    <a href="logout.php"><button>Logout</button></a>
+<?php endif; ?>
 <img src="static/eska-rock-horizontal-logo.png" class="logo">
 <div class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream">
