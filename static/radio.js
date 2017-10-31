@@ -50,7 +50,10 @@ $(function () {
     let timer = $("#radio-refreshing-countdown-timer");
 
     function startRefreshSongInfo() {
+        timer.addClass("radio-pie-indeterminate");
         refreshStats(function () {
+            timer.removeClass("radio-pie-indeterminate");
+
             refreshingSongInfoId = startTimer(refreshingDuration, 360 * 0.2, function (progress) {
                 setRadioRefreshTimerProgress(progress);
             }, function () {
