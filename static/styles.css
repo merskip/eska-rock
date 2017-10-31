@@ -272,14 +272,14 @@ body {
     display: inline-block;
     position: relative;
     background: #fff;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
 }
 
 .radio-pie-label {
-    margin-left: 4px;
+    margin-left: 2px;
     position: relative;
-    top: -3px;
+    top: -2px;
 }
 
 .radio-pie, .radio-pie * {
