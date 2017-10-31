@@ -51,10 +51,8 @@ $(function () {
 
     function startRefreshSongInfo() {
         refreshStats(function () {
-            startTimer(refreshingDuration, 360 * 0.2, function (progress) {
-                timer.find(".radio-pie-spinner").css("transform", "rotate(" + (progress * 360) + "deg)");
-                timer.find(".radio-pie-filler").css("opacity", progress < 0.5 ? 0 : 1);
-                timer.find(".radio-pie-mask").css("opacity", progress >= 0.5 ? 0 : 1);
+            refreshingSongInfoId = startTimer(refreshingDuration, 360 * 0.2, function (progress) {
+                setRadioRefreshTimerProgress(progress);
             }, function () {
                 startRefreshSongInfo();
             });
@@ -63,6 +61,13 @@ $(function () {
 
     function stopRefreshSongInfo() {
         clearInterval(refreshingSongInfoId);
+        setRadioRefreshTimerProgress(0.0);
+    }
+
+    function setRadioRefreshTimerProgress(progress) {
+        timer.find(".radio-pie-spinner").css("transform", "rotate(" + (progress * 360) + "deg)");
+        timer.find(".radio-pie-filler").css("opacity", progress < 0.5 ? 0 : 1);
+        timer.find(".radio-pie-mask").css("opacity", progress >= 0.5 ? 0 : 1);
     }
 
     function startTimer(duration, tickCount, onTick, onFinish) {
@@ -71,6 +76,7 @@ $(function () {
 
             let remainingTime = deadline - Date.now();
             let progress = (duration - remainingTime) / duration;
+            progress = Math.max(Math.min(progress, 1.0), 0.0);
             onTick(progress);
 
             if (remainingTime <= 0) {
@@ -78,10 +84,10 @@ $(function () {
                 clearInterval(timerId);
             }
         }, duration / tickCount);
+        return timerId;
     }
  
     function refreshStats(onCompletion) {
-
         $.get("song_info.php", function(info) {
             console.debug(info);
 
