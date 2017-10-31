@@ -170,6 +170,35 @@ body {
     letter-spacing: 0.05em;
 }
 
+.radio-panel .radio-panel-section-title.radio-placeholder,
+.radio-panel .radio-panel-section-title .radio-placeholder {
+    background-color: #c21a29;
+    height: 14px;
+    border-radius: 7px;
+    color: transparent;
+    margin-bottom: 4px;
+}
+
+.radio-panel .radio-placeholder {
+    height: 14px;
+    width: 88px;
+    background-color: #ddd;
+    border-radius: 7px;
+    color: transparent;
+}
+
+.radio-panel span.radio-placeholder {
+    display: inline-block;
+}
+
+.radio-panel .radio-placeholder.placeholder-long {
+    width: 256px;
+}
+
+.radio-panel .radio-placeholder.placeholder-short {
+    width: 32px;
+}
+
 .radio-panel .radio-panel-section-title:first-child {
     margin-top: 16px;
 }
@@ -280,6 +309,15 @@ body {
     margin-left: 2px;
     position: relative;
     top: -2px;
+}
+
+.radio-pie.radio-pie-placeholder {
+    width: 14px;
+    height: 14px;
+}
+
+.radio-pie-label.radio-placeholder {
+    top: -1px;
 }
 
 .radio-pie, .radio-pie * {

@@ -29,32 +29,32 @@
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
 
         <div class="radio-panel-section-title">
-            <div id="radio-refreshing-countdown-timer" class="radio-pie">
+            <div id="radio-refreshing-countdown-timer" class="radio-pie radio-pie-indeterminate radio-pie-placeholder">
                 <div class="radio-pie-spinner"></div>
                 <div class="radio-pie-filler"></div>
                 <div class="radio-pie-mask"></div>
             </div>
-            <span class="radio-pie-label">
+            <span class="radio-pie-label radio-placeholder">
                 Teraz gra
             </span>
         </div>
-        <span id="radio-song-title"></span>
+        <span id="radio-song-title" class="radio-placeholder placeholder-long"></span>
 
-        <div class="radio-panel-section-title">Z albumu</div>
-        <span id="radio-album"></span>
+        <div class="radio-panel-section-title radio-placeholder">Z albumu</div>
+        <span id="radio-album" class="radio-placeholder"></span>
 
         <div class="row">
             <div class="row-item">
-                <div class="radio-panel-section-title">Czas trwania</div>
-                <span id="radio-song-duration"></span>
+                <div class="radio-panel-section-title radio-placeholder">Czas trwania</div>
+                <span id="radio-song-duration" class="radio-placeholder placeholder-short"></span>
             </div>
             <div class="row-item">
-                <div class="radio-panel-section-title">Liczba słuchaczy</div>
-                <span id="radio-listeners"></span>
+                <div class="radio-panel-section-title radio-placeholder">Liczba słuchaczy</div>
+                <span id="radio-listeners" class="radio-placeholder placeholder-short"></span>
             </div>
             <div class="row-item">
-                <div class="radio-panel-section-title">Czas odtwarzania</div>
-                <span id="radio-time"></span>
+                <div id="radio-time-title" class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
+                <span id="radio-time" class="radio-placeholder"></span>
             </div>
         </div>
 

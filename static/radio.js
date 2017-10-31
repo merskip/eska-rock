@@ -29,7 +29,9 @@ $(function () {
         stopRefreshSongInfo();
     };
     radio.stream.ontimeupdate = function() {
-        $("#radio-time").text(formatCountdown(radio.stream.currentTime));
+        $("#radio-time").text(formatCountdown(radio.stream.currentTime))
+            .removeClass("radio-placeholder");
+        $("#radio-time-title").removeClass("radio-placeholder");
         if (radio.stream.currentTime !== 0) {
             $("#radio-toggle-play").removeClass("radio-stream-loading");
         }
@@ -53,6 +55,9 @@ $(function () {
         timer.addClass("radio-pie-indeterminate");
         refreshStats(function () {
             timer.removeClass("radio-pie-indeterminate");
+
+            $(".radio-placeholder").removeClass("radio-placeholder");
+            $(".radio-pie-placeholder").removeClass("radio-pie-placeholder");
 
             refreshingSongInfoId = startTimer(refreshingDuration, 360 * 0.2, function (progress) {
                 setRadioRefreshTimerProgress(progress);
