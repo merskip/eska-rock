@@ -7,6 +7,7 @@
     <!--suppress JSUnusedLocalSymbols -->
     <script>
         <?php
+        require_once "src/utils.php";
         require_once "src/EskaRock.php";
         $eskaRock = new EskaRock();
         $streamUrl = $eskaRock->getCachedStreamUrl();
@@ -20,7 +21,7 @@
     <?php
     require_once "src/Authorization.php";
     if (!$auth->isAuthorized()): ?>
-        <a href="sign_in.php" class="btn-sign-in-google"></a>
+        <a href="<?= l("api/user/sign_in") ?>" class="btn-sign-in-google"></a>
     <?php else:
         $userInfo = $auth->getUserInfo();
         ?>
@@ -34,9 +35,9 @@
                 </div>
             </div>
             <div class="user-actions">
-                <a href="api/favorites.php" class="btn-link">Ulubione</a>
+                <a href="<?= l("api/favorites") ?>" class="btn-link">Ulubione</a>
                 <span class="btn-link-separator">|</span>
-                <a href="logout.php" class="btn-link">Wyloguj</a>
+                <a href="<?= l("api/user/logout") ?>" class="btn-link">Wyloguj</a>
             </div>
         </div>
     <?php endif; ?>

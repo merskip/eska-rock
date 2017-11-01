@@ -1,0 +1,14 @@
+# For check correct works "mod_rewrite" (used in function _isSupportFriendlyUrl)
+SetEnv HTACCESS on
+
+RewriteEngine On
+
+# Skip if file or directory physical exists
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Skip if url already has extension, protection for internal redirect loop
+RewriteCond %{REQUEST_URI} !\.
+
+# Add .php extension, eg. api/favorites -> api/favorites.php
+RewriteRule ^(.+) $1.php

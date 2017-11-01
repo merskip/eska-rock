@@ -1,5 +1,18 @@
 <?php
 
+function l($url) {
+    static $isSupportFriendlyUrl = null;
+    if ($isSupportFriendlyUrl === null)
+        $isSupportFriendlyUrl = _isSupportFriendlyUrl();
+
+    return $isSupportFriendlyUrl ? ($url) : ($url . ".php");
+}
+
+function _isSupportFriendlyUrl() {
+    return in_array('mod_rewrite', apache_get_modules())
+        && isset($_SERVER['HTACCESS']);
+}
+
 function str_find($text, $prefix, $suffix) {
     $startPos = strpos($text, $prefix);
     $endPos = strpos($text, $suffix, $startPos);

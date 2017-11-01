@@ -96,7 +96,7 @@ $(function () {
     }
  
     function refreshStats(onCompletion) {
-        $.get("api/song_info.php", function(info) {
+        $.get("api/song_info", function(info) {
             console.debug(info);
 
             let fullSongTitle = "songDetails" in info

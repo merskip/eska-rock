@@ -1,4 +1,5 @@
 <?php
+require_once "utils.php";
 require_once __DIR__ . "/google-api-php-client-2.2.0/vendor/autoload.php";
 
 class Authorization {
@@ -12,7 +13,7 @@ class Authorization {
         $client->setAccessType("offline");
         $client->setIncludeGrantedScopes(true);
         $client->addScope(Google_Service_People::USERINFO_EMAIL);
-        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/oauth2callback.php');
+        $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . "/eska_rock/" . l('api/user/oauth2callback'));
         $this->client = $client;
     }
 
