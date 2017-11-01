@@ -23,18 +23,24 @@
     if ($userInfo == null): ?>
         <a href="sign_in.php" class="btn-sign-in-google"></a>
     <?php else: ?>
-        <div class="user-panel row">
-            <img src="<?php echo $userInfo->picture ?>" class="row-item user-avatar">
-            <div class="row-item">
-                <div class="user-name"><?php echo $userInfo->name ?></div>
-                <div class="user-email"><?php echo $userInfo->email ?></div>
+        <div class="user-panel">
+            <div class="row">
+                <img src="<?php echo $userInfo->picture ?>" class="row-item user-avatar">
+                <div class="row-item">
+                    <div class="user-name"><?php echo $userInfo->name ?></div>
+                    <div class="user-email"><?php echo $userInfo->email ?></div>
 
-                <a href="logout.php" class="btn-logout">Logout</a>
+                </div>
+            </div>
+            <div class="user-actions">
+                <a href="favorites.php" class="btn-link">Ulubione</a>
+                <span class="btn-link-separator">|</span>
+                <a href="logout.php" class="btn-link">Wyloguj</a>
             </div>
         </div>
     <?php endif; ?>
-<img src="static/eska-rock-horizontal-logo.png" class="logo">
-<div class="radio-panel radio-panel-collapsed">
+    <img src="static/eska-rock-horizontal-logo.png" class="logo">
+    <div class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream">
     </audio>
     <div id="radio-stream-title" class="radio-panel-title"><?php echo $streamTitle ?></div>
@@ -43,6 +49,12 @@
     </button>
     <div class="radio-panel-content">
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
+        <?php if ($userInfo != null): ?>
+            <form action="favorites_add.php" method="post">
+                <input type="hidden" name="songTitle">
+                <button type="submit" class="btn-link">Dodaj do ulubionych</button>
+            </form>
+        <?php endif; ?>
 
         <div class="radio-panel-section-title">
             <div id="radio-refreshing-countdown-timer" class="radio-pie radio-pie-indeterminate radio-pie-placeholder">
