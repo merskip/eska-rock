@@ -1,6 +1,7 @@
 <!doctype html>
 <head>
     <link rel="icon" href="static/favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="static/styles.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="static/radio.js"></script>
@@ -51,11 +52,14 @@
     </button>
     <div class="radio-panel-content">
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
+
         <?php if ($auth->isAuthorized()): ?>
-            <form action="api/favorites.php" method="post">
-                <input id="favorites-add-song-title" type="hidden" name="songTitle">
-                <button type="submit" class="btn-link">Dodaj do ulubionych</button>
+            <form id="favorite-add" action="<?= l("api/favorites") ?>" method="post">
+                <input id="song-title" type="hidden" name="songTitle">
             </form>
+            <a type="submit" class="btn-link btn-favorite-add radio-placeholder" title="Dodaj do ulubionych">
+                <i class="favorite-add-icon material-icons">favorite_border</i>
+            </a>
         <?php endif; ?>
 
         <div class="radio-panel-section-title">

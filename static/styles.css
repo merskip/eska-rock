@@ -454,3 +454,28 @@ a.btn-sign-in-google:active {
     color: #ddd;
     font-size: 12px;
 }
+
+/* .btn-favorite-add */
+
+.btn-favorite-add {
+    float: right;
+    margin-top: -8px;
+    margin-right: 16px;
+}
+
+.btn-favorite-add.radio-placeholder {
+    display: none;
+}
+
+.btn-favorite-add .favorite-add-icon:hover {
+    visibility: hidden;
+    position: relative;
+}
+
+.btn-favorite-add .favorite-add-icon:hover::after {
+    content: "favorite";
+    visibility: visible;
+    position: absolute;
+    left: 0;
+}
+
