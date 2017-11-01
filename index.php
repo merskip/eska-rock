@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="static/styles.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="static/radio.js"></script>
+    <script src="static/favorites.js"></script>
     <!--suppress JSUnusedLocalSymbols -->
     <script>
         <?php
@@ -57,9 +58,10 @@
             <form id="favorite-add" action="<?= l("api/favorites") ?>" method="post">
                 <input id="song-title" type="hidden" name="songTitle">
             </form>
-            <a type="submit" class="btn-link btn-favorite-add radio-placeholder" title="Dodaj do ulubionych">
+            <button type="submit" form="favorite-add"
+               class="btn-link btn-favorite-add radio-placeholder" title="Dodaj do ulubionych">
                 <i class="favorite-add-icon material-icons">favorite_border</i>
-            </a>
+            </button>
         <?php endif; ?>
 
         <div class="radio-panel-section-title">

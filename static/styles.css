@@ -455,6 +455,15 @@ a.btn-sign-in-google:active {
     font-size: 12px;
 }
 
+.btn-disabled {
+    color: #555;
+    pointer-events: none;
+}
+
+.btn-readonly {
+    pointer-events: none;
+}
+
 /* .btn-favorite-add */
 
 .btn-favorite-add {
