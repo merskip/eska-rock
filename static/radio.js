@@ -192,7 +192,6 @@ class Radio {
     }
 
     play() {
-        this.stream.muted = true;
         this.stream.src = this.url;
         this.stream.load();
         this.stream.play().catch(function (e) {
