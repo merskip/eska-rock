@@ -18,11 +18,12 @@
 </head>
 <body>
     <?php
-    require_once __DIR__ . '/src/Google.php';
-    $userInfo = getUserInfo();
-    if ($userInfo == null): ?>
+    require_once "src/Authorization.php";
+    if (!$auth->isAuthorized()): ?>
         <a href="sign_in.php" class="btn-sign-in-google"></a>
-    <?php else: ?>
+    <?php else:
+        $userInfo = $auth->getUserInfo();
+        ?>
         <div class="user-panel">
             <div class="row">
                 <img src="<?= $userInfo->picture ?>" class="row-item user-avatar">
@@ -33,7 +34,7 @@
                 </div>
             </div>
             <div class="user-actions">
-                <a href="favorites.php" class="btn-link">Ulubione</a>
+                <a href="api/favorites.php" class="btn-link">Ulubione</a>
                 <span class="btn-link-separator">|</span>
                 <a href="logout.php" class="btn-link">Wyloguj</a>
             </div>
@@ -49,8 +50,8 @@
     </button>
     <div class="radio-panel-content">
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
-        <?php if ($userInfo != null): ?>
-            <form action="favorites_add.php" method="post">
+        <?php if ($auth->isAuthorized()): ?>
+            <form action="api/favorites.php" method="post">
                 <input id="favorites-add-song-title" type="hidden" name="songTitle">
                 <button type="submit" class="btn-link">Dodaj do ulubionych</button>
             </form>

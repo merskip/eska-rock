@@ -16,7 +16,9 @@ class Favorites {
     }
 
     public function getFavoritesSongs() {
-        return $this->db->find("db.favorites", ["userId" => $this->userId]);
+        return $this->db->find("db.favorites",
+            ["userId" => $this->userId],
+            ["userId" => 0]);
     }
 
     public function addFavoriteSong($songTitle) {

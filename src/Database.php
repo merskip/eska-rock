@@ -20,12 +20,18 @@ class Database {
         return self::$instance;
     }
 
-    public function find($collection, $filter = []) {
-        $query = new MongoDB\Driver\Query($filter, []);
+    public function find($collection, $filter = [], $fields = []) {
+        $options = [];
+        $options["projection"] = $fields;
+
+        $query = new MongoDB\Driver\Query($filter, $options);
         $cursor = $this->manager->executeQuery($this->resolveCollection($collection), $query);
 
         $rows = [];
         foreach ($cursor as $row) {
+            if (isset($row->_id)) { // Replacing type MongoDB\BSON\ObjectId to simple string
+                $row->_id = (string)$row->_id;
+            }
             $rows[] = $row;
         }
         return $rows;

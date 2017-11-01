@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/src/Google.php';
+require_once "src/Authorization.php";
 
-if ($client->getAccessToken() != null) {
-    $client->revokeToken();
-}
-session_destroy();
+$auth->logout();
 header('Location: http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']));

@@ -96,7 +96,7 @@ $(function () {
     }
  
     function refreshStats(onCompletion) {
-        $.get("song_info.php", function(info) {
+        $.get("api/song_info.php", function(info) {
             console.debug(info);
 
             let fullSongTitle = "songDetails" in info
@@ -104,6 +104,7 @@ $(function () {
                 : info["rawSongTitle"];
 
             document.title = fullSongTitle;
+
             $("#favorites-add-song-title").val(info["rawSongTitle"]);
             $("#radio-song-title").text(fullSongTitle);
             $("#radio-listeners").text(info["listeners"]);
@@ -191,6 +192,7 @@ class Radio {
     }
 
     play() {
+        this.stream.muted = true;
         this.stream.src = this.url;
         this.stream.load();
         this.stream.play().catch(function (e) {
