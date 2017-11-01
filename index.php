@@ -12,9 +12,9 @@
         $streamUrl = $eskaRock->getCachedStreamUrl();
         $streamTitle = $eskaRock->getStreamTitle($streamUrl);
         ?>
-        let streamUrl = "<?php echo $streamUrl ?>";
+        let streamUrl = "<?= $streamUrl ?>";
     </script>
-    <title><?php echo $streamTitle ?></title>
+    <title><?= $streamTitle ?></title>
 </head>
 <body>
     <?php
@@ -25,10 +25,10 @@
     <?php else: ?>
         <div class="user-panel">
             <div class="row">
-                <img src="<?php echo $userInfo->picture ?>" class="row-item user-avatar">
+                <img src="<?= $userInfo->picture ?>" class="row-item user-avatar">
                 <div class="row-item">
-                    <div class="user-name"><?php echo $userInfo->name ?></div>
-                    <div class="user-email"><?php echo $userInfo->email ?></div>
+                    <div class="user-name"><?= $userInfo->name ?></div>
+                    <div class="user-email"><?= $userInfo->email ?></div>
 
                 </div>
             </div>
@@ -43,7 +43,7 @@
     <div class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream">
     </audio>
-    <div id="radio-stream-title" class="radio-panel-title"><?php echo $streamTitle ?></div>
+    <div id="radio-stream-title" class="radio-panel-title"><?= $streamTitle ?></div>
     <button id="radio-toggle-play" class="radio-panel-button radio-toggle-play radio-play-btn">
         <span class="radio-toggle-play-icon"></span>
     </button>
@@ -51,7 +51,7 @@
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
         <?php if ($userInfo != null): ?>
             <form action="favorites_add.php" method="post">
-                <input type="hidden" name="songTitle">
+                <input id="favorites-add-song-title" type="hidden" name="songTitle">
                 <button type="submit" class="btn-link">Dodaj do ulubionych</button>
             </form>
         <?php endif; ?>

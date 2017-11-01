@@ -104,6 +104,7 @@ $(function () {
                 : info["rawSongTitle"];
 
             document.title = fullSongTitle;
+            $("#favorites-add-song-title").val(info["rawSongTitle"]);
             $("#radio-song-title").text(fullSongTitle);
             $("#radio-listeners").text(info["listeners"]);
 
