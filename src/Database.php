@@ -20,6 +20,11 @@ class Database {
         return self::$instance;
     }
 
+    public function findOne($collection, $filter = [], $fields = []) {
+        $rows = $this->find($collection, $filter, $fields);
+        return array_pop($rows); // TODO: Add limit 1 to query
+    }
+
     public function find($collection, $filter = [], $fields = []) {
         $options = [];
         $options["projection"] = $fields;
@@ -38,10 +43,17 @@ class Database {
     }
 
     public function insert($collection, $data) {
+        $data = array_merge(['_id' => new MongoDB\BSON\ObjectId], $data);
         $bulk = new MongoDB\Driver\BulkWrite;
-        $bulk->insert(array_merge(['_id' => new MongoDB\BSON\ObjectId], $data));
+        $bulk->insert($data);
 
-        $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
+        $result = $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
+        if ($result->getInsertedCount() > 0) {
+            return (string)$data['_id'];
+        }
+        else {
+            return null;
+        }
     }
 
     private function resolveCollection($collection) {

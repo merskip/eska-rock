@@ -55,12 +55,11 @@
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
 
         <?php if ($auth->isAuthorized()): ?>
-            <form id="favorite-add" action="<?= l("api/favorites") ?>" method="post">
-                <input id="song-title" type="hidden" name="songTitle">
-            </form>
-            <button type="submit" form="favorite-add"
-               class="btn-link btn-favorite-add radio-placeholder" title="Dodaj do ulubionych">
-                <i class="favorite-add-icon material-icons">favorite_border</i>
+            <button id="favorite-control"
+                    class="btn-link btn-favorite-control"
+                    data-title-add="Dodaj do ulubionych"
+                    data-title-remove="Usuń z ulubionych">
+                <i class="material-icons"></i>
             </button>
         <?php endif; ?>
 

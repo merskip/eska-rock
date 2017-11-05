@@ -105,7 +105,27 @@ $(function () {
 
             document.title = fullSongTitle;
 
-            $("#favorite-add").find("[name='songTitle']").val(info["rawSongTitle"]);
+            let favoriteControl = $("#favorite-control");
+            favoriteControl.attr("data-song-title", info["rawSongTitle"]);
+            if ("favoriteId" in info) {
+                if (info["favoriteId"] !== null) {
+                    favoriteControl
+                        .removeClass("favorite-add")
+                        .attr("data-song-title", null)
+                        .attr("data-favorite-id", info["favoriteId"])
+                        .addClass("favorite-remove")
+                        .attr("title", favoriteControl.attr("data-title-remove"));
+                }
+                else {
+                    favoriteControl
+                        .removeClass("favorite-remove")
+                        .attr("data-song-title", info["rawSongTitle"])
+                        .attr("data-favorite-id", null)
+                        .addClass("favorite-add")
+                        .attr("title", favoriteControl.attr("data-title-add"));
+                }
+            }
+
             $("#radio-song-title").text(fullSongTitle);
             $("#radio-listeners").text(info["listeners"]);
 

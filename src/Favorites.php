@@ -15,14 +15,20 @@ class Favorites {
         $this->userId = $userInfo->id;
     }
 
-    public function getFavoritesSongs() {
+    public function findAllFavoritesSongs() {
         return $this->db->find("db.favorites",
             ["userId" => $this->userId],
             ["userId" => 0]);
     }
 
-    public function addFavoriteSong($songTitle) {
-        $this->db->insert("db.favorites", [
+    public function findFavoriteSong($songTitle) {
+        return $this->db->findOne("db.favorites",
+            ["userId" => $this->userId, "songTitle" => $songTitle],
+            ["userId" => 0]);
+    }
+
+    public function insertFavoriteSong($songTitle) {
+        return $this->db->insert("db.favorites", [
             "userId" => $this->userId,
             "songTitle" => $songTitle
         ]);

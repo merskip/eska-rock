@@ -3,6 +3,9 @@ $timeStart = microtime(true);
 require_once "../src/EskaRock.php";
 require_once "../src/LastFM.php";
 require_once "../src/TekstowoPL.php";
+require_once "../src/Authorization.php";
+require_once "../src/Database.php";
+require_once "../src/Favorites.php";
 
 define('LAST_FM_API_KEY', "6afdf0e4de1911f77203f9b28ca17168");
 define('ESKA_ROCK_NO_SONG', "EskaROCK");
@@ -13,6 +16,14 @@ $result = [
     "rawSongTitle" => $metadata->songTitle,
     "listeners" => $metadata->listeners 
 ];
+
+$userInfo = Authorization::getInstance()->getUserInfo();
+if ($userInfo != null) {
+    $favorite = new Favorites(Database::getInstance(), $userInfo);
+    $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);
+    $result["favoriteId"] = $favoriteSong != null ? $favoriteSong->_id : null;
+}
+
 
 if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $lastFm = new LastFM(LAST_FM_API_KEY);

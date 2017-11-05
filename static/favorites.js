@@ -1,27 +1,32 @@
 $(function () {
 
-    $('#favorite-add').on('submit', function(e) {
-        e.preventDefault();
+    let favoriteControl = $("#favorite-control");
 
-        $(".btn-favorite-add").addClass("btn-readonly");
+    favoriteControl.click(function(e) {
+        if (favoriteControl.has("favorite-add")) {
+            $(".btn-favorite-add").addClass("btn-readonly");
 
-        let form = $(e.target);
-        let data = form.find(":input").serializeArray();
-        $.ajax({
-            url: form.attr('action'),
-            method: form.attr('method'),
-            data: data,
-            success() {
-                console.info("Success");
-            },
-            complete() {
-                let currentData = form.find(":input").serializeArray();
-                // We must make sure that the form didn't change
-                if (JSON.stringify(data)=== JSON.stringify(currentData)) {
-                    $(".btn-favorite-add").removeClass("btn-readonly");
+            $.ajax({
+                method: "POST",
+                url: "api/favorites",
+                data: {
+                    songTitle: favoriteControl.attr("data-song-title")
+                },
+                success(response) {
+                    console.log(response);
+                    let id = response['_id'];
+                    debugger;
+                    console.info("Success");
+                },
+                complete() {
+                    // let currentData = form.find(":input").serializeArray();
+                    // // We must make sure that the form didn't change
+                    // if (JSON.stringify(data) === JSON.stringify(currentData)) {
+                    //     $(".btn-favorite-add").removeClass("btn-readonly");
+                    // }
                 }
-            }
-        });
+            });
+        }
     });
 
 });
