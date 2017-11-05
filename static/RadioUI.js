@@ -6,7 +6,7 @@ $(function () {
             radio.stop();
         }
         else {
-            radio.playIfAvailable();
+            radio.play();
             $(this).addClass("radio-stream-loading");
 
             $("#radio-toggle-play").removeClass("radio-play-btn").addClass("radio-stop-btn");
@@ -14,6 +14,24 @@ $(function () {
         }
     });
 
+    radio.onStartBuffering(() => {
+        console.log("Start buffering");
+    });
+    radio.onPlay(() => {
+        console.log("Radio played");
+    });
+    radio.onFailedPlay(data => {
+        console.log("Radio failed play: " + data.message);
+    });
+    radio.onTimeUpdate(time => {
+        console.log("Time update: " + time);
+    });
+    radio.onStop(() => {
+        console.log("Radio stop");
+    });
+
+
+    /*
     radio.stream.onplay = function() {
         $("#radio-toggle-play").removeClass("radio-play-btn").addClass("radio-stop-btn");
         $(".radio-panel").removeClass("radio-panel-collapsed").addClass("radio-panel-extended");
@@ -36,6 +54,7 @@ $(function () {
             $("#radio-toggle-play").removeClass("radio-stream-loading");
         }
     };
+    */
 
     $("#radio-lyrics-show").click(function () {
        let lyricsContent = $(".radio-panel-lyrics");
@@ -195,56 +214,7 @@ $(function () {
     }
 });
 
-class Radio {
 
-    constructor(streamUrl) {
-        this.stream = document.getElementById('radio-stream');
-        this.url = streamUrl;
-    }
-
-    playIfAvailable() {
-        let self = this;
-        this.checkHttpIsOk(this.url, function () {
-            self.play();
-        }, function () {
-
-        });
-    }
-
-    play() {
-        this.stream.src = this.url;
-        this.stream.load();
-        this.stream.play().catch(function (e) {
-            // Nothing
-        });
-    }
-
-    stop() {
-        this.stream.pause();
-        this.stream.currentTime = 0;
-        this.stream.src = '';
-        this.stream.onpause(); // bug?
-    }
-
-    checkHttpIsOk(url, onSuccess, onFailed) {
-        let req = new XMLHttpRequest();
-
-        req.onreadystatechange = function () {
-            if (req.readyState === 2) {
-                let isOk = req.status === 200;
-                req.abort();
-                isOk ? onSuccess() : onFailed();
-            }
-        };
-
-        req.open('GET', url, true);
-        req.send(null);
-    }
-
-    isPlaying() {
-        return !this.stream.paused;
-    }
-}
 
 function _pad(n) {
     return (n < 10 ? "0" + n : n);

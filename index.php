@@ -4,7 +4,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="static/styles.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="static/radio.js"></script>
+    <script src="static/RadioCode.js"></script>
+    <script src="static/RadioUI.js"></script>
     <script src="static/favorites.js"></script>
     <!--suppress JSUnusedLocalSymbols -->
     <script>
