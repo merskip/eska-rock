@@ -6,18 +6,15 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="static/RadioCode.js"></script>
     <script src="static/RadioUI.js"></script>
+    <script src="static/RadioController.js"></script>
     <script src="static/favorites.js"></script>
-    <!--suppress JSUnusedLocalSymbols -->
-    <script>
-        <?php
-        require_once "src/utils.php";
-        require_once "src/EskaRock.php";
-        $eskaRock = new EskaRock();
-        $streamUrl = $eskaRock->getCachedStreamUrl();
-        $streamTitle = $eskaRock->getStreamTitle($streamUrl);
-        ?>
-        let streamUrl = "<?= $streamUrl ?>";
-    </script>
+    <?php
+    require_once "src/utils.php";
+    require_once "src/EskaRock.php";
+    $eskaRock = new EskaRock();
+    $streamUrl = $eskaRock->getCachedStreamUrl();
+    $streamTitle = $eskaRock->getStreamTitle($streamUrl);
+    ?>
     <title><?= $streamTitle ?></title>
 </head>
 <body>
@@ -116,7 +113,9 @@
             <div id="radio-lyrics-translation"></div>
         </div>
     </div>
-</div>
-<script>
-</script>
+    </div>
+    <script>
+        let radio = new Radio('radio-stream', "<?= $streamUrl ?>");
+        new RadioController(radio, new RadioUI());
+    </script>
 </body>

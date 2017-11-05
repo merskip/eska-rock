@@ -1,7 +1,8 @@
+
 class Radio {
 
-    constructor(streamUrl) {
-        this.stream = document.getElementById('radio-stream');
+    constructor(audioTagId, streamUrl) {
+        this.stream = document.getElementById(audioTagId);
         this.url = streamUrl;
 
         this._bindEvents();
@@ -26,9 +27,14 @@ class Radio {
     }
 
     play() {
+        this.isBufferingStream = true;
         this.onStartBuffering();
+
         this._checkHttpIsOk(this.url, () => {
-            this._startPlayStream();
+
+            if (this.isBufferingStream) { // Is false, this means that method "stop" did called
+                this._startPlayStream();
+            }
         }, httpStatus => {
             this.onFailedPlay({
                 message: "Initial http request ends with " + httpStatus,
@@ -38,7 +44,6 @@ class Radio {
     }
 
     _startPlayStream() {
-        this.isBufferingStream = true;
         this.stream.src = this.url;
         this.stream.load();
         this.stream.play().catch(e => {
@@ -54,10 +59,7 @@ class Radio {
         this.stream.currentTime = 0;
         this.stream.src = '';
         this.stream.onpause(); // bug?
-    }
-
-    isPlaying() {
-        return !this.stream.paused;
+        this.isBufferingStream = false;
     }
 
     _checkHttpIsOk(url, onSuccess, onFailed) {
