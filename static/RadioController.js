@@ -24,9 +24,14 @@ class RadioController {
             this.ui.setToggleButtonIsLoading(false);
         });
 
+        this.radio.onTimeUpdate((time) => {
+            this.ui.setPlayTime(time);
+        });
+
         this.radio.onStop(() => {
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Play);
         });
+
     }
 
     didSelectPlay() {

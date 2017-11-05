@@ -86,8 +86,8 @@
                 <span id="radio-listeners" class="radio-placeholder placeholder-short"></span>
             </div>
             <div class="row-item">
-                <div id="radio-time-title" class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
-                <span id="radio-time" class="radio-placeholder"></span>
+                <div class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
+                <span id="radio-timer" class="radio-placeholder"></span>
             </div>
         </div>
 

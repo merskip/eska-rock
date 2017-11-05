@@ -10,6 +10,7 @@ class RadioUI {
 
     constructor() {
         this.togglePlayBtn = $("#radio-toggle-play");
+        this.timer = $("#radio-timer");
         this._setupToggleButton();
     }
 
@@ -37,6 +38,28 @@ class RadioUI {
         isLoading
             ? this.togglePlayBtn.addClass("radio-stream-loading")
             : this.togglePlayBtn.removeClass("radio-stream-loading");
+    }
+
+    setPlayTime(time) {
+        this.timer.text(RadioUI._formatTimer(time));
+        this.timer.closest(".row-item").find(".radio-placeholder").removeClass("radio-placeholder");
+    }
+
+    static _formatTimer(secs) {
+        let h = Math.floor(secs / 3600);
+        let m = Math.floor(secs / 60) - (h * 60);
+        let s = Math.floor(secs - h * 3600 - m * 60);
+        return RadioUI._pad(h) + ":" + RadioUI._pad(m) + ":" + RadioUI._pad(s);
+    }
+
+    static _formatDuration(secs) {
+        let m = Math.floor(secs / 60);
+        let s = Math.floor(secs - m * 60);
+        return m + ":" + RadioUI._pad(s);
+    }
+
+    static _pad(n) {
+        return (n < 10 ? "0" + n : n);
     }
 }
 
@@ -264,20 +287,3 @@ RadioUI.prototype.didSelectStop = () => { };
 //
 //
 //
-// function _pad(n) {
-//     return (n < 10 ? "0" + n : n);
-// }
-//
-//
-// function formatCountdown(secs) {
-//     let h = Math.floor(secs / 3600);
-//     let m = Math.floor(secs / 60) - (h * 60);
-//     let s = Math.floor(secs - h * 3600 - m * 60);
-//     return _pad(h) + ":" + _pad(m) + ":" + _pad(s);
-//  }
-//
-// function formatDuration(secs) {
-//     let m = Math.floor(secs / 60);
-//     let s = Math.floor(secs - m * 60);
-//     return m + ":" + _pad(s);
-// }
