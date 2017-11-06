@@ -22,6 +22,7 @@ class RadioController {
 
         this.radio.onPlay(() => {
             this.ui.setToggleButtonIsLoading(false);
+            this.ui.setPanelState(RadioUI.PanelState.Extended);
         });
 
         this.radio.onTimeUpdate((time) => {
@@ -30,6 +31,7 @@ class RadioController {
 
         this.radio.onStop(() => {
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Play);
+            this.ui.setPanelState(RadioUI.PanelState.Collapsed);
         });
 
     }

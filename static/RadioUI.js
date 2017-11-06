@@ -8,7 +8,15 @@ class RadioUI {
         };
     }
 
+    static get PanelState() {
+        return {
+            Collapsed: 0,
+            Extended: 1
+        };
+    }
+
     constructor() {
+        this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
         this.timer = $("#radio-timer");
         this._setupToggleButton();
@@ -32,12 +40,27 @@ class RadioUI {
         else if (state === RadioUI.ToggleButtonState.Stop) {
             this.togglePlayBtn.removeClass("radio-play-btn").addClass("radio-stop-btn");
         }
+        else {
+            console.error("Expected value kind of RadioUI.ToggleButtonState");
+        }
     }
 
     setToggleButtonIsLoading(isLoading) {
         isLoading
             ? this.togglePlayBtn.addClass("radio-stream-loading")
             : this.togglePlayBtn.removeClass("radio-stream-loading");
+    }
+
+    setPanelState(state) {
+        if (state === RadioUI.PanelState.Collapsed) {
+            this.panel.removeClass("radio-panel-extended").addClass("radio-panel-collapsed");
+        }
+        else if (state === RadioUI.PanelState.Extended) {
+            this.panel.removeClass("radio-panel-collapsed").addClass("radio-panel-extended");
+        }
+        else {
+            console.error("Expected value kind of RadioUI.PanelState");
+        }
     }
 
     setPlayTime(time) {
