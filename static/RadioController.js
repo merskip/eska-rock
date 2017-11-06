@@ -29,8 +29,8 @@ class RadioController {
 
             this.ui.restorePreviousDismissedPlaceholders();
 
-            this.refreshTimer = this.startRefreshingCurrentSongDetailsInLoop();
-            this._setupRefreshTimer();
+            this.refreshTimer = this.createTimerForRefreshingCurrentSong();
+            this.refreshTimer.startLoop();
         });
 
         this.radio.onPlay(() => {
@@ -56,32 +56,6 @@ class RadioController {
         });
     }
 
-    _setupRefreshTimer() {
-        this.refreshTimer.onBeginRequest(() => {
-            this.ui.setRefreshProgressIndicator(RadioUI.InterminateTime);
-        });
-        this.refreshTimer.onReceivedDetails((data) => {
-            this.ui.setRefreshProgressIndicator(0.0);
-
-            let songDetails = data["songDetails"];
-            let songTitle = songDetails !== undefined
-                ? songDetails["artist"] + " - " + songDetails["title"]
-                : data["rawSongTitle"];
-
-            this.ui.setSongDetails({
-                songTitle: songTitle,
-                albumTitle: data["album"] ? data["album"]["title"] : null,
-                albumImage: data["album"] ? data["album"]["image"] : null,
-                songDuration: data["songDetails"] ? data["songDetails"]["duration"] : null,
-                listeners: data["listeners"]
-            });
-            this.ui.dismissPlaceholdersIfNeeded();
-        });
-        this.refreshTimer.onTick((progress) => {
-            this.ui.setRefreshProgressIndicator(progress);
-        });
-    }
-
     didSelectPlay() {
         this.radio.play();
     }
@@ -90,42 +64,34 @@ class RadioController {
         this.radio.stop();
     }
 
-    startRefreshingCurrentSongDetailsInLoop() {
-        let timerId = null,
-            beginRequestCallback = () => {},
-            receivedDetailsCallback = (details) => {},
-            tickCallback = (progress) => {};
+    createTimerForRefreshingCurrentSong() {
+        let options = this.options.refreshCurrentSong;
+        return new Timer(options.duration, options.tickCount)
+            .onTick((progress) => {
+                this.ui.setRefreshProgressIndicator(progress);
+            })
+            .onBeforeAction(() => {
+                this.ui.setRefreshProgressIndicator(RadioUI.InterminateTime);
+            })
+            .setAsyncAction((onCompletion) => {
+                this.requestCurrentSongDetails((data) => {
+                    this.ui.setRefreshProgressIndicator(0.0);
 
-        let executeRequest = () => {
-            beginRequestCallback();
-            this.requestCurrentSongDetails((data) => {
-                receivedDetailsCallback(data);
-            }, () => {
-                let duration = this.options.refreshCurrentSong.duration;
-                let tickCount = this.options.refreshCurrentSong.tickCount;
-                timerId = this._startTimer(duration, tickCount, (progress) => {
-                    tickCallback(progress);
-                }, () => {
-                    executeRequest();
-                });
+                    let songDetails = data["songDetails"];
+                    let songTitle = songDetails !== undefined
+                        ? songDetails["artist"] + " - " + songDetails["title"]
+                        : data["rawSongTitle"];
+
+                    this.ui.setSongDetails({
+                        songTitle: songTitle,
+                        albumTitle: data["album"] ? data["album"]["title"] : null,
+                        albumImage: data["album"] ? data["album"]["image"] : null,
+                        songDuration: data["songDetails"] ? data["songDetails"]["duration"] : null,
+                        listeners: data["listeners"]
+                    });
+                    this.ui.dismissPlaceholdersIfNeeded();
+                }, onCompletion);
             });
-        };
-        executeRequest();
-
-        return {
-            onBeginRequest: (callback) => {
-                beginRequestCallback = callback;
-            },
-            onReceivedDetails: (callback) => {
-                receivedDetailsCallback = callback;
-            },
-            onTick: (callback) => {
-                tickCallback = callback;
-            },
-            invalidate: () => {
-                clearInterval(timerId);
-            }
-        };
     }
 
     requestCurrentSongDetails(onSuccess, onCompletion) {
@@ -136,61 +102,6 @@ class RadioController {
             onCompletion();
         });
     }
-//             console.debug(info);
-//
-//             let fullSongTitle = "songDetails" in info
-//                 ? info["songDetails"]["artist"] + " - " + info["songDetails"]["title"]
-//                 : info["rawSongTitle"];
-//
-//             document.title = fullSongTitle;
-//
-//             let favoriteControl = $("#favorite-control");
-//             favoriteControl.attr("data-song-title", info["rawSongTitle"]);
-//             if ("favoriteId" in info) {
-//                 if (info["favoriteId"] !== null) {
-//                     favoriteControl
-//                         .removeClass("favorite-add")
-//                         .attr("data-song-title", null)
-//                         .attr("data-favorite-id", info["favoriteId"])
-//                         .addClass("favorite-remove")
-//                         .attr("title", favoriteControl.attr("data-title-remove"));
-//                 }
-//                 else {
-//                     favoriteControl
-//                         .removeClass("favorite-remove")
-//                         .attr("data-song-title", info["rawSongTitle"])
-//                         .attr("data-favorite-id", null)
-//                         .addClass("favorite-add")
-//                         .attr("title", favoriteControl.attr("data-title-add"));
-//                 }
-//             }
-//
-//             $("#radio-song-title").text(fullSongTitle);
-//             $("#radio-listeners").text(info["listeners"]);
-//
-//             if ("album" in info) {
-//                 $("#radio-album").text(info["album"]["title"]);
-//
-//                 if ("image" in info["album"]) {
-//                     $("#radio-album-image")
-//                         .removeClass("no-album-image")
-//                         .attr("src", info["album"]["image"]);
-//                 }
-//                 else {
-//                     $("#radio-album-image").addClass("no-album-image").attr("src", "");
-//                 }
-//             }
-//             else {
-//                 $("#radio-album").text("-");
-//                 $("#radio-album-image").addClass("no-album-image").attr("src", "");
-//             }
-//
-//             if ("songDetails" in info && "duration" in info["songDetails"]) {
-//                 $("#radio-song-duration").text(formatDuration(info["songDetails"]["duration"]));
-//             }
-//             else {
-//                 $("#radio-song-duration").text("-");
-//             }
 //
 //             if ("tags" in info) {
 //                 let tags = $("#radio-song-tags").html('');
@@ -233,19 +144,62 @@ class RadioController {
 //         });
 }
 
-RadioController.prototype._startTimer = function(duration, tickCount, onTick, onFinish) {
-    let deadline = Date.now() + duration;
-    let timerId = setInterval(function () {
+class Timer {
 
-        let remainingTime = deadline - Date.now();
-        let progress = (duration - remainingTime) / duration;
-        progress = Math.max(Math.min(progress, 1.0), 0.0);
-        onTick(progress);
+    constructor(duration, tickCount) {
+        this.duration = duration;
+        this.tickCount = tickCount;
 
-        if (remainingTime <= 0) {
-            onFinish();
-            clearInterval(timerId);
+        this.tickCallback = (progress) => {};
+        this.beforeActionCallback = () => {};
+        this.asyncActionCallback = (onCompletion) => {};
+    }
+
+    startLoop() {
+        let executeAction = () => {
+            this.beforeActionCallback();
+            this.asyncActionCallback(() => {
+
+                this._startOne(() => {
+                    executeAction();
+                });
+            });
+        };
+        executeAction();
+    }
+
+    _startOne(onFinishCallback) {
+        let deadline = Date.now() + this.duration;
+        this.timerId = setInterval(() => {
+
+            let remainingTime = deadline - Date.now();
+            let progress = (this.duration - remainingTime) / this.duration;
+            progress = Math.max(Math.min(progress, 1.0), 0.0);
+            this.tickCallback(progress);
+
+            if (remainingTime <= 0) {
+                onFinishCallback();
+                clearInterval(this.timerId);
+            }
+        }, this.duration / this.tickCount);
+    }
+
+    invalidate() {
+        if (this.timerId) {
+            clearInterval(this.timerId);
         }
-    }, duration / tickCount);
-    return timerId;
+    }
+}
+
+Timer.prototype.onTick = function(callback) {
+    this.tickCallback = callback;
+    return this;
+};
+Timer.prototype.onBeforeAction = function(callback) {
+    this.beforeActionCallback = callback;
+    return this;
+};
+Timer.prototype.setAsyncAction = function(callback) {
+    this.asyncActionCallback = callback;
+    return this;
 };
