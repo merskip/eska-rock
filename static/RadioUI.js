@@ -15,7 +15,7 @@ class RadioUI {
         };
     }
 
-    static get InterminateTime() {
+    static get IndeterminateTime() {
         return Infinity;
     }
 
@@ -135,7 +135,7 @@ class RadioUI {
     setRefreshProgressIndicator(progress) {
         let indicator = this.refreshProgressIndicator;
 
-        if (progress === RadioUI.InterminateTime) {
+        if (progress === RadioUI.IndeterminateTime) {
             indicator.addClass("radio-pie-indeterminate");
             progress = 0.0;
         }

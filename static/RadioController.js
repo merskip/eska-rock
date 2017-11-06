@@ -71,7 +71,7 @@ class RadioController {
                 this.ui.setRefreshProgressIndicator(progress);
             })
             .onBeforeAction(() => {
-                this.ui.setRefreshProgressIndicator(RadioUI.InterminateTime);
+                this.ui.setRefreshProgressIndicator(RadioUI.IndeterminateTime);
             })
             .setAsyncAction((onCompletion) => {
                 this.requestCurrentSongDetails((data) => {
