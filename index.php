@@ -75,7 +75,7 @@
             <span id="radio-song-title" class="radio-placeholder placeholder-long"></span>
 
             <div class="radio-panel-section-title radio-placeholder">Z albumu</div>
-            <span id="radio-album" class="radio-placeholder"></span>
+            <span id="radio-album-title" class="radio-placeholder"></span>
 
             <div class="row">
                 <div class="row-item">
