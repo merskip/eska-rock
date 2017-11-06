@@ -89,6 +89,7 @@ class RadioController {
                         songDuration: data["songDetails"] ? data["songDetails"]["duration"] : null,
                         listeners: data["listeners"]
                     });
+                    this.ui.setSongTags(data["tags"] ? data["tags"] : []);
                     this.ui.dismissPlaceholdersIfNeeded();
                 }, onCompletion);
             });
@@ -102,18 +103,6 @@ class RadioController {
             onCompletion();
         });
     }
-//
-//             if ("tags" in info) {
-//                 let tags = $("#radio-song-tags").html('');
-//                 info["tags"].forEach(function (tag) {
-//                     tags.append($("<div></div>")
-//                         .addClass("radio-tag")
-//                         .text(tag))
-//                 });
-//             }
-//             else {
-//                 $("#radio-song-tags").html('');
-//             }
 //
 //             if ("lyrics" in info) {
 //                 $("#radio-lyrics-url")
