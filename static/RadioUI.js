@@ -45,17 +45,35 @@ class RadioUI {
             listeners: $("#radio-listeners")
         };
         this.tags = $("#radio-song-tags");
+        this.lyrics = {
+            linkUrl: $("#radio-lyrics-url"),
+            toggleBtn: $("#radio-lyrics-toggle"),
+            panel: $("#radio-lyrics-panel"),
+            content: {
+                original: $("#radio-lyrics-original"),
+                translation: $("#radio-lyrics-translation")
+            }
+        };
+        this.youtubeUrl = $("#radio-youtube-url");
 
-        this._setupToggleButton();
+        this._setupEvents();
     }
 
-    _setupToggleButton() {
+    _setupEvents() {
         this.togglePlayBtn.click(() => {
             if (this.togglePlayBtn.hasClass("radio-play-btn")) {
                 this.didSelectPlay();
             }
             else if (this.togglePlayBtn.hasClass("radio-stop-btn")) {
                 this.didSelectStop();
+            }
+        });
+        this.lyrics.toggleBtn.click(() => {
+            if (this.lyrics.panel.hasClass("collapsed")) {
+                this.lyrics.panel.removeClass("collapsed");
+            }
+            else {
+                this.lyrics.panel.addClass("collapsed");
             }
         });
     }
@@ -158,6 +176,40 @@ class RadioUI {
                 .text(tag)
                 .appendTo(this.tags);
         });
+    }
+
+    setLyrics(a, b, c) {
+        if (a !== null) {
+            let url = a;
+            let original = b;
+            let translation = c;
+
+            this.lyrics.linkUrl.removeClass("no-url").attr("href", url);
+            this.lyrics.toggleBtn.removeClass("no-url");
+
+            let prepareContent = (str) => {
+                return str.split("\n").join("<br />")
+            };
+            this.lyrics.content.original.html(prepareContent(original));
+            this.lyrics.content.translation.html(prepareContent(translation));
+        }
+        else {
+            this.lyrics.linkUrl.addClass("no-url").attr("href", null);
+            this.lyrics.toggleBtn.addClass("no-url");
+            this.lyrics.panel.addClass("collapsed");
+            this.lyrics.content.original.html('');
+            this.lyrics.content.translation.html('');
+        }
+    }
+
+    setYoutubeLink(videoId) {
+        if (videoId !== null) {
+            this.youtubeUrl.removeClass("no-url")
+                .attr("href", "https://www.youtube.com/watch?v=" + videoId);
+        }
+        else {
+            this.youtubeUrl.addClass("no-url").attr("href", null);
+        }
     }
 
     static _formatTimer(secs) {

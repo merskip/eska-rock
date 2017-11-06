@@ -90,6 +90,17 @@ class RadioController {
                         listeners: data["listeners"]
                     });
                     this.ui.setSongTags(data["tags"] ? data["tags"] : []);
+
+                    if (data["lyrics"]) {
+                        this.ui.setLyrics(data["lyrics"]["url"],
+                            data["lyrics"]["original"],
+                            data["lyrics"]["translation"]);
+                    }
+                    else {
+                        this.ui.setLyrics(null);
+                    }
+                    this.ui.setYoutubeLink(data["youtube"] ? data["youtube"]["videoId"] : null);
+
                     this.ui.dismissPlaceholdersIfNeeded();
                 }, onCompletion);
             });
@@ -103,34 +114,6 @@ class RadioController {
             onCompletion();
         });
     }
-//
-//             if ("lyrics" in info) {
-//                 $("#radio-lyrics-url")
-//                     .removeClass("no-url")
-//                     .attr("href", info["lyrics"]["url"]);
-//                 $("#radio-lyrics-show").removeClass("no-url");
-//                 $("#radio-lyrics-original").html(info["lyrics"]["original"].split("\n").join("<br />"));
-//                 $("#radio-lyrics-translation").html(info["lyrics"]["translation"].split("\n").join("<br />"));
-//             }
-//             else {
-//                 $("#radio-lyrics-url").addClass("no-url").attr("href", "");
-//                 $("#radio-lyrics-show").addClass("no-url");
-//                 $(".radio-panel-lyrics").addClass("collapsed");
-//                 $("#radio-lyrics-original").html("");
-//                 $("#radio-lyrics-translation").html("");
-//             }
-//
-//             if ("youtube" in info) {
-//                 $("#radio-youtube-url")
-//                     .removeClass("no-url")
-//                     .attr("href", "https://www.youtube.com/watch?v=" + info["youtube"]["videoId"]);
-//             }
-//             else {
-//                 $("#radio-youtube-url").addClass("no-url").attr("href", "");
-//             }
-//         }).always(function () {
-//             onCompletion();
-//         });
 }
 
 class Timer {
