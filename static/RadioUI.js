@@ -19,11 +19,20 @@ class RadioUI {
         return Infinity;
     }
 
+    static get FavoriteButtonState() {
+        return {
+            Hidden: { _id: 0 },
+            Add: { _id: 1, songTitle: null },
+            Remove: { _id: 2, favoriteId: null }
+        }
+    }
+
     constructor() {
         this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
         this.playingTimer = $("#radio-timer");
         this.refreshProgressIndicator = $("#radio-refreshing-countdown-timer");
+        this.favoriteBtn = $("#radio-favorite");
         this.detailsItems = {
             songTitle: $("#radio-song-title"),
             albumTitle: $("#radio-album-title"),
@@ -66,6 +75,14 @@ class RadioUI {
             }
             else if (this.togglePlayBtn.hasClass("radio-stop-btn")) {
                 this.didSelectStop();
+            }
+        });
+        this.favoriteBtn.click(() => {
+            if (this.favoriteBtn.hasClass("btn-favorite-add")) {
+                this.didSelectFavoriteAdd(this.favoriteBtn.attr("data-song-title"));
+            }
+            else if (this.favoriteBtn.hasClass("btn-favorite-remove")) {
+                this.didSelectFavoriteRemove();
             }
         });
         this.lyrics.toggleBtn.click(() => {
@@ -212,6 +229,42 @@ class RadioUI {
         }
     }
 
+    setFavoriteButtonState(state) {
+        this.favoriteBtn
+            .removeClass("btn-favorite-remove")
+            .removeClass("btn-favorite-add")
+            .attr("data-song-title", null)
+            .attr("dat-favorite-id", null);
+
+        if (state._id === RadioUI.FavoriteButtonState.Hidden._id) {
+            // Nothing, only clear
+        }
+        else if (state._id === RadioUI.FavoriteButtonState.Add._id) {
+            this.favoriteBtn.addClass("btn-favorite-add")
+                .attr("title", this.favoriteBtn.attr("data-title-add"))
+                .attr("data-song-title", state.songTitle);
+        }
+        else if (state._id === RadioUI.FavoriteButtonState.Remove._id) {
+            this.favoriteBtn.addClass("btn-favorite-remove")
+                .attr("title", this.favoriteBtn.attr("data-title-remove"))
+                .attr("data-favorite-id", state.favoriteId);
+        }
+        else {
+            console.error("Expected value kind of RadioUI.FavoriteButtonState");
+        }
+    }
+
+    getFavoriteButtonSongTitle() {
+        return this.favoriteBtn.attr("data-song-title");
+    }
+
+    highlightFavoriteButton() {
+        this.favoriteBtn.addClass("btn-favorite-highlight");
+        this.favoriteBtn.animationEnd(() => {
+            this.favoriteBtn.removeClass("btn-favorite-highlight");
+        });
+    }
+
     static _formatTimer(secs) {
         let h = Math.floor(secs / 3600);
         let m = Math.floor(secs / 60) - (h * 60);
@@ -234,3 +287,11 @@ class RadioUI {
 
 RadioUI.prototype.didSelectPlay = () => { };
 RadioUI.prototype.didSelectStop = () => { };
+RadioUI.prototype.didSelectFavoriteAdd = (songTitle) => { };
+RadioUI.prototype.didSelectFavoriteRemove = () => { };
+
+// Utils
+
+$.fn.animationEnd = function (callback) {
+    $(this).on("webkitAnimationEnd oanimationend msAnimationEnd animationend", callback);
+};

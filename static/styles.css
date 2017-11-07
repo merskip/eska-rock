@@ -364,7 +364,7 @@ body {
 .radio-pie.radio-pie-indeterminate {
     border-radius: 100%;
     background: #c21a29;
-    animation: radio-pie-indeterminate 0.3s infinite alternate
+    animation: radio-pie-indeterminate 0.3s infinite alternate;
 }
 
 .radio-pie.radio-pie-indeterminate .radio-pie-spinner,
@@ -464,25 +464,46 @@ a.btn-sign-in-google:active {
     pointer-events: none;
 }
 
-/* .btn-favorite-add */
+/* .btn-favorite */
 
-.btn-favorite-control {
+.btn-favorite {
     float: right;
     margin-top: -8px;
     margin-right: 16px;
-    /*width: 24px;*/
-    /*height: 24px;*/
 }
 
-.btn-favorite-control.radio-placeholder {
+.btn-favorite.radio-placeholder {
     display: none;
 }
 
-.btn-favorite-control.favorite-add i.material-icons::after {
+.btn-favorite i.material-icons {
+    position: relative;
+}
+
+.btn-favorite.btn-favorite-add i.material-icons::after {
     content: "favorite_border";
 }
 
-.btn-favorite-control.favorite-add i.material-icons:hover::after {
+.btn-favorite.btn-favorite-add i.material-icons:hover::after {
     content: "favorite";
 }
 
+.btn-favorite.btn-favorite-remove i.material-icons::after {
+    content: "favorite";
+}
+
+.btn-favorite.btn-favorite-highlight i.material-icons::before {
+    content: "favorite";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: btn-favorite-highlight 0.6s ease-out;
+}
+
+@keyframes btn-favorite-highlight {
+    to {
+        transform: scale(2.5);
+        opacity: 0.0;
+    }
+}

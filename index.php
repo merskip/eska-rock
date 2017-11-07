@@ -9,7 +9,7 @@
     <script src="static/Timer.js"></script>
     <script src="static/RadioController.js"></script>
     <script src="static/SongDetailsController.js"></script>
-    <script src="static/favorites.js"></script>
+    <script src="static/FavoritesController.js"></script>
     <?php
     require_once "src/utils.php";
     require_once "src/EskaRock.php";
@@ -55,8 +55,8 @@
             <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
 
             <?php if ($auth->isAuthorized()): ?>
-                <button id="favorite-control"
-                        class="btn-link btn-favorite-control"
+                <button id="radio-favorite"
+                        class="btn-link btn-favorite radio-placeholder"
                         data-title-add="Dodaj do ulubionych"
                         data-title-remove="Usuń z ulubionych">
                     <i class="material-icons"></i>
@@ -121,11 +121,12 @@
         let radio = new Radio('radio-stream', "<?= $streamUrl ?>");
         let radioUI = new RadioUI();
         new RadioController(radio, radioUI);
-        new SongDetailsController(radio, radioUI, {
+        let songDetailsController = new SongDetailsController(radio, radioUI, {
             refreshCurrentSong: {
                 duration: 1000 * 15,
                 tickCount: 360 * 0.2
             }
         });
+        new FavoritesController(radioUI, songDetailsController);
     </script>
 </body>
