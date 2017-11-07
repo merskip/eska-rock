@@ -35,13 +35,15 @@ class FavoritesController {
 
     didSelectFavoriteAdd(songTitle) {
         this.ui.highlightFavoriteButton();
-        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+
+        let removeState = RadioUI.FavoriteButtonState.Remove;
+        removeState.songTitle = songTitle;
+        this.ui.setFavoriteButtonState(removeState);
 
         this.performFavoriteAdd(songTitle, (favoriteId) => {
 
             // // We must make sure that the song title didn't change
             if (this.ui.getFavoriteButtonSongTitle() === songTitle) {
-                let removeState = RadioUI.FavoriteButtonState.Remove;
                 removeState.favoriteId = favoriteId;
                 this.ui.setFavoriteButtonState(removeState);
             }
@@ -67,7 +69,7 @@ class FavoritesController {
             },
             success: (response) =>  {
                 let favoriteId = response['_id'];
-                console.info("Successfully added a song to favorites", {_id: favoriteId, songTitle: songTitle});
+                console.info("Successfully was added the song to favorites", {_id: favoriteId, songTitle: songTitle});
                 onSuccess(favoriteId);
             }
         });
@@ -81,6 +83,7 @@ class FavoritesController {
                 _id: favoriteId
             },
             success: () =>  {
+                console.info("Successfully was delete favorite song", {_id: favoriteId});
                 onSuccess();
             }
         });
