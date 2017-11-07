@@ -6,7 +6,9 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="static/RadioCode.js"></script>
     <script src="static/RadioUI.js"></script>
+    <script src="static/Timer.js"></script>
     <script src="static/RadioController.js"></script>
+    <script src="static/SongDetailsController.js"></script>
     <script src="static/favorites.js"></script>
     <?php
     require_once "src/utils.php";
@@ -117,6 +119,13 @@
     </div>
     <script>
         let radio = new Radio('radio-stream', "<?= $streamUrl ?>");
-        new RadioController(radio, new RadioUI());
+        let radioUI = new RadioUI();
+        new RadioController(radio, radioUI);
+        new SongDetailsController(radio, radioUI, {
+            refreshCurrentSong: {
+                duration: 1000 * 15,
+                tickCount: 360 * 0.2
+            }
+        });
     </script>
 </body>
