@@ -77,11 +77,25 @@ class SongDetailsController {
     }
 
     requestCurrentSongDetails(onSuccess, onCompletion) {
-        $.get("api/song_info", function (details) {
-            console.debug(details);
-            onSuccess(details);
-        }).always(function () {
-            onCompletion();
+        $.ajax({
+            method: "GET",
+            url: "api/song_info",
+            ifModified: true,
+            success: (details, status) =>  {
+                if (status === "success") {
+                    console.debug(details);
+                    onSuccess(details);
+                }
+                else if (status === "notmodified") {
+                    console.debug("Current song didn't change");
+                }
+                else {
+                    console.error("Unknown status: " + status);
+                }
+            },
+            complete() {
+                onCompletion();
+            }
         });
     }
 }

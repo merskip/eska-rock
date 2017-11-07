@@ -17,13 +17,20 @@ $result = [
     "listeners" => $metadata->listeners 
 ];
 
+$ETag = sha1($metadata->songTitle);
+header("ETag: " . sha1($metadata->songTitle));
+
+if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $ETag == $_SERVER['HTTP_IF_NONE_MATCH']) {
+    http_response_code(304); // 304 - Not Modified
+    return;
+}
+
 $userInfo = Authorization::getInstance()->getUserInfo();
 if ($userInfo != null) {
     $favorite = new Favorites(Database::getInstance(), $userInfo);
     $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);
     $result["favoriteId"] = $favoriteSong != null ? $favoriteSong->_id : null;
 }
-
 
 if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
     $lastFm = new LastFM(LAST_FM_API_KEY);
