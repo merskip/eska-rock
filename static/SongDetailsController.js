@@ -42,6 +42,7 @@ class SongDetailsController {
         let songTitle = songDetails !== undefined
             ? songDetails["artist"] + " - " + songDetails["title"]
             : data["rawSongTitle"];
+        document.title = songTitle;
 
         this.ui.setSongDetails({
             songTitle: songTitle,
