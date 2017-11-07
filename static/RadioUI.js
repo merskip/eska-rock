@@ -79,10 +79,16 @@ class RadioUI {
         });
         this.favoriteBtn.click(() => {
             if (this.favoriteBtn.hasClass("btn-favorite-add")) {
-                this.didSelectFavoriteAdd(this.favoriteBtn.attr("data-song-title"));
+                let songTitle = this.favoriteBtn.attr("data-song-title");
+                if (songTitle) {
+                    this.didSelectFavoriteAdd(songTitle);
+                }
             }
             else if (this.favoriteBtn.hasClass("btn-favorite-remove")) {
-                this.didSelectFavoriteRemove();
+                let favoriteId = this.favoriteBtn.attr("data-favorite-id");
+                if (favoriteId) {
+                    this.didSelectFavoriteRemove(favoriteId);
+                }
             }
         });
         this.lyrics.toggleBtn.click(() => {

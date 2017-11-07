@@ -32,6 +32,8 @@ class FavoritesController {
 
     didSelectFavoriteAdd(songTitle) {
         this.ui.highlightFavoriteButton();
+        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+
         this.performFavoriteAdd(songTitle, (favoriteId) => {
 
             // // We must make sure that the song title didn't change
@@ -40,8 +42,6 @@ class FavoritesController {
                 removeState.favoriteId = favoriteId;
                 this.ui.setFavoriteButtonState(removeState);
             }
-        }, () => {
-            // TODO: impl onCompletion
         });
     }
 
@@ -49,7 +49,7 @@ class FavoritesController {
 
     }
 
-    performFavoriteAdd(songTitle, onSuccess, onCompletion) {
+    performFavoriteAdd(songTitle, onSuccess) {
         $.ajax({
             method: "POST",
             url: "api/favorites",
@@ -60,9 +60,6 @@ class FavoritesController {
                 let favoriteId = response['_id'];
                 console.info("Successfully added a song to favorites", {_id: favoriteId, songTitle: songTitle});
                 onSuccess(favoriteId);
-            },
-            complete() {
-                onCompletion();
             }
         });
     }
