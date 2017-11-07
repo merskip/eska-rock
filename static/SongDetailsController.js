@@ -12,6 +12,7 @@ class SongDetailsController {
         }, options);
 
         this.radio.onStartBuffering(() => {
+            this.canUseCache = false;
             this.ui.restorePreviousDismissedPlaceholders();
 
             if (this.refreshTimer !== undefined) {
@@ -30,6 +31,7 @@ class SongDetailsController {
 
         this.onResponseSongDetails((data) => {
 
+            this.canUseCache = true;
             this.setSongDetails(data);
             this.ui.dismissPlaceholdersIfNeeded();
         });
@@ -84,7 +86,7 @@ class SongDetailsController {
         $.ajax({
             method: "GET",
             url: "api/song_info",
-            ifModified: true,
+            ifModified: this.canUseCache,
             success: (details, status) =>  {
                 if (status === "success") {
                     console.debug(details);
