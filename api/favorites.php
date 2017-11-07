@@ -14,7 +14,6 @@ if ($method == 'GET') {
 }
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     isset($_POST["songTitle"]) or die("Argument songTitle is required");
-
     $songTitle = $_POST["songTitle"];
 
     if ($favoriteSong = $favorites->findFavoriteSong($songTitle)) {
@@ -27,6 +26,16 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header("Content-Type: application/json");
     echo json_encode(["_id" => $id], JSON_PRETTY_PRINT);
+}
+else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    parse_str(file_get_contents('php://input'), $_DELETE); // PHP not supports DELETE in default
+
+    isset($_DELETE["_id"]) or die("Argument _id is required");
+    $id = $_DELETE["_id"];
+
+    if (!$favorites->deleteFavoriteSong($id)) {
+        http_response_code(404);
+    }
 }
 else {
     die("Unknown http method: " . $method);

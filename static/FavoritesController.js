@@ -12,18 +12,21 @@ class FavoritesController {
         this.ui.didSelectFavoriteRemove = this.didSelectFavoriteRemove.bind(this);
 
         this.songDetailsController.onResponseSongDetails((data) => {
+            let songTitle = data["rawSongTitle"];
             let favoriteId = data["favoriteId"];
+
             if (favoriteId === undefined) {
                 this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
             }
             else if (favoriteId !== null) {
                 let removeState = RadioUI.FavoriteButtonState.Remove;
                 removeState.favoriteId = favoriteId;
+                removeState.songTitle = songTitle;
                 this.ui.setFavoriteButtonState(removeState);
             }
             else {
                 let addState = RadioUI.FavoriteButtonState.Add;
-                addState.songTitle = data["rawSongTitle"];
+                addState.songTitle = songTitle;
                 this.ui.setFavoriteButtonState(addState);
             }
         });
@@ -45,8 +48,14 @@ class FavoritesController {
         });
     }
 
-    didSelectFavoriteRemove() {
+    didSelectFavoriteRemove(favoriteId, songTitle) {
+        let addState = RadioUI.FavoriteButtonState.Add;
+        addState.songTitle = songTitle;
+        this.ui.setFavoriteButtonState(addState);
 
+        this.performFavoriteDelete(favoriteId, () => {
+            // Nothing, button state was previously set
+        });
     }
 
     performFavoriteAdd(songTitle, onSuccess) {
@@ -60,6 +69,19 @@ class FavoritesController {
                 let favoriteId = response['_id'];
                 console.info("Successfully added a song to favorites", {_id: favoriteId, songTitle: songTitle});
                 onSuccess(favoriteId);
+            }
+        });
+    }
+
+    performFavoriteDelete(favoriteId, onSuccess) {
+        $.ajax({
+            type: "DELETE",
+            url: "api/favorites",
+            data: {
+                _id: favoriteId
+            },
+            success: () =>  {
+                onSuccess();
             }
         });
     }

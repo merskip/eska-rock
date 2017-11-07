@@ -23,7 +23,7 @@ class RadioUI {
         return {
             Hidden: { _id: 0 },
             Add: { _id: 1, songTitle: null },
-            Remove: { _id: 2, favoriteId: null }
+            Remove: { _id: 2, favoriteId: null, songTitle: null }
         }
     }
 
@@ -86,8 +86,9 @@ class RadioUI {
             }
             else if (this.favoriteBtn.hasClass("btn-favorite-remove")) {
                 let favoriteId = this.favoriteBtn.attr("data-favorite-id");
+                let songTitle = this.favoriteBtn.attr("data-song-title");
                 if (favoriteId) {
-                    this.didSelectFavoriteRemove(favoriteId);
+                    this.didSelectFavoriteRemove(favoriteId, songTitle);
                 }
             }
         });
@@ -253,7 +254,8 @@ class RadioUI {
         else if (state._id === RadioUI.FavoriteButtonState.Remove._id) {
             this.favoriteBtn.addClass("btn-favorite-remove")
                 .attr("title", this.favoriteBtn.attr("data-title-remove"))
-                .attr("data-favorite-id", state.favoriteId);
+                .attr("data-favorite-id", state.favoriteId)
+                .attr("data-song-title", state.songTitle);
         }
         else {
             console.error("Expected value kind of RadioUI.FavoriteButtonState");
@@ -294,7 +296,7 @@ class RadioUI {
 RadioUI.prototype.didSelectPlay = () => { };
 RadioUI.prototype.didSelectStop = () => { };
 RadioUI.prototype.didSelectFavoriteAdd = (songTitle) => { };
-RadioUI.prototype.didSelectFavoriteRemove = () => { };
+RadioUI.prototype.didSelectFavoriteRemove = (id, songTitle) => { };
 
 // Utils
 

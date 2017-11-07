@@ -34,4 +34,10 @@ class Favorites {
         ]);
     }
 
+    public function deleteFavoriteSong($id) {
+        return $this->db->deleteOne("db.favorites", [
+            "_id" => $id,
+            "userId" => $this->userId,
+        ]);
+    }
 }

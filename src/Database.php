@@ -56,8 +56,20 @@ class Database {
         }
     }
 
-    private function resolveCollection($collection) {
+    public function deleteOne($collection, $filter) {
+        count($filter) > 0 or die("For delete query you must set non-empty filter");
+        if ($filter["_id"] && is_string($filter["_id"])) {
+            $filter["_id"] = new MongoDB\BSON\ObjectID($filter["_id"]);
+        }
 
+        $bulk = new MongoDB\Driver\BulkWrite;
+        $bulk->delete($filter, ['limit' => 1]);
+
+        $result = $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
+        return $result->getDeletedCount() > 0;
+    }
+
+    private function resolveCollection($collection) {
         if (strpos($collection, Database::COLLECTION_PREFIX) === 0) {
             return substr_replace($collection, $this->dbName . ".", 0, strlen(Database::COLLECTION_PREFIX));
         }
