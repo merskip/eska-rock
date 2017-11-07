@@ -33,12 +33,22 @@ class RadioController {
             this.ui.setPlayTime(time);
         });
 
-        this.radio.onStop(() => {
-            console.debug("Radio was stopped");
+        let setStateForPlayRadio = () => {
 
+            this.ui.setToggleButtonIsLoading(false);
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Play);
             this.ui.setPanelState(RadioUI.PanelState.Collapsed);
+        };
+
+        this.radio.onStop(() => {
+            console.debug("Radio was stopped");
+            setStateForPlayRadio();
         });
+
+        this.radio.onFailedPlay(() => {
+            console.debug("Radio was failed start");
+            setStateForPlayRadio();
+        })
     }
 
     didSelectPlay() {

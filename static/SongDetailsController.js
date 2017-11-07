@@ -14,6 +14,10 @@ class SongDetailsController {
         this.radio.onStartBuffering(() => {
             this.ui.restorePreviousDismissedPlaceholders();
 
+            if (this.refreshTimer !== undefined) {
+                this.refreshTimer.invalidate();
+            }
+
             this.refreshTimer = this.createTimerForRefreshingCurrentSong();
             this.refreshTimer.startLoop();
         });

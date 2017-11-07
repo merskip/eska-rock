@@ -34,7 +34,7 @@ body {
     position: relative;
     cursor: pointer;
 
-    transition: margin-left 0.4s, width 0.4s, height 0.4s;
+    transition: margin 0.4s, width 0.4s, height 0.4s;
 }
 
 .radio-toggle-play:active {
@@ -146,7 +146,13 @@ body {
     margin-top: -24px;
 }
 
+
 .radio-panel.radio-panel-collapsed .radio-panel-button {
+    margin-left: calc(50% - 48px);
+}
+
+.radio-panel .radio-panel-button.radio-stream-loading {
+    margin-top: -8px;
     margin-left: calc(50% - 24px);
 }
 
@@ -503,7 +509,7 @@ a.btn-sign-in-google:active {
 
 @keyframes btn-favorite-highlight {
     to {
-        transform: scale(2.5);
+        transform: scale(3);
         opacity: 0.0;
     }
 }
