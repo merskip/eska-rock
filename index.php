@@ -1,7 +1,10 @@
+<?php
+require_once "src/utils.php";
+$config = loadConfigOrDie();
+?>
 <!doctype html>
-<head>
-    <meta name="google-signin-client_id"
-          content="291196772926-9qq1bqn9u15cnkujqbhamamsoivesc0g.apps.googleusercontent.com">
+<head lang="pl">
+    <meta name="google-signin-client_id" content="<?= $config->gapi->client_id ?>">
     <link rel="icon" href="static/favicon.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="static/styles.css" type="text/css">
@@ -17,7 +20,6 @@
     <script src="static/UserUI.js"></script>
     <script src="static/UserController.js"></script>
     <?php
-    require_once "src/utils.php";
     require_once "src/EskaRock.php";
     $eskaRock = new EskaRock();
     $streamUrl = $eskaRock->getCachedStreamUrl();

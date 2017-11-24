@@ -36,6 +36,7 @@ class UserController {
         this.auth.signOut().then(() => {
             this.auth.disconnect();
             this.auth.currentUser.get().reloadAuthResponse();
+            this._revokeToken();
         });
     }
 
@@ -44,17 +45,48 @@ class UserController {
         let isAuthorized = user.hasGrantedScopes(GAPI_SCOPE);
 
         if (isAuthorized) {
-            let profile = this.auth.currentUser.get().getBasicProfile();
-            this.ui.setUserPanelVisibility(true, {
-                name: profile.getName(),
-                email: profile.getEmail(),
-                imageUrl: profile.getImageUrl()
-            });
-            this.ui.setSignInButtonVisibility(false);
+            let tokenId = user.getAuthResponse().id_token;
+
+            this._authorizeTokenId(tokenId, () => {
+
+                let profile = this.auth.currentUser.get().getBasicProfile();
+                this.ui.setUserPanelVisibility(true, {
+                    name: profile.getName(),
+                    email: profile.getEmail(),
+                    imageUrl: profile.getImageUrl()
+                });
+                this.ui.setSignInButtonVisibility(false);
+
+            }, (response) => {
+                console.error("Failed authorize: ", response);
+            })
         }
         else {
             this.ui.setUserPanelVisibility(false);
             this.ui.setSignInButtonVisibility(true);
         }
+    }
+
+    _authorizeTokenId(tokenId, onSuccess, onFailed) {
+        $.ajax({
+            method: "POST",
+            url: "api/user/oauth2_authorize",
+            data: {
+                tokenId: tokenId
+            },
+            success: () =>  {
+                onSuccess();
+            },
+            error: (xhr) => {
+                onFailed(xhr.responseText)
+            }
+        });
+    }
+
+    _revokeToken() {
+        $.ajax({
+            method: "POST",
+            url: "api/user/oauth2_revoke",
+        });
     }
 }

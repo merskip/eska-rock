@@ -1,5 +1,19 @@
 <?php
 
+function loadConfigOrDie() {
+    static $savedConfig = null;
+    if ($savedConfig != null) {
+        return $savedConfig;
+    }
+
+    define("CONFIG_FILENAME", "/var/www/eska_rock_config.json");
+    file_exists(CONFIG_FILENAME) or die("Not found file with config");
+    $config = json_decode(file_get_contents(CONFIG_FILENAME));
+
+    $savedConfig = $config;
+    return $config;
+}
+
 function l($url) {
     static $isSupportFriendlyUrl = null;
     if ($isSupportFriendlyUrl === null)

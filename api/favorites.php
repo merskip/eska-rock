@@ -1,5 +1,5 @@
 <?php
-require_once "../src/Authorization.php";
+require_once "../src/OAuth2.php";
 require_once "../src/Favorites.php";
 
 $auth->isAuthorized() or die("You must be sign in");

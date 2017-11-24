@@ -3,7 +3,7 @@ $timeStart = microtime(true);
 require_once "../src/EskaRock.php";
 require_once "../src/LastFM.php";
 require_once "../src/TekstowoPL.php";
-require_once "../src/Authorization.php";
+require_once "../src/OAuth2.php";
 require_once "../src/Database.php";
 require_once "../src/Favorites.php";
 
@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $ETag == $_SERVER['HTTP_IF_NONE_MAT
     return;
 }
 
-$userInfo = Authorization::getInstance()->getUserInfo();
+$userInfo = OAuth2::getInstance()->getUserInfo();
 if ($userInfo != null) {
     $favorite = new Favorites(Database::getInstance(), $userInfo);
     $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);

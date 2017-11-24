@@ -15,7 +15,8 @@ class Database {
 
     public static function getInstance() {
         if (self::$instance === null) {
-            self::$instance = new Database("mongodb://localhost:27017", "eskarockdb");
+            global $config;
+            self::$instance = new Database($config->mongodb->url, $config->mongodb->dbname);
         }
         return self::$instance;
     }
