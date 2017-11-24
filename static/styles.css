@@ -385,40 +385,18 @@ body {
     to { background-color: #90121b; }
 }
 
-/* a.btn-sign-in-google */
+/* .user-container & .user-panel*/
 
-a.btn-sign-in-google {
-    display: inline-block;
-    width: 191px;
-    height: 46px;
-    transform: scale(0.8, 0.8);
-    background-image: url("btn_google_signin_normal.png");
-}
-
-.btn-sign-in-google {
+.user-container {
     position: absolute;
     top: 24px;
     right: 24px;
 }
-
-a.btn-sign-in-google:focus {
-    background-image: url("btn_google_signin_focus.png");
-}
-
-
-a.btn-sign-in-google:active {
-    background-image: url("btn_google_signin_pressed.png");
-}
-
-/* .user-panel */
 
 .user-panel {
-    position: absolute;
-    top: 24px;
-    right: 24px;
 }
 
-.user-avatar {
+.user-image {
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -436,9 +414,11 @@ a.btn-sign-in-google:active {
 }
 
 .user-actions {
-    float: right;
+    text-align: right;
     margin-top: 8px;
 }
+
+/* .btn-link */
 
 .btn-link {
     text-decoration: underline;
