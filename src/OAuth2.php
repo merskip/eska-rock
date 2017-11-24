@@ -43,7 +43,8 @@ class OAuth2 {
         return (object) [
             'id' => $this->tokenInfo->sub,
             'name' => $this->tokenInfo->name,
-            'email' => $this->tokenInfo->email
+            'email' => $this->tokenInfo->email,
+            'picture' => $this->tokenInfo->picture
         ];
     }
 

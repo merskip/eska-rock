@@ -42,3 +42,12 @@ function str_remove_prefix_ltrim($text, $prefix) {
     }
     return $text;
 }
+
+class Styles {
+
+    private function __construct() { }
+
+    static function displayNone() {
+        return "style=\"display: none\"";
+    }
+}

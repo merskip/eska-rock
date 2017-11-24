@@ -1,4 +1,7 @@
 <?php
+version_compare(PHP_VERSION, '7.0.0', '>=')
+    or die("Required PHP version 7.0 or newer");
+
 require_once "src/utils.php";
 $config = loadConfigOrDie();
 ?>
@@ -30,16 +33,20 @@ $config = loadConfigOrDie();
 <body>
 
 <div class="user-container">
-    <div id="user-signin" class="g-signin2" style="display: none"></div>
+    <?php
+    require_once "src/OAuth2.php";
+    $user = OAuth2::getInstance()->getUser();
+    ?>
+    <div id="user-signin" class="g-signin2" <?= $user != null ? Styles::displayNone() : "" ?>></div>
 
-    <div id="user-panel" style="display: none">
+    <div id="user-panel" <?= $user == null ? Styles::displayNone() : "" ?>>
         <div class="row">
             <div class="row-item">
-                <img src="" class="user-image">
+                <img src="<?= $user->picture ?? "" ?>" class="user-image">
             </div>
             <div class="row-item">
-                <div class="user-name"></div>
-                <div class="user-email"></div>
+                <div class="user-name"><?= $user->name ?? "" ?></div>
+                <div class="user-email"><?= $user->email ?? "" ?></div>
             </div>
         </div>
         <div class="user-actions">
