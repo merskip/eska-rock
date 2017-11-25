@@ -43,6 +43,11 @@ function str_remove_prefix_ltrim($text, $prefix) {
     return $text;
 }
 
+function str_ends_with($haystack, $needle) {
+    $length = strlen($needle);
+    return $length === 0 || substr($haystack, -$length) === $needle;
+}
+
 class Styles {
 
     private function __construct() { }

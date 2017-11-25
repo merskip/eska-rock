@@ -21,9 +21,9 @@ class RadioUI {
 
     static get FavoriteButtonState() {
         return {
-            Hidden: { _id: 0 },
-            Add: { _id: 1, songTitle: null },
-            Remove: { _id: 2, favoriteId: null, songTitle: null }
+            Hidden: 0,
+            Add: 1,
+            Remove: 2
         }
     }
 
@@ -236,34 +236,37 @@ class RadioUI {
         }
     }
 
+    setFavoriteButtonData(data) {
+        this.favoriteBtn.attr("data-song-title", data.songTitle)
+            .attr("data-favorite-id", data.favoriteId);
+    }
+
+    getFavoriteButtonData() {
+        return {
+            songTitle: this.favoriteBtn.attr("data-song-title"),
+            favoriteId: this.favoriteBtn.attr("data-favorite-id")
+        };
+    }
+
     setFavoriteButtonState(state) {
         this.favoriteBtn
             .removeClass("btn-favorite-remove")
-            .removeClass("btn-favorite-add")
-            .attr("data-song-title", null)
-            .attr("dat-favorite-id", null);
+            .removeClass("btn-favorite-add");
 
-        if (state._id === RadioUI.FavoriteButtonState.Hidden._id) {
+        if (state === RadioUI.FavoriteButtonState.Hidden) {
             // Nothing, only clear
         }
-        else if (state._id === RadioUI.FavoriteButtonState.Add._id) {
+        else if (state === RadioUI.FavoriteButtonState.Add) {
             this.favoriteBtn.addClass("btn-favorite-add")
-                .attr("title", this.favoriteBtn.attr("data-title-add"))
-                .attr("data-song-title", state.songTitle);
+                .attr("title", this.favoriteBtn.attr("data-title-add"));
         }
-        else if (state._id === RadioUI.FavoriteButtonState.Remove._id) {
+        else if (state === RadioUI.FavoriteButtonState.Remove) {
             this.favoriteBtn.addClass("btn-favorite-remove")
-                .attr("title", this.favoriteBtn.attr("data-title-remove"))
-                .attr("data-favorite-id", state.favoriteId)
-                .attr("data-song-title", state.songTitle);
+                .attr("title", this.favoriteBtn.attr("data-title-remove"));
         }
         else {
             console.error("Expected value kind of RadioUI.FavoriteButtonState");
         }
-    }
-
-    getFavoriteButtonSongTitle() {
-        return this.favoriteBtn.attr("data-song-title");
     }
 
     highlightFavoriteButton() {

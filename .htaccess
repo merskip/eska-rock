@@ -3,12 +3,9 @@ SetEnv HTACCESS on
 
 RewriteEngine On
 
-# Skip if file or directory physical exists
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# Skip if url already has extension, protection for internal redirect loop
-RewriteCond %{REQUEST_URI} !\.
-
-# Add .php extension, eg. api/favorites -> api/favorites.php
-RewriteRule ^(.+) $1.php
+# Mapping api request to file
+RewriteRule ^api/song_info$ api/song_info.php
+RewriteRule ^api/user/oauth2_authorize$ api/oauth2_authorize.php
+RewriteRule ^api/user/oauth2_revoke$ api/oauth2_revoke.php
+RewriteRule ^api/favorites$ api/favorites.php
+RewriteRule ^api/favorites/search$ api/favorites.php

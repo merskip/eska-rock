@@ -8,11 +8,11 @@ class Favorites {
 
     /**
      * @param Database $database
-     * @param stdClass $userInfo
+     * @param stdClass $user
      */
-    public function __construct($database, $userInfo) {
+    public function __construct($database, $user) {
         $this->db = $database;
-        $this->userId = $userInfo->id;
+        $this->userId = $user->id;
     }
 
     public function findAllFavoritesSongs() {

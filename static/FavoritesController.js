@@ -1,8 +1,9 @@
 
 class FavoritesController {
 
-    constructor(radioUI, songDetailsController) {
+    constructor(radioUI, userController, songDetailsController) {
         this.ui = radioUI;
+        this.userController = userController;
         this.songDetailsController = songDetailsController;
         this._setupEvents();
     }
@@ -11,49 +12,72 @@ class FavoritesController {
         this.ui.didSelectFavoriteAdd = this.didSelectFavoriteAdd.bind(this);
         this.ui.didSelectFavoriteRemove = this.didSelectFavoriteRemove.bind(this);
 
+        this.userController.onSignInChange((isSignIn) => {
+            if (isSignIn) {
+                let data = this.ui.getFavoriteButtonData();
+                if (data.songTitle !== undefined) {
+
+                    this.getFavoriteDetailsWithSongTitle(data.songTitle, (favorite) => {
+                        this.ui.setFavoriteButtonData({
+                            songTitle: favorite.songTitle,
+                            favoriteId: favorite._id
+                        });
+                        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+                    }, () => { // Not found
+                        this.ui.setFavoriteButtonData({
+                            songTitle: data.songTitle
+                        });
+                        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
+                    });
+                }
+            }
+            else {
+                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
+            }
+        });
+
         this.songDetailsController.onResponseSongDetails((data) => {
             let songTitle = data["rawSongTitle"];
             let favoriteId = data["favoriteId"];
 
+            this.ui.setFavoriteButtonData({
+                songTitle: songTitle,
+                favoriteId: favoriteId
+            });
             if (favoriteId === undefined) {
                 this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
             }
             else if (favoriteId !== null) {
-                let removeState = RadioUI.FavoriteButtonState.Remove;
-                removeState.favoriteId = favoriteId;
-                removeState.songTitle = songTitle;
-                this.ui.setFavoriteButtonState(removeState);
+                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
             }
             else {
-                let addState = RadioUI.FavoriteButtonState.Add;
-                addState.songTitle = songTitle;
-                this.ui.setFavoriteButtonState(addState);
+                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
             }
         });
-
     }
 
     didSelectFavoriteAdd(songTitle) {
         this.ui.highlightFavoriteButton();
-
-        let removeState = RadioUI.FavoriteButtonState.Remove;
-        removeState.songTitle = songTitle;
-        this.ui.setFavoriteButtonState(removeState);
+        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
 
         this.performFavoriteAdd(songTitle, (favoriteId) => {
 
             // // We must make sure that the song title didn't change
-            if (this.ui.getFavoriteButtonSongTitle() === songTitle) {
-                removeState.favoriteId = favoriteId;
-                this.ui.setFavoriteButtonState(removeState);
+            let currentSongTitle = this.ui.getFavoriteButtonData().songTitle;
+            if (currentSongTitle === songTitle) {
+                this.ui.setFavoriteButtonData({
+                    songTitle: songTitle,
+                    favoriteId: favoriteId
+                });
             }
         });
     }
 
     didSelectFavoriteRemove(favoriteId, songTitle) {
-        let addState = RadioUI.FavoriteButtonState.Add;
-        addState.songTitle = songTitle;
-        this.ui.setFavoriteButtonState(addState);
+        this.ui.setFavoriteButtonData({
+            songTitle: songTitle
+        });
+        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
 
         this.performFavoriteDelete(favoriteId, () => {
             // Nothing, button state was previously set
@@ -87,5 +111,23 @@ class FavoritesController {
                 onSuccess();
             }
         });
+    }
+
+    getFavoriteDetailsWithSongTitle(songTitle, onSuccess, onNotFound) {
+        $.ajax({
+            type: "GET",
+            url: "api/favorites/search",
+            data: {
+                songTitle: songTitle
+            },
+            success: (songDetails) => {
+                onSuccess(songDetails);
+            },
+            error: (xhr) => {
+                if (xhr.status === 404) {
+                    onNotFound();
+                }
+            }
+        })
     }
 }

@@ -1,5 +1,5 @@
 <?php
-require_once '../../src/OAuth2.php';
+require_once '../src/OAuth2.php';
 
 isset($_POST['tokenId']) or  die("Parameter tokenId no exists");
 $tokenId = $_POST['tokenId'];

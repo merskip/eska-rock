@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $ETag == $_SERVER['HTTP_IF_NONE_MAT
     return;
 }
 
-$userInfo = OAuth2::getInstance()->getUserInfo();
+$userInfo = OAuth2::getInstance()->getUser();
 if ($userInfo != null) {
     $favorite = new Favorites(Database::getInstance(), $userInfo);
     $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);

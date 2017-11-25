@@ -1,16 +1,30 @@
 <?php
 require_once "../src/OAuth2.php";
 require_once "../src/Favorites.php";
+require_once "../src/utils.php";
 
-$auth->isAuthorized() or die("You must be sign in");
+$oauth2 = OAuth2::getInstance();
+$oauth2->isSignIn() or die("You must be sign in");
 
-$favorites = new Favorites(Database::getInstance(), $auth->getUserInfo());
+$favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 
 $method = $_SERVER['REQUEST_METHOD'];
-if ($method == 'GET') {
-
+$url = $_SERVER['REDIRECT_URL'];
+if ($method == 'GET' && str_ends_with($url, "/api/favorites")) {
     header("Content-Type: application/json");
     echo json_encode($favorites->findAllFavoritesSongs(), JSON_PRETTY_PRINT);
+}
+else if ($method == 'GET' && str_ends_with($url, "/api/favorites/search")) {
+    isset($_GET['songTitle']) or die("Argument songTitle is required");
+    $songTitle = $_GET["songTitle"];
+
+    if ($favoriteSong = $favorites->findFavoriteSong($songTitle)) {
+        header("Content-Type: application/json");
+        echo json_encode($favoriteSong, JSON_PRETTY_PRINT);
+    }
+    else {
+        http_response_code(404);
+    }
 }
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     isset($_POST["songTitle"]) or die("Argument songTitle is required");

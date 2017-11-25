@@ -139,9 +139,9 @@ $config = loadConfigOrDie();
             tickCount: 360 * 0.2
         }
     });
-    new FavoritesController(radioUI, songDetailsController);
 
     let userUI = new UserUI();
-    new UserController(userUI);
+    let userController = new UserController(userUI);
+    new FavoritesController(radioUI, userController, songDetailsController);
 </script>
 </body>
