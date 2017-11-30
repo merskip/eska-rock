@@ -493,3 +493,29 @@ body {
         opacity: 0.0;
     }
 }
+
+.btn-favorite.btn-favorite-show-anim {
+    transform: scale(0.5);
+    opacity: 0.0;
+    animation: btn-favorite-show-anim 0.2s ease-out;
+}
+
+@keyframes btn-favorite-show-anim {
+    to {
+        transform: scale(1);
+        opacity: 1.0;
+    }
+}
+
+.btn-favorite.btn-favorite-hide-anim {
+    transform: scale(1.0);
+    opacity: 1.0;
+    animation: btn-favorite-hide-anim 0.2s ease-out;
+}
+
+@keyframes btn-favorite-hide-anim {
+    to {
+        transform: scale(0.5);
+        opacity: 0.0;
+    }
+}

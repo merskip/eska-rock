@@ -14,25 +14,10 @@ class FavoritesController {
 
         this.userController.onSignInChange((isSignIn) => {
             if (isSignIn) {
-                let data = this.ui.getFavoriteButtonData();
-                if (data.songTitle !== undefined) {
-
-                    this.getFavoriteDetailsWithSongTitle(data.songTitle, (favorite) => {
-                        this.ui.setFavoriteButtonData({
-                            songTitle: favorite.songTitle,
-                            favoriteId: favorite._id
-                        });
-                        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
-                    }, () => { // Not found
-                        this.ui.setFavoriteButtonData({
-                            songTitle: data.songTitle
-                        });
-                        this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
-                    });
-                }
+                this._configureFavoriteButtonOnSignIn();
             }
             else {
-                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
+                this.ui.hideFavoriteButtonWithAnimation();
             }
         });
 
@@ -53,6 +38,29 @@ class FavoritesController {
             else {
                 this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
             }
+        });
+    }
+
+    _configureFavoriteButtonOnSignIn() {
+        let data = this.ui.getFavoriteButtonData();
+        if (data.songTitle === undefined) {
+            return;
+        }
+
+        this.getFavoriteDetailsWithSongTitle(data.songTitle, (favorite) => {
+            this.ui.setFavoriteButtonData({
+                songTitle: favorite.songTitle,
+                favoriteId: favorite._id
+            });
+            this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+            this.ui.showFavoriteButtonWithAnimation();
+
+        }, () => { // Not found this song in favorite
+            this.ui.setFavoriteButtonData({
+                songTitle: data.songTitle
+            });
+            this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
+            this.ui.showFavoriteButtonWithAnimation();
         });
     }
 

@@ -276,6 +276,21 @@ class RadioUI {
         });
     }
 
+    showFavoriteButtonWithAnimation() {
+        this.favoriteBtn.addClass("btn-favorite-show-anim");
+        this.favoriteBtn.animationEnd(() => {
+            this.favoriteBtn.removeClass("btn-favorite-show-anim");
+        });
+    }
+
+    hideFavoriteButtonWithAnimation() {
+        this.favoriteBtn.addClass("btn-favorite-hide-anim");
+        this.favoriteBtn.animationEnd(() => {
+            this.favoriteBtn.removeClass("btn-favorite-hide-anim");
+            this.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
+        });
+    }
+
     static _formatTimer(secs) {
         let h = Math.floor(secs / 3600);
         let m = Math.floor(secs / 60) - (h * 60);
@@ -304,5 +319,5 @@ RadioUI.prototype.didSelectFavoriteRemove = (id, songTitle) => { };
 // Utils
 
 $.fn.animationEnd = function (callback) {
-    $(this).on("webkitAnimationEnd oanimationend msAnimationEnd animationend", callback);
+    $(this).one("webkitAnimationEnd oanimationend msAnimationEnd animationend", callback);
 };
