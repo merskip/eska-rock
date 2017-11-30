@@ -22,6 +22,7 @@ $config = loadConfigOrDie();
     <script src="static/FavoritesController.js"></script>
     <script src="static/UserUI.js"></script>
     <script src="static/UserController.js"></script>
+    <script src="static/Fragments.js"></script>
     <?php
     require_once "src/EskaRock.php";
     $eskaRock = new EskaRock();
@@ -50,7 +51,8 @@ $config = loadConfigOrDie();
             </div>
         </div>
         <div class="user-actions">
-            <a href="<?= l("api/favorites") ?>" class="btn-link">Ulubione</a>
+            <a id="user-favorites-list" class="btn-link"
+               data-fragment-url="<?= l("fragments/favorites_list") ?>">Ulubione</a>
             <span class="btn-link-separator">|</span>
             <a id="user-logout" class="btn-link">Wyloguj</a>
         </div>
