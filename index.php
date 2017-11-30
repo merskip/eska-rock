@@ -144,4 +144,7 @@ $config = loadConfigOrDie();
     let userController = new UserController(userUI);
     new FavoritesController(radioUI, userController, songDetailsController);
 </script>
+<div class="footer">
+    Version: <?= exec("git describe --long --tags") ?>
+</div>
 </body>
