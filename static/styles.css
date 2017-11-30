@@ -519,3 +519,18 @@ body {
         opacity: 0.0;
     }
 }
+
+/* .radio-footer */
+
+.radio-footer {
+    float: right;
+    color: #555;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 16px
+}
+
+.radio-footer .version {
+    color: #777;
+    font-weight: bolder;
+}

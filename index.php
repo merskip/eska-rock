@@ -144,7 +144,13 @@ $config = loadConfigOrDie();
     let userController = new UserController(userUI);
     new FavoritesController(radioUI, userController, songDetailsController);
 </script>
-<div class="footer">
-    Version: <?= exec("git describe --long --tags") ?>
+<div class="radio-footer">
+    <?php
+    $lastTaggedVersion = exec("git describe --tags --abbrev=0");
+    $fullVersion = exec("git describe --tags --long");
+    $suffixVersion = str_remove_prefix_ltrim($fullVersion, $lastTaggedVersion);
+    ?>
+    Version
+    <span class="version"><?= $lastTaggedVersion ?></span><?= $suffixVersion ?>
 </div>
 </body>
