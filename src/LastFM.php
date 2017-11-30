@@ -34,6 +34,7 @@ class LastFM {
         $songInfo->title = $info->track->name;
         $songInfo->artist = $info->track->artist->name;
         if ($info->track->duration != 0) {
+            // Service returns duration in milliseconds, but we wants get time in seconds
             $songInfo->duration = intval($info->track->duration / 1000.0);
         }
         if (isset($info->track->album)) {
