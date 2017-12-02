@@ -270,23 +270,15 @@ class RadioUI {
     }
 
     highlightFavoriteButton() {
-        this.favoriteBtn.addClass("btn-favorite-highlight");
-        this.favoriteBtn.animationEnd(() => {
-            this.favoriteBtn.removeClass("btn-favorite-highlight");
-        });
+        this.favoriteBtn.addClassForAnimation("btn-favorite-highlight");
     }
 
     showFavoriteButtonWithAnimation() {
-        this.favoriteBtn.addClass("btn-favorite-show-anim");
-        this.favoriteBtn.animationEnd(() => {
-            this.favoriteBtn.removeClass("btn-favorite-show-anim");
-        });
+        this.favoriteBtn.addClassForAnimation("btn-favorite-show-anim");
     }
 
     hideFavoriteButtonWithAnimation() {
-        this.favoriteBtn.addClass("btn-favorite-hide-anim");
-        this.favoriteBtn.animationEnd(() => {
-            this.favoriteBtn.removeClass("btn-favorite-hide-anim");
+        this.favoriteBtn.addClassForAnimation("btn-favorite-hide-anim", () => {
             this.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
         });
     }
