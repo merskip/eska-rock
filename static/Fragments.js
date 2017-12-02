@@ -1,19 +1,21 @@
 
 $(function () {
     $("[data-fragment-url]").click(function () {
+        $(this).disableUserInteraction();
+
         let url = $(this).attr("data-fragment-url");
-        loadFragment(url, callbackAppendToBody);
+        loadFragment(url, callbackAppendToBody, () => {
+
+            $(this).enableUserInteraction();
+        });
     });
 });
 
-function loadFragment(url, callback) {
+function loadFragment(url, successCallback, completeCallback) {
     $.ajax({
         type: "GET",
-        url: url,
-        success: (content) => {
-            callback(content);
-        }
-    })
+        url: url
+    }).done(successCallback).always(completeCallback)
 }
 
 function callbackAppendToBody(content) {
