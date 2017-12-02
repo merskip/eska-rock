@@ -24,7 +24,17 @@ function callbackAppendToBody(content) {
 // TODO: Move in separated file
 function initModals() {
 
-    $(".radio-modal-close").on("click", function () {
+    $(".radio-modal-close").click(function () {
         $(this).closest(".radio-modal").remove();
+    });
+    
+    $(".radio-modal").click(function (e) {
+        let target = $(e.target);
+        let isInsideContent = target.hasClass("radio-modal-content")
+            || target.parents(".radio-modal-content").length !== 0;
+
+        if (!isInsideContent) {
+            $(this).remove();
+        }
     });
 }

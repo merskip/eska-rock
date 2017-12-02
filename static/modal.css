@@ -12,6 +12,36 @@
     width: 512px;
     max-width: 100%;
     background-color: #fff;
+    color: #231f20;
     margin: 0 auto;
     margin-top: 64px;
+    clear: both;
+}
+
+.radio-modal-content::after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.radio-modal-close {
+    color: #555555;
+    cursor: pointer;
+    float: right;
+    margin: 8px;
+}
+
+button.radio-modal-close {
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.radio-modal-close:active {
+    color: #231f20;
+}
+
+.radio-modal-close:before {
+    content: '✕';
 }
