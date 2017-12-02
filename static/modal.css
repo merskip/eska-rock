@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.67);
     z-index: 100;
 }
 
@@ -44,4 +44,34 @@ button.radio-modal-close {
 
 .radio-modal-close:before {
     content: '✕';
+}
+
+/* .radio-modal-show-anim & .radio-modal-hide-anim */
+
+.radio-modal.radio-modal-show-anim {
+    animation: radio-modal-show-anim 0.3s;
+}
+
+.radio-modal.radio-modal-show-anim .radio-modal-content {
+    position: relative;
+    animation: radio-modal-show-content-anim 0.3s;
+}
+
+@keyframes radio-modal-show-anim {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+@keyframes radio-modal-show-content-anim {
+    from { top: -32px }
+    to { top: 0 }
+}
+
+.radio-modal.radio-modal-hide-anim {
+    animation: radio-modal-hide-anim 0.3s;
+}
+
+@keyframes radio-modal-hide-anim {
+    from { opacity: 1 }
+    to { opacity: 0; top: 16px; height: calc(100% - 16px) }
 }

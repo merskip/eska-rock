@@ -19,5 +19,5 @@ function loadFragment(url, callback) {
 function callbackAppendToBody(content) {
     let element = $.parseHTML(content);
     $(document.body).append(element);
-    initModals(element);
+    $(element).initModal().showModal();
 }
