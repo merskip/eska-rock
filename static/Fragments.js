@@ -17,24 +17,7 @@ function loadFragment(url, callback) {
 }
 
 function callbackAppendToBody(content) {
-    $(document.body).append(content);
-    initModals();
-}
-
-// TODO: Move in separated file
-function initModals() {
-
-    $(".radio-modal-close").click(function () {
-        $(this).closest(".radio-modal").remove();
-    });
-    
-    $(".radio-modal").click(function (e) {
-        let target = $(e.target);
-        let isInsideContent = target.hasClass("radio-modal-content")
-            || target.parents(".radio-modal-content").length !== 0;
-
-        if (!isInsideContent) {
-            $(this).remove();
-        }
-    });
+    let element = $.parseHTML(content);
+    $(document.body).append(element);
+    initModals(element);
 }

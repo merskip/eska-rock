@@ -14,6 +14,7 @@ $config = loadConfigOrDie();
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://apis.google.com/js/platform.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src="static/Utils.js"></script>
     <script src="static/RadioCore.js"></script>
     <script src="static/RadioUI.js"></script>
     <script src="static/Timer.js"></script>
@@ -22,6 +23,7 @@ $config = loadConfigOrDie();
     <script src="static/FavoritesController.js"></script>
     <script src="static/UserUI.js"></script>
     <script src="static/UserController.js"></script>
+    <script src="static/Modal.js"></script>
     <script src="static/Fragments.js"></script>
     <?php
     require_once "src/EskaRock.php";

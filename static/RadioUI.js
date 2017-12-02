@@ -315,9 +315,3 @@ RadioUI.prototype.didSelectPlay = () => { };
 RadioUI.prototype.didSelectStop = () => { };
 RadioUI.prototype.didSelectFavoriteAdd = (songTitle) => { };
 RadioUI.prototype.didSelectFavoriteRemove = (id, songTitle) => { };
-
-// Utils
-
-$.fn.animationEnd = function (callback) {
-    $(this).one("webkitAnimationEnd oanimationend msAnimationEnd animationend", callback);
-};
