@@ -11,11 +11,14 @@
 .radio-modal-content {
     width: 512px;
     max-width: 100%;
+    position: relative;
+    top: 64px;
     background-color: #fff;
     color: #231f20;
     margin: 0 auto;
-    margin-top: 64px;
-    clear: both;
+    padding: 16px;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.3);
 }
 
 .radio-modal-content::after {
@@ -25,11 +28,18 @@
     clear: both;
 }
 
+.radio-modal-content .radio-modal-title {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
 .radio-modal-close {
     color: #555555;
     cursor: pointer;
     float: right;
-    margin: 8px;
+    margin: -8px;
+    font-size: 16px;
 }
 
 button.radio-modal-close {
@@ -38,8 +48,13 @@ button.radio-modal-close {
     outline: none;
 }
 
+
+.radio-modal-close:hover {
+    color: #c21a29;
+}
+
 .radio-modal-close:active {
-    color: #231f20;
+    color: #90121b;
 }
 
 .radio-modal-close:before {
@@ -63,8 +78,7 @@ button.radio-modal-close {
 }
 
 @keyframes radio-modal-show-content-anim {
-    from { top: -32px }
-    to { top: 0 }
+    from { top: 32px }
 }
 
 .radio-modal.radio-modal-hide-anim {

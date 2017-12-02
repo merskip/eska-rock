@@ -10,7 +10,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 <div class="radio-modal">
     <div class="radio-modal-content">
         <button class="radio-modal-close"></button>
-        <h2>Favorties</h2>
+        <h2 class="radio-modal-title">Favorites</h2>
         <ul>
             <?php foreach ($favorites->findAllFavoritesSongs() as $item): ?>
                 <li><?= $item->songTitle ?></li>
