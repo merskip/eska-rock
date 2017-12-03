@@ -2,6 +2,10 @@
 require_once "../src/OAuth2.php";
 require_once "../src/Favorites.php";
 require_once "../src/utils.php";
+require_once "../src/LastFM.php";
+require_once "../src/TekstowoPL.php";
+
+define('LAST_FM_API_KEY', "6afdf0e4de1911f77203f9b28ca17168");
 
 $oauth2 = OAuth2::getInstance();
 $oauth2->isSignIn() or die("You must be sign in");
@@ -34,7 +38,27 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $favoriteSong->_id;
     }
     else {
-        $id = $favorites->insertFavoriteSong($songTitle);
+        $songDetails = [];
+
+        $lastFm = new LastFM(LAST_FM_API_KEY);
+        if ($details = $lastFm->getCachedSongDetails($songTitle)) {
+            $songDetails["title"] = $details->title;
+            $songDetails["artist"] = $details->artist;
+            if (isset($details->album)) {
+                $songDetails["album"] = $details->album;
+            }
+        }
+
+        $tekstowoPl = new TekstowoPL();
+        if ($lyricsUrl = $tekstowoPl->getCachedLyricsUrl($songTitle)) {
+            $songDetails["lyrics"] = ["url" => $lyricsUrl];
+
+            $details = $tekstowoPl->getCachedSongDetails($lyricsUrl);
+            $songDetails["youtube"] = ["videoId" => $details->youtubeVideoId];
+        }
+
+        $songDetails = count($songDetails) > 0 ? $songDetails : null;
+        $id = $favorites->insertFavoriteSongWithDetails($songTitle, $songDetails);
         http_response_code(201); // 201 - Created
     }
 

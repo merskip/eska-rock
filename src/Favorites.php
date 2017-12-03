@@ -34,6 +34,13 @@ class Favorites {
         ]);
     }
 
+    public function insertFavoriteSongWithDetails($songTitle, $details) {
+        return $this->db->insert("db.favorites", array_merge([
+            "userId" => $this->userId,
+            "songTitle" => $songTitle
+        ], $details ? ["details" => $details] : []));
+    }
+
     public function deleteFavoriteSong($id) {
         return $this->db->deleteOne("db.favorites", [
             "_id" => $id,
