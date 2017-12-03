@@ -6,9 +6,8 @@ require_once "../src/TekstowoPL.php";
 require_once "../src/OAuth2.php";
 require_once "../src/Database.php";
 require_once "../src/Favorites.php";
-
-define('LAST_FM_API_KEY', "6afdf0e4de1911f77203f9b28ca17168");
-define('ESKA_ROCK_NO_SONG', "EskaROCK");
+require_once "../src/utils.php";
+$config = loadConfigOrDie();
 
 $eskaRock = new EskaRock();
 $metadata = $eskaRock->requestStreamMetadata();
@@ -32,8 +31,8 @@ if ($userInfo != null) {
     $result["favoriteId"] = $favoriteSong != null ? $favoriteSong->_id : null;
 }
 
-if ($metadata->songTitle != ESKA_ROCK_NO_SONG) {
-    $lastFm = new LastFM(LAST_FM_API_KEY);
+if ($metadata->songTitle != $config->eska_rock->no_song) {
+    $lastFm = new LastFM();
     $details = $lastFm->getCachedSongDetails($metadata->songTitle);
     if ($details != null) {
         $result["songDetails"] = [

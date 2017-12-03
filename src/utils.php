@@ -1,4 +1,5 @@
 <?php
+define("CONFIG_FILENAME", "/var/www/eska_rock_config.json");
 
 function loadConfigOrDie() {
     static $savedConfig = null;
@@ -6,7 +7,6 @@ function loadConfigOrDie() {
         return $savedConfig;
     }
 
-    define("CONFIG_FILENAME", "/var/www/eska_rock_config.json");
     file_exists(CONFIG_FILENAME) or die("Not found file with config");
     $config = json_decode(file_get_contents(CONFIG_FILENAME));
 

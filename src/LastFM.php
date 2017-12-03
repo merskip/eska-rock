@@ -1,5 +1,7 @@
 <?php
 require_once 'Cache.php';
+require_once 'utils.php';
+$config = loadConfigOrDie();
 
 class LastFM {
 
@@ -8,8 +10,9 @@ class LastFM {
 
     private $apiKey;
 
-    function __construct($apiKey) {
-        $this->apiKey = $apiKey;
+    function __construct() {
+        global $config;
+        $this->apiKey = $config->last_fm->api_key;
     }
 
     function getCachedSongDetails($songTitle) {

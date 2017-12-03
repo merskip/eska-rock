@@ -5,8 +5,6 @@ require_once "../src/utils.php";
 require_once "../src/LastFM.php";
 require_once "../src/TekstowoPL.php";
 
-define('LAST_FM_API_KEY', "6afdf0e4de1911f77203f9b28ca17168");
-
 $oauth2 = OAuth2::getInstance();
 $oauth2->isSignIn() or die("You must be sign in");
 
@@ -40,7 +38,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         $songDetails = [];
 
-        $lastFm = new LastFM(LAST_FM_API_KEY);
+        $lastFm = new LastFM();
         if ($details = $lastFm->getCachedSongDetails($songTitle)) {
             $songDetails["title"] = $details->title;
             $songDetails["artist"] = $details->artist;
