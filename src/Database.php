@@ -43,18 +43,35 @@ class Database {
         return $rows;
     }
 
-    public function insert($collection, $data) {
-        $data = array_merge(['_id' => new MongoDB\BSON\ObjectId], $data);
+    public function insert($collection, $document) {
+        $document = array_merge(['_id' => new MongoDB\BSON\ObjectId], $document);
         $bulk = new MongoDB\Driver\BulkWrite;
-        $bulk->insert($data);
+        $bulk->insert($document);
 
         $result = $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
         if ($result->getInsertedCount() > 0) {
-            return (string)$data['_id'];
+            return (string)$document['_id'];
         }
         else {
             return null;
         }
+    }
+
+    public function updateOne($collection, $filter, $document) {
+        count($filter) > 0 or die("For update query you must set non-empty filter");
+        if ($filter["_id"] && is_string($filter["_id"])) {
+            $filter["_id"] = new MongoDB\BSON\ObjectID($filter["_id"]);
+        }
+        $document = (array)$document;
+        if ($document["_id"] && is_string($document["_id"])) {
+            $document["_id"] = new MongoDB\BSON\ObjectID($document["_id"]);
+        }
+
+        $bulk = new MongoDB\Driver\BulkWrite;
+        $bulk->update($filter, $document, ['limit' => 1]);
+
+        $result = $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
+        return $result->getUpsertedCount() > 0;
     }
 
     public function deleteOne($collection, $filter) {
