@@ -24,6 +24,7 @@ $config = loadConfigOrDie();
     <script src="static/FavoritesController.js"></script>
     <script src="static/UserUI.js"></script>
     <script src="static/UserController.js"></script>
+    <script src="static/DropdownMenu.js"></script>
     <script src="static/Modal.js"></script>
     <script src="static/Fragments.js"></script>
     <?php

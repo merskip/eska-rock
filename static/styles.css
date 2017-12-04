@@ -563,6 +563,7 @@ ul.radio-favorites-list {
 }
 
 .radio-favorite-list-item {
+    position: relative;
     margin-bottom: 8px;
 }
 
@@ -609,4 +610,32 @@ ul.radio-favorites-list {
 .radio-favorite-album {
     font-size: 14px;
     color: #1D1C1C;
+}
+
+.radio-favorite-list-item .radio-dropdown-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #777;
+    font-size: 22px;
+    visibility: hidden;
+}
+
+.radio-favorite-list-item:hover .radio-dropdown-btn {
+    visibility: visible;
+}
+
+.radio-favorite-list-item .radio-dropdown-btn:hover {
+    color: #555;
+}
+
+/* .radio-dropdown-menu */
+
+.radio-dropdown-btn {
+    cursor: pointer;
+}
+
+.radio-dropdown-menu {
+    display: none;
+    position: absolute;
 }

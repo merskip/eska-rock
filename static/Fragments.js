@@ -21,5 +21,7 @@ function loadFragment(url, successCallback, completeCallback) {
 function callbackAppendToBody(content) {
     let element = $.parseHTML(content);
     $(document.body).append(element);
-    $(element).initModal().showModal();
+    $(element)
+        .initDropdownMenu()
+        .initModal().showModal();
 }
