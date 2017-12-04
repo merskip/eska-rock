@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 @import url("modal.css");
 
 body {
@@ -111,7 +110,7 @@ body {
 
 .radio-panel .radio-panel-title {
     color: #fff;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
     margin-left: 96px;
 }
@@ -179,7 +178,7 @@ body {
     margin-top: 14px;
     color: #c21a29;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 0.05em;
 }
 
@@ -307,7 +306,7 @@ body {
     margin-bottom: 8px;
     color: #c21a29;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 0.05em;
 }
 
@@ -430,7 +429,7 @@ body {
     font-size: 12px;
     color: #c21a29;
     letter-spacing: 0.06em;
-    font-weight: bold;
+    font-weight: 600;
     background: transparent;
     border: none;
     outline: none;
@@ -537,5 +536,56 @@ body {
 
 .radio-footer .version {
     color: #777;
-    font-weight: bolder;
+    font-weight: 600;
+}
+
+/* .radio-favorites-list */
+
+ul.radio-favorites-list {
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.radio-favorite-list-item {
+    margin-bottom: 8px;
+}
+
+.radio-favorite-list-item:last-child {
+    margin-bottom: 0;
+}
+
+.radio-favorite-album-image,
+.radio-favorite-no-album-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 16px;
+}
+
+.radio-favorite-no-album-image {
+    position: relative;
+}
+
+.radio-favorite-no-album-image i.material-icons {
+    font-size: 64px;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    color: #aaa
+}
+
+.radio-favorite-song-title,
+.radio-favorite-album {
+    display: block;
+}
+
+.radio-favorite-song-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.radio-favorite-album {
+    font-size: 14px;
+    color: #1D1C1C;
 }

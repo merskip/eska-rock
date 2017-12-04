@@ -9,6 +9,7 @@ $config = loadConfigOrDie();
 <head lang="pl">
     <meta name="google-signin-client_id" content="<?= $config->gapi->client_id ?>">
     <link rel="icon" href="static/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="static/styles.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

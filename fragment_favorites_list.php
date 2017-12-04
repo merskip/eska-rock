@@ -14,18 +14,26 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         <h2 class="radio-modal-title">Favorites</h2>
         <ul class="radio-favorites-list">
             <?php foreach ($favorites->findAllFavoritesSongs() as $item): ?>
-                <li class="radio-favorite-item">
-                    <?php if (isset($item->details->album)): ?>
-                        <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
-                    <?php endif; ?>
-                    <span class="radio-favorite-song-title">
-                        <?= $item->details
-                            ? $item->details->artist . " - " . $item->details->title
-                            : $item->songTitle ?>
-                    </span>
-                    <?php if (isset($item->details->album)): ?>
-                        <span class="radio-favorite-album"><?= $item->details->album->title ?></span>
-                    <?php endif; ?>
+                <li class="radio-favorite-list-item row">
+                    <div>
+                        <?php if (isset($item->details->album)): ?>
+                            <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
+                        <?php else: ?>
+                            <div class="radio-favorite-no-album-image">
+                                <i class="material-icons">album</i>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <span class="radio-favorite-song-title">
+                            <?= $item->details
+                                ? $item->details->artist . " - " . $item->details->title
+                                : $item->songTitle ?>
+                        </span>
+                        <span class="radio-favorite-album">
+                            <?= $item->details->album->title ?? "Bez albumu" ?>
+                        </span>
+                    </div>
                 </li>
             <?php endforeach; ?>
         </ul>
