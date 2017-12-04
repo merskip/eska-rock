@@ -226,10 +226,10 @@ class RadioUI {
         }
     }
 
-    setYoutubeLink(videoId) {
-        if (videoId !== null) {
+    setYoutubeLink(videoUrl) {
+        if (videoUrl !== null) {
             this.youtubeUrl.removeClass("no-url")
-                .attr("href", "https://www.youtube.com/watch?v=" + videoId);
+                .attr("href", videoUrl);
         }
         else {
             this.youtubeUrl.addClass("no-url").attr("href", null);

@@ -7,6 +7,7 @@ require_once "../src/OAuth2.php";
 require_once "../src/Database.php";
 require_once "../src/Favorites.php";
 require_once "../src/utils.php";
+require_once "../src/YouTubeHelpers.php";
 $config = loadConfigOrDie();
 
 $eskaRock = new EskaRock();
@@ -56,7 +57,10 @@ if ($metadata->songTitle != $config->eska_rock->no_song) {
         ];
 
         $details = $tekstowoPl->getCachedSongDetails($lyricsUrl);
-        $result["youtube"] = ["videoId" => $details->youtubeVideoId];
+        $result["youtube"] = [
+            "videoId" => $details->youtubeVideoId,
+            "url" => YouTubeHelpers::getVideoUrl($details->youtubeVideoId)
+        ];
         $result["lyrics"]["original"] = $details->lyricsOrginal;
         $result["lyrics"]["translation"] = $details->lyricsTranslation;
     }

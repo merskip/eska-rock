@@ -61,7 +61,7 @@ class SongDetailsController {
         else {
             this.ui.setLyrics(null);
         }
-        this.ui.setYoutubeLink(data["youtube"] ? data["youtube"]["videoId"] : null);
+        this.ui.setYoutubeLink(data["youtube"] ? data["youtube"]["url"] : null);
     }
 
     createTimerForRefreshingCurrentSong() {

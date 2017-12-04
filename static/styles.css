@@ -350,7 +350,7 @@ body {
 
 .radio-pie-spinner {
     border-radius: 100% 0 0 100% / 50% 0 0 50%;
-    z-index: 200;
+    z-index: 20;
     border-right: none;
 }
 
@@ -358,7 +358,7 @@ body {
     border-radius: 0 100% 100% 0 / 0 50% 50% 0;
     left: 50%;
     opacity: 0;
-    z-index: 100;
+    z-index: 10;
     border-left: none;
 }
 
@@ -368,7 +368,7 @@ body {
     position: absolute;
     background: inherit;
     opacity: 1;
-    z-index: 300;
+    z-index: 30;
 }
 
 .radio-pie.radio-pie-indeterminate {
@@ -548,6 +548,11 @@ ul.radio-favorites-list {
     padding-left: 0;
 }
 
+.radio-favorites-open-youtube-playlist {
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
 .radio-favorite-list-item {
     margin-bottom: 8px;
 }
@@ -557,22 +562,29 @@ ul.radio-favorites-list {
 }
 
 .radio-favorite-album-image,
-.radio-favorite-no-album-image {
+.radio-favorite-no-album-image,
+.radio-favorite-no-album {
     width: 80px;
     height: 80px;
     margin-right: 16px;
 }
 
-.radio-favorite-no-album-image {
+.radio-favorite-no-album-image,
+.radio-favorite-no-album {
     position: relative;
 }
 
-.radio-favorite-no-album-image i.material-icons {
+.radio-favorite-no-album-image i.material-icons,
+.radio-favorite-no-album i.material-icons {
     font-size: 64px;
     position: absolute;
     left: 8px;
     top: 8px;
     color: #aaa
+}
+
+.radio-favorite-no-album i.material-icons {
+    color: #ddd;
 }
 
 .radio-favorite-song-title,
