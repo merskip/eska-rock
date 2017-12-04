@@ -49,7 +49,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                         <i class="material-icons radio-dropdown-btn">more_vert</i>
                         <ul class="radio-dropdown-menu">
                             <li><a href>Edytuj</a></li>
-                            <li><a href>Usuń</a></li>
+                            <li class="radio-dropdown-item-remove"><a href>Usuń</a></li>
                         </ul>
 
                         <span class="radio-favorite-song-title">

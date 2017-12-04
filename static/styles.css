@@ -574,6 +574,7 @@ ul.radio-favorites-list {
 .radio-favorite-album-image,
 .radio-favorite-no-album-image,
 .radio-favorite-no-album {
+    display: block;
     width: 80px;
     height: 80px;
     margin-right: 16px;
@@ -638,4 +639,30 @@ ul.radio-favorites-list {
 .radio-dropdown-menu {
     display: none;
     position: absolute;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+ul.radio-dropdown-menu {
+    list-style: none;
+    padding-left: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.radio-dropdown-menu li > a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 14px;
+    color: #231f20;
+    padding: 6px 16px;
+}
+
+.radio-dropdown-menu li.radio-dropdown-item-remove > a {
+    color: #c21a29;
+}
+
+.radio-dropdown-menu li:hover {
+    background-color: #f8f8f8;
 }
