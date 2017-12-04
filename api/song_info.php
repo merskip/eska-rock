@@ -25,14 +25,17 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $ETag == $_SERVER['HTTP_IF_NONE_MAT
     return;
 }
 
-$userInfo = OAuth2::getInstance()->getUser();
-if ($userInfo != null) {
-    $favorite = new Favorites(Database::getInstance(), $userInfo);
-    $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);
-    $result["favoriteId"] = $favoriteSong != null ? $favoriteSong->_id : null;
-}
+$isValidSong = ($metadata->songTitle != $config->eska_rock->no_song);
+$result["isValidSong"] = $isValidSong;
 
-if ($metadata->songTitle != $config->eska_rock->no_song) {
+if ($isValidSong) {
+    $userInfo = OAuth2::getInstance()->getUser();
+    if ($userInfo != null) {
+        $favorite = new Favorites(Database::getInstance(), $userInfo);
+        $favoriteSong = $favorite->findFavoriteSong($metadata->songTitle);
+        $result["favoriteId"] = $favoriteSong != null ? $favoriteSong->_id : null;
+    }
+
     $lastFm = new LastFM();
     $details = $lastFm->getCachedSongDetails($metadata->songTitle);
     if ($details != null) {

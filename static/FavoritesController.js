@@ -22,21 +22,28 @@ class FavoritesController {
         });
 
         this.songDetailsController.onResponseSongDetails((data) => {
-            let songTitle = data["rawSongTitle"];
-            let favoriteId = data["favoriteId"];
+            let isValidSong = data["isValidSong"];
+            if (isValidSong) {
+                let songTitle = data["rawSongTitle"];
+                let favoriteId = data["favoriteId"];
 
-            this.ui.setFavoriteButtonData({
-                songTitle: songTitle,
-                favoriteId: favoriteId
-            });
-            if (favoriteId === undefined) {
-                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
-            }
-            else if (favoriteId !== null) {
-                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+                this.ui.setFavoriteButtonData({
+                    songTitle: songTitle,
+                    favoriteId: favoriteId
+                });
+                if (favoriteId === undefined) {
+                    this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Hidden);
+                }
+                else if (favoriteId !== null) {
+                    this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Remove);
+                }
+                else {
+                    this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
+                }
             }
             else {
-                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Add);
+                this.ui.setFavoriteButtonData({});
+                this.ui.setFavoriteButtonState(RadioUI.FavoriteButtonState.Unavailable);
             }
         });
     }

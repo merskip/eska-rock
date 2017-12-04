@@ -75,6 +75,7 @@ $config = loadConfigOrDie();
 
         <button id="radio-favorite"
                 class="btn-link btn-favorite radio-placeholder"
+                data-title-unavailable="Nie można dodać tego utworu do ulubionych"
                 data-title-add="Dodaj do ulubionych"
                 data-title-remove="Usuń z ulubionych">
             <i class="material-icons"></i>

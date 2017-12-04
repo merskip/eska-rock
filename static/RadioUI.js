@@ -22,8 +22,9 @@ class RadioUI {
     static get FavoriteButtonState() {
         return {
             Hidden: 0,
-            Add: 1,
-            Remove: 2
+            Unavailable: 1,
+            Add: 2,
+            Remove: 3
         }
     }
 
@@ -251,10 +252,15 @@ class RadioUI {
     setFavoriteButtonState(state) {
         this.favoriteBtn
             .removeClass("btn-favorite-remove")
+            .removeClass("btn-favorite-unavailable")
             .removeClass("btn-favorite-add");
 
         if (state === RadioUI.FavoriteButtonState.Hidden) {
             // Nothing, only clear
+        }
+        else if (state === RadioUI.FavoriteButtonState.Unavailable) {
+            this.favoriteBtn.addClass("btn-favorite-unavailable")
+                .attr("title", this.favoriteBtn.attr("data-title-unavailable"));
         }
         else if (state === RadioUI.FavoriteButtonState.Add) {
             this.favoriteBtn.addClass("btn-favorite-add")

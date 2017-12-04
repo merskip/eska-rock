@@ -32,6 +32,12 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     isset($_POST["songTitle"]) or die("Argument songTitle is required");
     $songTitle = $_POST["songTitle"];
 
+    $config = loadConfigOrDie();
+    if ($songTitle == $config->eska_rock->no_song) {
+        http_response_code(400);
+        die("Is not valid song");
+    }
+
     if ($favoriteSong = $favorites->findFavoriteSong($songTitle)) {
         $id = $favoriteSong->_id;
     }

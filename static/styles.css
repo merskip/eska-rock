@@ -470,6 +470,15 @@ body {
     position: relative;
 }
 
+.btn-favorite.btn-favorite-unavailable {
+    color: #777;
+    cursor: auto;
+}
+
+.btn-favorite.btn-favorite-unavailable i.material-icons::after {
+    content: "favorite_border";
+}
+
 .btn-favorite.btn-favorite-add i.material-icons::after {
     content: "favorite_border";
 }
