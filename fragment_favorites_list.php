@@ -15,7 +15,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         <h2 class="radio-modal-title">Lista ulubionych utworów</h2>
         <ul class="radio-favorites-list">
             <?php
-            $favoritesSongs = $favorites->findAllFavoritesSongs();
+            $favoritesSongs = array_reverse($favorites->findAllFavoritesSongs());
 
             $songsWithYoutubeLink = array_filter($favoritesSongs, function ($favorite) {
                 return isset($favorite->details->youtube);
@@ -31,7 +31,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                 </a>
             <?php endif; ?>
             <?php foreach ($favoritesSongs as $item): ?>
-                <li class="radio-favorite-list-item row">
+                <li class="radio-favorite-list-item row" data-favorite-id="<?= $item->_id ?>">
                     <div>
                         <?php if (isset($item->details->album->image)): ?>
                             <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
