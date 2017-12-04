@@ -33,6 +33,19 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                         <span class="radio-favorite-album">
                             <?= $item->details->album->title ?? "Bez albumu" ?>
                         </span>
+                        <div class="radio-favorite-links">
+                            <?php if (isset($item->details->youtube->videoId)): ?>
+                                <a class="radio-url" target="_blank"
+                                   href="https://www.youtube.com/watch?v=<?= $item->details->youtube->videoId ?>">
+                                    YouTube
+                                </a>
+                            <?php endif; ?>
+                            <?php if (isset($item->details->lyrics->url)): ?>
+                                <a class="radio-url" href="<?= $item->details->lyrics->url ?>" target="_blank">
+                                    tekstowo.pl
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </li>
             <?php endforeach; ?>
