@@ -32,7 +32,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             <?php endif; ?>
             <?php foreach ($favoritesSongs as $item): ?>
                 <li class="radio-favorite-list-item row" data-favorite-id="<?= $item->_id ?>">
-                    <div>
+                    <div class="row-item-fit">
                         <?php if (isset($item->details->album->image)): ?>
                             <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
                         <?php elseif (isset($item->details->album)): ?>
@@ -45,11 +45,15 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                             </div>
                         <?php endif; ?>
                     </div>
-                    <div>
+                    <div class="row-item">
                         <i class="material-icons radio-dropdown-btn">more_vert</i>
                         <ul class="radio-dropdown-menu">
-                            <li><a href>Edytuj</a></li>
-                            <li class="radio-dropdown-item-remove"><a href>Usuń</a></li>
+                            <li>
+                                <a class="radio-favorite-edit">Edytuj</a>
+                            </li>
+                            <li class="radio-dropdown-item-remove">
+                                <a href>Usuń</a>
+                            </li>
                         </ul>
 
                         <span class="radio-favorite-song-title">
@@ -78,4 +82,20 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             <?php endforeach; ?>
         </ul>
     </div>
+    <script>
+
+        const EditFormTemplate = `
+            <div class="radio-favorite-edit-form">
+                <label class="radio-favorite-edit-label">YouTube:</label>
+                <input id="radio-favorite-edit-youtube">
+            </div>
+        `;
+
+        $(".radio-favorite-edit").click(function (e) {
+            let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
+
+            let editForm = $.parseHTML(EditFormTemplate);
+            favoriteItem.append(editForm);
+        });
+    </script>
 </div>

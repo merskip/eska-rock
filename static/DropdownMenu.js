@@ -31,10 +31,11 @@ $.fn.showDropdownMenu = function (btn) {
 
 function dismissDropdownMenu(e) {
     let target = $(e.target);
-    if (!target.hasClass("radio-dropdown-btn")
-        && !target.hasClass("radio-dropdown-menu")
-        && $(e.target).parents(".radio-dropdown-menu").length === 0) {
+    let isDropdownButton = target.hasClass("radio-dropdown-btn");
+    let isDropdownMenu = target.closest(".radio-dropdown-menu").length !== 0;
+    let isDropdownItem = target.closest(".radio-dropdown-menu > li").length !== 0;
 
+    if (isDropdownItem || !(isDropdownButton || isDropdownMenu)) {
         $(".radio-dropdown-menu:visible").hideDropdownMenu();
     }
 }

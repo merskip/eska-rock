@@ -19,7 +19,7 @@ function loadFragment(url, successCallback, completeCallback) {
 }
 
 function callbackAppendToBody(content) {
-    let element = $.parseHTML(content);
+    let element = $.parseHTML(content, document, true);
     $(document.body).append(element);
     $(element)
         .initDropdownMenu()

@@ -21,6 +21,10 @@ body {
     flex: 1;
 }
 
+.row .row-item-fit {
+    flex: 0;
+}
+
 .clearfix {
     clear: both;
 }
@@ -565,6 +569,7 @@ ul.radio-favorites-list {
 .radio-favorite-list-item {
     position: relative;
     margin-bottom: 8px;
+    flex-wrap: wrap;
 }
 
 .radio-favorite-list-item:last-child {
@@ -630,6 +635,10 @@ ul.radio-favorites-list {
     color: #555;
 }
 
+.radio-favorite-edit-form {
+    flex: 100%;
+}
+
 /* .radio-dropdown-menu */
 
 .radio-dropdown-btn {
@@ -657,6 +666,8 @@ ul.radio-dropdown-menu {
     font-size: 14px;
     color: #231f20;
     padding: 6px 16px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .radio-dropdown-menu li.radio-dropdown-item-remove > a {
