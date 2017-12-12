@@ -67,7 +67,8 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                         <div class="radio-favorite-links">
                             <?php if (isset($item->details->youtube->videoId)): ?>
                                 <a class="radio-url" target="_blank"
-                                   href="<?= YouTubeHelpers::getVideoUrl($item->details->youtube->videoId) ?>">
+                                   href="<?= YouTubeHelpers::getVideoUrl($item->details->youtube->videoId) ?>"
+                                   data-youtube-link>
                                     YouTube
                                 </a>
                             <?php endif; ?>
@@ -83,19 +84,78 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         </ul>
     </div>
     <script>
+        //# sourceURL=wtf-:D.js
 
         const EditFormTemplate = `
             <div class="radio-favorite-edit-form">
-                <label class="radio-favorite-edit-label">YouTube:</label>
-                <input id="radio-favorite-edit-youtube">
+                <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label">YouTube:</label>
+                <div id="radio-favorite-edit-youtube" contenteditable>
             </div>
         `;
+        const videoIdLength = 11;
 
         $(".radio-favorite-edit").click(function (e) {
             let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
-
             let editForm = $.parseHTML(EditFormTemplate);
+
+            let youtubeLink = favoriteItem.find("a[data-youtube-link]").attr("href");
+            if (youtubeLink !== undefined) {
+                $(editForm).find("#radio-favorite-edit-youtube").text(youtubeLink);
+            }
+
             favoriteItem.append(editForm);
+
+            let ytLinkElement = $(editForm).find("#radio-favorite-edit-youtube");
+            formatYoutubeLink(ytLinkElement);
+
+            ytLinkElement.on("focus", function () {
+                clearFormatYoutubeLink($(this));
+            }).on("focusout", function () {
+                formatYoutubeLink($(this));
+            });
         });
+
+        function clearFormatYoutubeLink(element) {
+            element.text(element.text());
+        }
+
+        function formatYoutubeLink(element) {
+            let text = element.text();
+            let videoIdRange = findRangeOfVideoId(text);
+            if (videoIdRange !== null) {
+                let videoId = text.substringRange(videoIdRange);
+                element.html(generateShortYouTubeUrl(videoId, true));
+            }
+            else if (text.length === videoIdLength && text.indexOf("://") === -1) {
+                element.html(generateShortYouTubeUrl(text, true));
+            }
+        }
+
+        function findRangeOfVideoId(url) {
+            let urlSchemas = [
+                { urlPrefix: "https://youtu.be/", prefix: "/", suffix: "?" },
+                { urlPrefix: "http://youtu.be/", prefix: "/", suffix: "?" },
+                { urlPrefix: "https://www.youtube.com/watch", prefix: "v=", suffix: "&" },
+                { urlPrefix: "http://www.youtube.com/watch", prefix: "v=", suffix: "&" }
+            ];
+
+            let resultRange = null;
+            $.each(urlSchemas, function (index, schema) {
+                if (url.startsWith(schema.urlPrefix)) {
+                    let range = url.findSubstringRange(schema.prefix, schema.suffix, schema.urlPrefix.length - 1);
+                    if (range.length === videoIdLength) {
+                        resultRange = range;
+                    }
+                    return false; // break loop
+                }
+            });
+            return resultRange;
+        }
+
+        function generateShortYouTubeUrl(videoId, highlight) {
+            let videoIdPath = highlight ? (`<span class="radio-input-edit-highlight">` + videoId + `</span>`) : videoId;
+            return "https://youtu.be/" + videoIdPath;
+        }
+
     </script>
 </div>

@@ -639,6 +639,11 @@ ul.radio-favorites-list {
     flex: 100%;
 }
 
+.radio-input-edit-highlight {
+    color: #c21a29;
+    font-weight: 600;
+}
+
 /* .radio-dropdown-menu */
 
 .radio-dropdown-btn {
