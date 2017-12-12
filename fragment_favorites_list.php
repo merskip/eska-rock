@@ -99,7 +99,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 
                     <div class="row radio-favorite-edit-actions-row">
                         <div class="row-item"></div>
-                        <button class="radio-btn radio-btn-secondary">Anuluj</button>
+                        <button class="radio-btn radio-btn-secondary" data-edit-form-action="dismiss">Anuluj</button>
                         <button class="radio-btn radio-btn-primary">Zapisz</button>
                     </div>
                 </div>`;
@@ -110,6 +110,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             $(".radio-favorite-edit").click(function (e) {
                 if (favoriteEditForm !== undefined) {
                     $(favoriteEditForm).remove();
+                    favoriteEditForm = undefined;
                 }
 
                 let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
@@ -142,6 +143,11 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                     $(this).parent().find(".radio-favorite-edit-label[for=" + id + "]").addClass("radio-favorite-edit-label-highlight");
                 }).on("focusout", function () {
                     $(this).parent().find(".radio-favorite-edit-label").removeClass("radio-favorite-edit-label-highlight");
+                });
+
+                $(editForm).find("[data-edit-form-action=dismiss]").click(function () {
+                    $(this).closest(".radio-favorite-edit-form").remove();
+                    favoriteEditForm = undefined;
                 });
             });
 

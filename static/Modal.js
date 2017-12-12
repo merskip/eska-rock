@@ -7,10 +7,11 @@ $.fn.initModal = function () {
     let modal = $(this).hasClass("radio-modal") ? $(this) : $(this).find(".radio-modal");
     modal.click(function (e) {
         let target = $(e.target);
+        let existsInDOM = document.body.contains(e.target);
         let isInsideContent = target.hasClass("radio-modal-content")
             || target.parents(".radio-modal-content").length !== 0;
 
-        if (!isInsideContent) {
+        if (existsInDOM && !isInsideContent) {
             $(this).dismissModal();
         }
     });
