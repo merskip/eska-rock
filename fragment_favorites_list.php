@@ -89,10 +89,14 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         $(function () {
             const EditFormTemplate = `
                 <div class="radio-favorite-edit-form">
-                    <div class="row row-align-baseline">
-                        <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label row-item-fit">YouTube:</label>
-                        <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false"></div>
-                    </div>
+                    <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label">YouTube:</label>
+                    <div id="radio-favorite-edit-youtube" class="radio-edit-value"
+                        contenteditable spellcheck="false" data-placeholder="https://youtu.be/HereVideoId"></div>
+
+                    <label for="radio-favorite-edit-album-image" class="radio-favorite-edit-label">Zdjęcie albumu:</label>
+                    <div id="radio-favorite-edit-album-image" class="radio-edit-value"
+                        contenteditable spellcheck="false" data-placeholder="https://hosting.example/path_to_image.jpg"></div>
+
                     <div class="row radio-favorite-edit-actions-row">
                         <div class="row-item"></div>
                         <button class="radio-btn radio-btn-secondary">Anuluj</button>
@@ -117,6 +121,11 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                     $(editForm).find("#radio-favorite-edit-youtube").text(youtubeLink);
                 }
 
+                let albumImageUrl = favoriteItem.find("img.radio-favorite-album-image").attr("src");
+                if (albumImageUrl !== undefined) {
+                    $(editForm).find("#radio-favorite-edit-album-image").text(albumImageUrl);
+                }
+
                 favoriteItem.append(editForm);
 
                 let ytLinkElement = $(editForm).find("#radio-favorite-edit-youtube");
@@ -124,9 +133,14 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 
                 ytLinkElement.on("focus", function () {
                     clearFormatYoutubeLink($(this));
-                    $(this).parent().find(".radio-favorite-edit-label").addClass("radio-favorite-edit-label-highlight");
                 }).on("focusout", function () {
                     formatYoutubeLink($(this));
+                });
+
+                $(editForm).find(".radio-edit-value").on("focus", function () {
+                    let id = $(this).attr("id");
+                    $(this).parent().find(".radio-favorite-edit-label[for=" + id + "]").addClass("radio-favorite-edit-label-highlight");
+                }).on("focusout", function () {
                     $(this).parent().find(".radio-favorite-edit-label").removeClass("radio-favorite-edit-label-highlight");
                 });
             });
