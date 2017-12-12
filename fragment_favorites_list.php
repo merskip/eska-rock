@@ -91,7 +91,12 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                 <div class="radio-favorite-edit-form">
                     <div class="row row-align-baseline">
                         <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label row-item-fit">YouTube:</label>
-                        <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false">
+                        <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false"></div>
+                    </div>
+                    <div class="row radio-favorite-edit-actions-row">
+                        <div class="row-item"></div>
+                        <button class="radio-btn radio-btn-secondary">Anuluj</button>
+                        <button class="radio-btn radio-btn-primary">Zapisz</button>
                     </div>
                 </div>`;
             const videoIdLength = 11;
