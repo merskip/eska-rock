@@ -17,6 +17,10 @@ body {
     display: flex;
 }
 
+.row.row-align-baseline {
+    align-items: baseline;
+}
+
 .row .row-item {
     flex: 1;
 }
@@ -637,11 +641,37 @@ ul.radio-favorites-list {
 
 .radio-favorite-edit-form {
     flex: 100%;
+    margin-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 8px;
 }
 
-.radio-input-edit-highlight {
-    color: #c21a29;
+.radio-favorite-edit-label {
     font-weight: 600;
+    margin-right: 4px;
+    transition: color 0.3s;
+}
+
+.radio-favorite-edit-label.radio-favorite-edit-label-highlight {
+    color: #c21a29;
+}
+
+.radio-edit-value[contenteditable] {
+    outline: none;
+    padding: 2px 8px;
+    border-bottom: 2px solid #ccc;
+    color: #555;
+    transition: border-bottom-color 0.3s, color 0.3s;
+}
+
+.radio-edit-value[contenteditable]:focus {
+    color: #231f20;
+    border-bottom-color: #c21a29;
+}
+
+.radio-edit-value-highlight {
+    color: #c21a29;
 }
 
 /* .radio-dropdown-menu */

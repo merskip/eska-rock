@@ -84,12 +84,14 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         </ul>
     </div>
     <script>
-        //# sourceURL=wtf-:D.js
+        //# sourceURL=<?= __FILE__ ?>.js
 
         const EditFormTemplate = `
             <div class="radio-favorite-edit-form">
-                <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label">YouTube:</label>
-                <div id="radio-favorite-edit-youtube" contenteditable>
+                <div class="row row-align-baseline">
+                    <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label row-item-fit">YouTube:</label>
+                    <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false">
+                </div>
             </div>
         `;
         const videoIdLength = 11;
@@ -110,8 +112,10 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 
             ytLinkElement.on("focus", function () {
                 clearFormatYoutubeLink($(this));
+                $(this).parent().find(".radio-favorite-edit-label").addClass("radio-favorite-edit-label-highlight");
             }).on("focusout", function () {
                 formatYoutubeLink($(this));
+                $(this).parent().find(".radio-favorite-edit-label").removeClass("radio-favorite-edit-label-highlight");
             });
         });
 
@@ -124,7 +128,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             let videoIdRange = findRangeOfVideoId(text);
             if (videoIdRange !== null) {
                 let videoId = text.substringRange(videoIdRange);
-                element.html(generateShortYouTubeUrl(videoId, true));
+                element.html(text.replaceRange(videoIdRange, wrapperVideoIdForHighlight(videoId)));
             }
             else if (text.length === videoIdLength && text.indexOf("://") === -1) {
                 element.html(generateShortYouTubeUrl(text, true));
@@ -153,8 +157,12 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
         }
 
         function generateShortYouTubeUrl(videoId, highlight) {
-            let videoIdPath = highlight ? (`<span class="radio-input-edit-highlight">` + videoId + `</span>`) : videoId;
+            let videoIdPath = highlight ? wrapperVideoIdForHighlight(videoId) : videoId;
             return "https://youtu.be/" + videoIdPath;
+        }
+
+        function wrapperVideoIdForHighlight(videoId) {
+            return `<span class="radio-edit-value-highlight">` + videoId + `</span>`;
         }
 
     </script>
