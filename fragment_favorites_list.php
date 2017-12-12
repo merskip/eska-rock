@@ -67,7 +67,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                         <div class="radio-favorite-links">
                             <?php if (isset($item->details->youtube->videoId)): ?>
                                 <a class="radio-url" target="_blank"
-                                   href="<?= YouTubeHelpers::getVideoUrl($item->details->youtube->videoId) ?>"
+                                   href="<?= YouTubeHelpers::getShortedVideoUrl($item->details->youtube->videoId) ?>"
                                    data-youtube-link>
                                     YouTube
                                 </a>

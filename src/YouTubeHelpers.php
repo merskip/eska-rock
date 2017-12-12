@@ -6,6 +6,10 @@ class YouTubeHelpers {
     private function __construct() {
     }
 
+    static function getShortedVideoUrl($videoId) {
+        return "https://youtu.be/" . $videoId;
+    }
+
     static function getVideoUrl($videoId) {
         return "https://www.youtube.com/watch?v=" . $videoId;
     }

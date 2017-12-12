@@ -641,15 +641,14 @@ ul.radio-favorites-list {
 
 .radio-favorite-edit-form {
     flex: 100%;
-    margin-top: 16px;
-    padding-bottom: 16px;
     border-bottom: 1px solid #d8d8d8;
-    margin-bottom: 8px;
+    padding: 16px;
+    margin: 0 -16px 8px;
 }
 
 .radio-favorite-edit-label {
     font-weight: 600;
-    margin-right: 4px;
+    margin-right: 8px;
     transition: color 0.3s;
 }
 
