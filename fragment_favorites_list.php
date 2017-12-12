@@ -86,84 +86,86 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
     <script>
         //# sourceURL=<?= __FILE__ ?>.js
 
-        const EditFormTemplate = `
-            <div class="radio-favorite-edit-form">
-                <div class="row row-align-baseline">
-                    <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label row-item-fit">YouTube:</label>
-                    <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false">
-                </div>
-            </div>
-        `;
-        const videoIdLength = 11;
+        $(function () {
+            const EditFormTemplate = `
+                <div class="radio-favorite-edit-form">
+                    <div class="row row-align-baseline">
+                        <label for="radio-favorite-edit-youtube" class="radio-favorite-edit-label row-item-fit">YouTube:</label>
+                        <div id="radio-favorite-edit-youtube" class="radio-edit-value row-item" contenteditable spellcheck="false">
+                    </div>
+                </div>`;
+            const videoIdLength = 11;
 
-        $(".radio-favorite-edit").click(function (e) {
-            let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
-            let editForm = $.parseHTML(EditFormTemplate);
+            $(".radio-favorite-edit").click(function (e) {
+                let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
+                let editForm = $.parseHTML(EditFormTemplate);
 
-            let youtubeLink = favoriteItem.find("a[data-youtube-link]").attr("href");
-            if (youtubeLink !== undefined) {
-                $(editForm).find("#radio-favorite-edit-youtube").text(youtubeLink);
-            }
-
-            favoriteItem.append(editForm);
-
-            let ytLinkElement = $(editForm).find("#radio-favorite-edit-youtube");
-            formatYoutubeLink(ytLinkElement);
-
-            ytLinkElement.on("focus", function () {
-                clearFormatYoutubeLink($(this));
-                $(this).parent().find(".radio-favorite-edit-label").addClass("radio-favorite-edit-label-highlight");
-            }).on("focusout", function () {
-                formatYoutubeLink($(this));
-                $(this).parent().find(".radio-favorite-edit-label").removeClass("radio-favorite-edit-label-highlight");
-            });
-        });
-
-        function clearFormatYoutubeLink(element) {
-            element.text(element.text());
-        }
-
-        function formatYoutubeLink(element) {
-            let text = element.text();
-            let videoIdRange = findRangeOfVideoId(text);
-            if (videoIdRange !== null) {
-                let videoId = text.substringRange(videoIdRange);
-                element.html(text.replaceRange(videoIdRange, wrapperVideoIdForHighlight(videoId)));
-            }
-            else if (text.length === videoIdLength && text.indexOf("://") === -1) {
-                element.html(generateShortYouTubeUrl(text, true));
-            }
-        }
-
-        function findRangeOfVideoId(url) {
-            let urlSchemas = [
-                { urlPrefix: "https://youtu.be/", prefix: "/", suffix: "?" },
-                { urlPrefix: "http://youtu.be/", prefix: "/", suffix: "?" },
-                { urlPrefix: "https://www.youtube.com/watch", prefix: "v=", suffix: "&" },
-                { urlPrefix: "http://www.youtube.com/watch", prefix: "v=", suffix: "&" }
-            ];
-
-            let resultRange = null;
-            $.each(urlSchemas, function (index, schema) {
-                if (url.startsWith(schema.urlPrefix)) {
-                    let range = url.findSubstringRange(schema.prefix, schema.suffix, schema.urlPrefix.length - 1);
-                    if (range.length === videoIdLength) {
-                        resultRange = range;
-                    }
-                    return false; // break loop
+                let youtubeLink = favoriteItem.find("a[data-youtube-link]").attr("href");
+                if (youtubeLink !== undefined) {
+                    $(editForm).find("#radio-favorite-edit-youtube").text(youtubeLink);
                 }
+
+                favoriteItem.append(editForm);
+
+                let ytLinkElement = $(editForm).find("#radio-favorite-edit-youtube");
+                formatYoutubeLink(ytLinkElement);
+
+                ytLinkElement.on("focus", function () {
+                    clearFormatYoutubeLink($(this));
+                    $(this).parent().find(".radio-favorite-edit-label").addClass("radio-favorite-edit-label-highlight");
+                }).on("focusout", function () {
+                    formatYoutubeLink($(this));
+                    $(this).parent().find(".radio-favorite-edit-label").removeClass("radio-favorite-edit-label-highlight");
+                });
             });
-            return resultRange;
-        }
 
-        function generateShortYouTubeUrl(videoId, highlight) {
-            let videoIdPath = highlight ? wrapperVideoIdForHighlight(videoId) : videoId;
-            return "https://youtu.be/" + videoIdPath;
-        }
+            function clearFormatYoutubeLink(element) {
+                element.text(element.text());
+            }
 
-        function wrapperVideoIdForHighlight(videoId) {
-            return `<span class="radio-edit-value-highlight">` + videoId + `</span>`;
-        }
+            function formatYoutubeLink(element) {
+                let text = element.text();
+                let videoIdRange = findRangeOfVideoId(text);
+                if (videoIdRange !== null) {
+                    let videoId = text.substringRange(videoIdRange);
+                    element.html(text.replaceRange(videoIdRange, wrapperVideoIdForHighlight(videoId)));
+                }
+                else if (text.length === videoIdLength && text.indexOf("://") === -1) {
+                    element.html(generateShortYouTubeUrl(text, true));
+                }
+            }
+
+            function findRangeOfVideoId(url) {
+                let urlSchemas = [
+                    {urlPrefix: "https://youtu.be/", prefix: "/", suffix: "?"},
+                    {urlPrefix: "http://youtu.be/", prefix: "/", suffix: "?"},
+                    {urlPrefix: "https://www.youtube.com/watch", prefix: "v=", suffix: "&"},
+                    {urlPrefix: "http://www.youtube.com/watch", prefix: "v=", suffix: "&"}
+                ];
+
+                let resultRange = null;
+                $.each(urlSchemas, function (index, schema) {
+                    if (url.startsWith(schema.urlPrefix)) {
+                        let range = url.findSubstringRange(schema.prefix, schema.suffix, schema.urlPrefix.length - 1);
+                        if (range.length === videoIdLength) {
+                            resultRange = range;
+                        }
+                        return false; // break loop
+                    }
+                });
+                return resultRange;
+            }
+
+            function generateShortYouTubeUrl(videoId, highlight) {
+                let videoIdPath = highlight ? wrapperVideoIdForHighlight(videoId) : videoId;
+                return "https://youtu.be/" + videoIdPath;
+            }
+
+            function wrapperVideoIdForHighlight(videoId) {
+                return `<span class="radio-edit-value-highlight">` + videoId + `</span>`;
+            }
+
+        });
 
     </script>
 </div>
