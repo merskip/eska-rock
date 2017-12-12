@@ -96,9 +96,16 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                 </div>`;
             const videoIdLength = 11;
 
+            let favoriteEditForm;
+
             $(".radio-favorite-edit").click(function (e) {
+                if (favoriteEditForm !== undefined) {
+                    $(favoriteEditForm).remove();
+                }
+
                 let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
                 let editForm = $.parseHTML(EditFormTemplate);
+                favoriteEditForm = editForm;
 
                 let youtubeLink = favoriteItem.find("a[data-youtube-link]").attr("href");
                 if (youtubeLink !== undefined) {
