@@ -149,7 +149,7 @@ $config = loadConfigOrDie();
 
     let userUI = new UserUI();
     let userController = new UserController(userUI);
-    new FavoritesController(radioUI, userController, songDetailsController);
+    let favoriteController = new FavoritesController(radioUI, userController, songDetailsController);
 </script>
 <div class="radio-footer">
     <?php

@@ -31,7 +31,8 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                 </a>
             <?php endif; ?>
             <?php foreach ($favoritesSongs as $item): ?>
-                <li class="radio-favorite-list-item row" data-favorite-id="<?= $item->_id ?>">
+                <li class="radio-favorite-list-item row"
+                    data-favorite-id="<?= $item->_id ?>" data-song-title="<?= $item->songTitle ?>">
                     <div class="row-item-fit radio-favorite-album-image-wrapper">
                         <?php if (isset($item->details->album->image)): ?>
                             <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
@@ -52,7 +53,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                                 <a class="radio-favorite-edit">Edytuj</a>
                             </li>
                             <li class="radio-dropdown-item-remove">
-                                <a href>Usuń</a>
+                                <a class="radio-favorite-remove">Usuń</a>
                             </li>
                         </ul>
 
@@ -106,6 +107,30 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             const videoIdLength = 11;
 
             let favoriteEditForm;
+
+            $(".radio-favorite-remove").click(function (e) {
+                let favoriteItem = $(e.target).closest(".radio-favorite-list-item");
+                let favoriteId = favoriteItem.attr("data-favorite-id");
+                let songTitle = favoriteItem.attr("data-song-title");
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "api/favorites",
+                    data: {
+                        _id: favoriteId
+                    },
+                    success: () => {
+                        favoriteItem
+                            .animate({opacity: 0.0}, 300)
+                            .slideUp({duration: 300, queue: false,
+                                complete: function () {
+                                    favoriteController.didSelectFavoriteRemove(favoriteId, songTitle);
+                                    $(this).remove();
+                                }
+                            });
+                    }
+                });
+            });
 
             $(".radio-favorite-edit").click(function (e) {
                 if (favoriteEditForm !== undefined) {
