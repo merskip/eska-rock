@@ -82,6 +82,13 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                     </div>
                 </li>
             <?php endforeach; ?>
+            <?php if (count($favoritesSongs) == 0): ?>
+                <div class="radio-favorite-list-empty-state">
+                    <i class="material-icons">favorite</i>
+                    Nic tu nie ma.<br>
+                    Dodawaj ulubione utwory i słuchaj ich na YouTube.
+                </div>
+            <?php endif; ?>
         </ul>
     </div>
     <script>
@@ -130,6 +137,10 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                             });
                     }
                 });
+
+                if ($(".radio-favorites-list > li").length === 1) { // Is last favorite song
+                    $("#favorite-list-fragment").dismissModal();
+                }
             });
 
             $(".radio-favorite-edit").click(function (e) {
