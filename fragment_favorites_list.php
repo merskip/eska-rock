@@ -157,7 +157,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 
                     let youtubeUrl = listItem.find("#radio-favorite-edit-youtube").text();
                     let videoIdRange = findRangeOfVideoId(youtubeUrl);
-                    let videoId = youtubeUrl.substringRange(videoIdRange);
+                    let videoId = videoIdRange !== null ? youtubeUrl.substringRange(videoIdRange) : null;
 
                     let albumImageUrl = listItem.find("#radio-favorite-edit-album-image").text();
 

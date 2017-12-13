@@ -57,12 +57,6 @@ class Database {
         }
     }
 
-    public function updateSetOne($collection, $filter, $document) {
-        return $this->updateOne($collection, $filter, [
-            '$set' => $document
-        ]);
-    }
-
     public function updateOne($collection, $filter, $document) {
         count($filter) > 0 or die("For update query you must set non-empty filter");
         if (isset($filter["_id"]) && is_string($filter["_id"])) {

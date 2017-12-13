@@ -51,9 +51,21 @@ class Favorites {
     }
 
     public function updateFavoriteSong($id, $albumImageUrl, $youtubeVideoId) {
-        return $this->db->updateSetOne(Favorites::Collection, ["_id" => $id], [
-            "details.album.image" => $albumImageUrl,
-            "details.youtube.videoId" => $youtubeVideoId
-        ]);
+        $query = ['$set' => [], '$unset' => []];
+
+        if ($albumImageUrl != null)
+            $query['$set']["details.album.image"] = $albumImageUrl;
+        else
+            $query['$unset']["details.album.image"] = null;
+
+        if ($youtubeVideoId != null)
+            $query['$set']["details.youtube.videoId"] = $youtubeVideoId;
+        else
+            $query['$unset']["details.youtube"] = null;
+
+        if (empty($query['$set'])) unset($query['$set']);
+        if (empty($query['$unset'])) unset($query['$unset']);
+
+        return $this->db->updateOne(Favorites::Collection, ["_id" => $id], $query);
     }
 }
