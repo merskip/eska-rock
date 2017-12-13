@@ -9,7 +9,7 @@ $oauth2 = OAuth2::getInstance();
 $oauth2->isSignIn() or die("You must be sign in");
 $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
 ?>
-<div class="radio-modal">
+<div id="favorite-list-fragment" class="radio-modal">
     <div class="radio-modal-content">
         <button class="radio-modal-close"></button>
         <h2 class="radio-modal-title">Lista ulubionych utworów</h2>
@@ -32,7 +32,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
             <?php endif; ?>
             <?php foreach ($favoritesSongs as $item): ?>
                 <li class="radio-favorite-list-item row" data-favorite-id="<?= $item->_id ?>">
-                    <div class="row-item-fit">
+                    <div class="row-item-fit radio-favorite-album-image-wrapper">
                         <?php if (isset($item->details->album->image)): ?>
                             <img src="<?= $item->details->album->image ?>" class="radio-favorite-album-image">
                         <?php elseif (isset($item->details->album)): ?>
@@ -100,7 +100,7 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                     <div class="row radio-favorite-edit-actions-row">
                         <div class="row-item"></div>
                         <button class="radio-btn radio-btn-secondary" data-edit-form-action="dismiss">Anuluj</button>
-                        <button class="radio-btn radio-btn-primary">Zapisz</button>
+                        <button class="radio-btn radio-btn-primary" data-edit-form-action="submit">Zapisz</button>
                     </div>
                 </div>`;
             const videoIdLength = 11;
@@ -148,6 +148,36 @@ $favorites = new Favorites(Database::getInstance(), $oauth2->getUser());
                 $(editForm).find("[data-edit-form-action=dismiss]").click(function () {
                     $(this).closest(".radio-favorite-edit-form").remove();
                     favoriteEditForm = undefined;
+                });
+
+
+                $(editForm).find("[data-edit-form-action=submit]").click(function () {
+                    let listItem = $(this).closest(".radio-favorite-list-item");
+                    let favoriteId = listItem.attr("data-favorite-id");
+
+                    let youtubeUrl = listItem.find("#radio-favorite-edit-youtube").text();
+                    let videoIdRange = findRangeOfVideoId(youtubeUrl);
+                    let videoId = youtubeUrl.substringRange(videoIdRange);
+
+                    let albumImageUrl = listItem.find("#radio-favorite-edit-album-image").text();
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "api/favorites",
+                        data: {
+                            _id: favoriteId,
+                            details: {
+                                album: { image: albumImageUrl },
+                                youtube: { videoId: videoId }
+                            }
+                        },
+                        success: () => {
+                            loadFragment("fragments/favorites_list", (content) => {
+                                $("#favorite-list-fragment").remove();
+                                callbackAppendToBody(content);
+                            });
+                        }
+                    });
                 });
             });
 

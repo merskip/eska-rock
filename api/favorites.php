@@ -79,6 +79,22 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         http_response_code(404);
     }
 }
+else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    parse_str(file_get_contents('php://input'), $_PUT); // PHP not supports PUT in default
+
+    isset($_PUT["_id"]) or die("Argument _id is required");
+
+    isset($_PUT["details"]["album"]["image"]) or die("Argument details.album.image is required");
+    isset($_PUT["details"]["youtube"]["videoId"]) or die("Argument details.youtube.videoId is required");
+
+    $id = $_PUT["_id"];
+    $albumImageUrl = $_PUT["details"]["album"]["image"];
+    $youtubeVideoId = $_PUT["details"]["youtube"]["videoId"];
+
+    if (!$favorites->updateFavoriteSong($id, $albumImageUrl, $youtubeVideoId)) {
+        http_response_code(400);
+    }
+}
 else {
     die("Unknown http method: " . $method);
 }

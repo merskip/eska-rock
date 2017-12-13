@@ -57,13 +57,19 @@ class Database {
         }
     }
 
+    public function updateSetOne($collection, $filter, $document) {
+        return $this->updateOne($collection, $filter, [
+            '$set' => $document
+        ]);
+    }
+
     public function updateOne($collection, $filter, $document) {
         count($filter) > 0 or die("For update query you must set non-empty filter");
-        if ($filter["_id"] && is_string($filter["_id"])) {
+        if (isset($filter["_id"]) && is_string($filter["_id"])) {
             $filter["_id"] = new MongoDB\BSON\ObjectID($filter["_id"]);
         }
         $document = (array)$document;
-        if ($document["_id"] && is_string($document["_id"])) {
+        if (isset($document["_id"]) && is_string($document["_id"])) {
             $document["_id"] = new MongoDB\BSON\ObjectID($document["_id"]);
         }
 
@@ -71,7 +77,7 @@ class Database {
         $bulk->update($filter, $document, ['limit' => 1]);
 
         $result = $this->manager->executeBulkWrite($this->resolveCollection($collection), $bulk);
-        return $result->getUpsertedCount() > 0;
+        return $result->getMatchedCount() > 0;
     }
 
     public function deleteOne($collection, $filter) {
