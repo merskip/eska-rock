@@ -3,6 +3,9 @@ SetEnv HTACCESS on
 
 RewriteEngine On
 
+# Forbid access to .git directory
+RedirectMatch 404 /\.git
+
 # Mapping api request to file
 RewriteRule ^api/song_info$ api/song_info.php
 RewriteRule ^api/user/oauth2_authorize$ api/oauth2_authorize.php
