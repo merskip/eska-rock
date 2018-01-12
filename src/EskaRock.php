@@ -4,7 +4,7 @@ require_once 'utils.php';
 
 class EskaRock {
 
-    const PLAYER_URL = "http://www.eskago.pl/radio/eska-rock";
+    const PLAYER_URL = "https://www.eskago.pl/radio/eska-rock";
     const STREAM_LINE_PREFIX = "var streamUrl = '";
     const STREAM_LINE_SUFFIX = "'.replace('.aac', '.mp3');";
     const CACHE_URL_FILENAME = "eska-rock-url";
