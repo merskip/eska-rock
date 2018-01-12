@@ -47,7 +47,7 @@ $config = loadConfigOrDie();
     <div id="user-panel" <?= $user == null ? Styles::displayNone() : "" ?>>
         <div class="row">
             <div class="row-item">
-                <img src="<?= $user->picture ?? "" ?>" class="user-image">
+                <img src="<?= $user->picture ?? "static/no-image.png" ?>" class="user-image" alt="Awatar użytkownika">
             </div>
             <div class="row-item">
                 <div class="user-name"><?= $user->name ?? "" ?></div>
@@ -63,7 +63,7 @@ $config = loadConfigOrDie();
     </div>
 </div>
 
-<img src="static/eska-rock-horizontal-logo.png" class="logo">
+<img src="static/eska-rock-horizontal-logo.png" class="logo" alt="EskaRock">
 <div id="radio-panel" class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream">
     </audio>
@@ -72,7 +72,7 @@ $config = loadConfigOrDie();
         <span class="radio-toggle-play-icon"></span>
     </button>
     <div class="radio-panel-content">
-        <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="">
+        <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="static/no-image.png" alt="Zdjęcie albumu">
 
         <button id="radio-favorite"
                 class="btn-link btn-favorite radio-placeholder"
