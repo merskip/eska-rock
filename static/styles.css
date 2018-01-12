@@ -547,14 +547,19 @@ body {
 /* .radio-footer */
 
 .radio-footer {
-    float: right;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border-top: 1px #231f20 solid;
+    margin: 0;
     color: #555;
     font-size: 14px;
-    margin-right: 8px;
-    margin-bottom: 16px
+    padding: 8px;
 }
 
-.radio-footer .version {
+.radio-footer .radio-version-canonical {
     color: #777;
     font-weight: 600;
 }
