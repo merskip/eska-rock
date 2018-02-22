@@ -1,6 +1,7 @@
 <?php
 require_once 'Cache.php';
 require_once 'utils.php';
+$config = loadConfigOrDie();
 
 class EskaRock {
 
@@ -41,24 +42,15 @@ class EskaRock {
     }
 
     function requestStreamMetadata() {
-        $streamUrl = $this->getCachedStreamUrl();
-        $streamUrl = substr($streamUrl, 0, strrpos($streamUrl, "?")); // Remove GET parameters
-        $filename = substr($streamUrl, strrpos($streamUrl, "/") + 1); 
-        $streamId = substr($filename, 0, strrpos($filename, "."));
-        $statusUrl = substr($streamUrl, 0, strrpos($streamUrl, "/")) . "/status-json.xsl";
-        
-        $status = json_decode(file_get_contents($statusUrl));
-        $sources = $status->icestats->source;
-        
-        $streamSources = array_values(array_filter($sources, function($source) use($streamId) {
-            return strpos($source->listenurl, $streamId) !== false;
-        }));
+        global $config;
+        $jsonp_url = $config->eska_rock->jsonp->url;
+
+        $jsonp = file_get_contents($jsonp_url);
+        $json = json_decode(str_find($jsonp, $config->eska_rock->jsonp->func_prefix, $config->eska_rock->jsonp->func_suffix));
         
         $result = new stdClass;
-        $result->songTitle = $streamSources[0]->title;
-        $result->listeners = array_sum(array_map(function($source) {
-            return $source->listeners;
-        }, $streamSources));
+        $result->songTitle = $json[0]->artists[0]->name . " - " . $json[0]->name;
+        $result->listeners = intval($json[0]->listenCount);
 
         return $result;
     }
