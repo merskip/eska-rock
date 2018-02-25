@@ -785,3 +785,29 @@ ul.radio-dropdown-menu {
 .radio-dropdown-menu li:hover {
     background-color: #f8f8f8;
 }
+
+/* .radio-toolbar */
+
+.radio-toolbar {
+    position: absolute;
+    left: 88px;
+    top: 4px;
+    margin-left: 8px;
+}
+
+.radio-toolbar-btn {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #231f20;
+    outline: none;
+    cursor: pointer;
+}
+
+.radio-toolbar-btn i {
+    font-size: 22px;
+}
+
+.radio-toolbar-btn:hover {
+    color: #000;
+}

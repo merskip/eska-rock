@@ -71,12 +71,13 @@ $config = loadConfigOrDie();
     <button id="radio-toggle-play" class="radio-panel-button radio-toggle-play radio-play-btn">
         <span class="radio-toggle-play-icon"></span>
     </button>
-    <div class="radio-toolbar">
-        <button id="radio-toggle-mute" class="toolbar-btn">
-            <i class="material-icons">volume_up</i>
-        </button>
-    </div>
     <div class="radio-panel-content">
+        <div class="radio-toolbar">
+            <button id="radio-toggle-mute" class="radio-toolbar-btn">
+                <i class="material-icons">volume_up</i>
+            </button>
+        </div>
+
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="static/no-image.png" alt="Zdjęcie albumu">
 
         <button id="radio-favorite"
