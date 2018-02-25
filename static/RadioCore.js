@@ -23,7 +23,10 @@ class Radio {
 
                 this.onTimeUpdate(this.stream.currentTime);
             }
-        }
+        };
+        this.stream.onvolumechange = () => {
+            this.onVolumeChange(this.stream.muted, this.stream.volume);
+        };
     }
 
     playWithStreamUrl(url) {
@@ -63,8 +66,16 @@ class Radio {
         this.stream.pause();
         this.stream.currentTime = 0;
         this.stream.src = '';
-        this.stream.onpause(); // bug?
+        this.stream.onpause(null); // bug?
         this.isBufferingStream = false;
+    }
+
+    mute() {
+        this.stream.muted = true;
+    }
+
+    unmute() {
+        this.stream.muted = false;
     }
 
     _checkHttpIsOk(url, onSuccess, onFailed) {
@@ -142,6 +153,21 @@ Radio.prototype.onTimeUpdate = function(a) {
     }
     else {
         console.error("Excepted 1 parameter function or number");
+    }
+};
+
+Radio.prototype.onVolumeChange= function(a, b) {
+    if (typeof a === "boolean" && typeof b === "number") {
+        $(this).trigger("on_volume_change", [a, b]);
+    }
+    else if (typeof a === "function") {
+        let callback = a;
+        $(this).on("on_volume_change", (event, muted, volume) => {
+            callback(muted, volume);
+        });
+    }
+    else {
+        console.error("Excepted 1 parameter function or boolean with number");
     }
 };
 

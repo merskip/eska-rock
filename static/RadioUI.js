@@ -31,6 +31,7 @@ class RadioUI {
     constructor() {
         this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
+        this.toggleMuteBtn = $("#radio-toggle-mute");
         this.playingTimer = $("#radio-timer");
         this.refreshProgressIndicator = $("#radio-refreshing-countdown-timer");
         this.favoriteBtn = $("#radio-favorite");
@@ -78,6 +79,10 @@ class RadioUI {
                 this.didSelectStop();
             }
         });
+        this.toggleMuteBtn.click(() => {
+            let iconName = this.toggleMuteBtn.text().trim();
+            this.didSelectToggleMute(iconName === "volume_up");
+        });
         this.favoriteBtn.click(() => {
             if (this.favoriteBtn.hasClass("btn-favorite-add")) {
                 let songTitle = this.favoriteBtn.attr("data-song-title");
@@ -119,6 +124,10 @@ class RadioUI {
         isLoading
             ? this.togglePlayBtn.addClass("radio-stream-loading")
             : this.togglePlayBtn.removeClass("radio-stream-loading");
+    }
+
+    setToggleMuteButton(isForMute) {
+        this.toggleMuteBtn.find("i").html(isForMute ? "volume_up" : " volume_off");
     }
 
     setPanelState(state) {
@@ -313,3 +322,4 @@ RadioUI.prototype.didSelectPlay = () => { };
 RadioUI.prototype.didSelectStop = () => { };
 RadioUI.prototype.didSelectFavoriteAdd = (songTitle) => { };
 RadioUI.prototype.didSelectFavoriteRemove = (id, songTitle) => { };
+RadioUI.prototype.didSelectToggleMute = (isForMute) => { };
