@@ -152,12 +152,12 @@ $config = loadConfigOrDie();
     let favoriteController = new FavoritesController(radioUI, userController, songDetailsController);
 </script>
 <div class="radio-footer">
-    &copy; 2018 by Piotr Merski
+    &copy; 2017-2018 Piotr Merski.
     <?php
     $lastTaggedVersion = exec("git describe --tags --abbrev=0");
     $fullVersion = exec("git describe --tags --long");
     $suffixVersion = str_remove_prefix_ltrim($fullVersion, $lastTaggedVersion);
     ?>
-    - <span class="radio-version-canonical"><?= $lastTaggedVersion ?></span><?= $suffixVersion ?>
+    Ver. <span class="radio-version-canonical"><?= $lastTaggedVersion ?></span><?= $suffixVersion ?>
 </div>
 </body>
