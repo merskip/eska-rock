@@ -47,7 +47,7 @@ class RadioController {
         });
 
         this.radio.onFailedPlay((error) => {
-            console.debug("Radio was failed start");
+            console.error("Radio was failed start", error);
 
             // "HTTP 401 Unauthorized" may means the token is invalid. So we can try refresh the token.
             if (error.httpStatus === 401) {
