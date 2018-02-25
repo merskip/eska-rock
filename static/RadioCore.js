@@ -26,6 +26,11 @@ class Radio {
         }
     }
 
+    playWithStreamUrl(url) {
+        this.url = url;
+        this.play();
+    }
+
     play() {
         this.isBufferingStream = true;
         this.onStartBuffering();
@@ -38,7 +43,7 @@ class Radio {
         }, httpStatus => {
             this.onFailedPlay({
                 message: "Initial http request ends with " + httpStatus,
-                status: httpStatus
+                httpStatus: httpStatus
             });
         });
     }
@@ -67,9 +72,15 @@ class Radio {
 
         req.onreadystatechange = () => {
             if (req.readyState === 2) {
-                let isOk = (req.status === 200);
-                req.abort();
-                isOk ? onSuccess() : onFailed(req.status);
+                let httpStatus = req.status;
+                req.abort(); // req.status after abort() is lost
+
+                if (httpStatus === 200) {
+                    onSuccess();
+                }
+                else {
+                    onFailed(httpStatus);
+                }
             }
         };
 

@@ -12,6 +12,7 @@ RewriteRule ^api/user/oauth2_authorize$ api/oauth2_authorize.php
 RewriteRule ^api/user/oauth2_revoke$ api/oauth2_revoke.php
 RewriteRule ^api/favorites$ api/favorites.php
 RewriteRule ^api/favorites/search$ api/favorites.php
+RewriteRule ^api/invalid_stream_url$ api/invalid_stream_url.php
 
 # Mapping fragment to file
 RewriteRule ^fragments/favorites_list fragment_favorites_list.php
