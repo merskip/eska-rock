@@ -374,9 +374,11 @@ body {
 }
 
 .radio-pie-mask {
-    width: 50%;
-    height: 100%;
+    width: calc(50% + 1px);
+    height: calc(100% + 2px);
     position: absolute;
+    left: -1px;
+    top: -1px;
     background: inherit;
     opacity: 1;
     z-index: 30;
@@ -791,7 +793,7 @@ ul.radio-dropdown-menu {
 .radio-toolbar {
     position: absolute;
     left: 88px;
-    top: 4px;
+    top: 6px;
     margin-left: 8px;
 }
 
@@ -805,7 +807,7 @@ ul.radio-dropdown-menu {
 }
 
 .radio-toolbar-btn i {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .radio-toolbar-btn:hover {
