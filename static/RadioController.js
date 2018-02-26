@@ -13,6 +13,7 @@ class RadioController {
         this.ui.didSelectPlay = this.didSelectPlay.bind(this);
         this.ui.didSelectStop = this.didSelectStop.bind(this);
         this.ui.didSelectToggleMute = this.didSelectToggleMute.bind(this);
+        this.ui.didChangeVolume = this.didChangeVolume.bind(this);
     }
 
     _setupRadioCodeEvents() {
@@ -64,8 +65,8 @@ class RadioController {
             }
         });
 
-        this.radio.onVolumeChange((muted) => {
-            this.ui.setToggleMuteButton(!muted);
+        this.radio.onVolumeChange((muted, volume) => {
+            this.ui.setVolume(muted, volume);
         });
     }
 
@@ -77,8 +78,12 @@ class RadioController {
         this.radio.stop();
     }
 
-    didSelectToggleMute(isForMute) {
-        isForMute ? this.radio.mute() : this.radio.unmute();
+    didSelectToggleMute() {
+        this.radio.muted(!this.radio.muted());
+    }
+
+    didChangeVolume(value) {
+        this.radio.volume(value);
     }
 
     requestInvalidAndGetRadioUrl(onSuccess, onFailed) {

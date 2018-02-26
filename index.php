@@ -73,9 +73,14 @@ $config = loadConfigOrDie();
     </button>
     <div class="radio-panel-content">
         <div class="radio-toolbar">
-            <button id="radio-toggle-mute" class="radio-toolbar-btn">
-                <i class="material-icons">volume_up</i>
-            </button>
+            <div class="radio-volume-control">
+                <svg xmlns="http://www.w3.org/2000/svg" id="radio-volume-icon" viewBox="0 0 1 1">
+                    <polygon points="0.12 0.35, 0.30 0.35, 0.5 0.15, 0.5 0.85, 0.3 0.65, 0.12 0.65" class="cover"></polygon>
+                    <path class="inner-circle" stroke="black" stroke-width="0.08" stroke-linecap="round" fill="none"></path>
+                    <path class="outer-circle" stroke="black" stroke-width="0.08" stroke-linecap="round" fill="none"></path>
+                </svg>
+                <input id="radio-volume-slider" type="range" title="Volume">
+            </div>
         </div>
 
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="static/no-image.png" alt="Zdjęcie albumu">

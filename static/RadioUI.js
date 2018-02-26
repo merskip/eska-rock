@@ -31,7 +31,8 @@ class RadioUI {
     constructor() {
         this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
-        this.toggleMuteBtn = $("#radio-toggle-mute");
+        this.volumeIcon = $("#radio-volume-icon");
+        this.volumeSlider = $("#radio-volume-slider");
         this.playingTimer = $("#radio-timer");
         this.refreshProgressIndicator = $("#radio-refreshing-countdown-timer");
         this.favoriteBtn = $("#radio-favorite");
@@ -79,9 +80,11 @@ class RadioUI {
                 this.didSelectStop();
             }
         });
-        this.toggleMuteBtn.click(() => {
-            let iconName = this.toggleMuteBtn.text().trim();
-            this.didSelectToggleMute(iconName === "volume_up");
+        this.volumeIcon.click(() => {
+            this.didSelectToggleMute();
+        });
+        this.volumeSlider.on("input", (e) => {
+            this.didChangeVolume(e.target.value / 100);
         });
         this.favoriteBtn.click(() => {
             if (this.favoriteBtn.hasClass("btn-favorite-add")) {
@@ -126,8 +129,20 @@ class RadioUI {
             : this.togglePlayBtn.removeClass("radio-stream-loading");
     }
 
-    setToggleMuteButton(isForMute) {
-        this.toggleMuteBtn.find("i").html(isForMute ? "volume_up" : " volume_off");
+    setVolume(muted, volume) {
+        let innerCircle = this.volumeIcon.find(".inner-circle")[0];
+        let outerCircle = this.volumeIcon.find(".outer-circle")[0];
+
+        let innerRefValue = volume * 2;
+        let outerRefValue = (volume - 0.5) * 2;
+
+        innerCircle.setAttribute("d", describeArc(0.55, 0.5, 0.15,
+            interpolateWithClip(1 - innerRefValue, 20, 90),
+            interpolateWithClip(innerRefValue, 90, 160)));
+
+        outerCircle.setAttribute("d", describeArc(0.55, 0.5, 0.3,
+            interpolateWithClip(1 - outerRefValue, 10, 90),
+            interpolateWithClip(outerRefValue, 90, 170)));
     }
 
     setPanelState(state) {
@@ -322,4 +337,5 @@ RadioUI.prototype.didSelectPlay = () => { };
 RadioUI.prototype.didSelectStop = () => { };
 RadioUI.prototype.didSelectFavoriteAdd = (songTitle) => { };
 RadioUI.prototype.didSelectFavoriteRemove = (id, songTitle) => { };
-RadioUI.prototype.didSelectToggleMute = (isForMute) => { };
+RadioUI.prototype.didSelectToggleMute = () => { };
+RadioUI.prototype.didChangeVolume = (value) => { };

@@ -70,12 +70,22 @@ class Radio {
         this.isBufferingStream = false;
     }
 
-    mute() {
-        this.stream.muted = true;
+    volume(value) {
+        if (value === undefined) {
+            return this.stream.volume;
+        }
+        else {
+            this.stream.volume = value;
+        }
     }
 
-    unmute() {
-        this.stream.muted = false;
+    muted(state) {
+        if (state === undefined) {
+            return this.stream.muted;
+        }
+        else {
+            this.stream.muted = state;
+        }
     }
 
     _checkHttpIsOk(url, onSuccess, onFailed) {

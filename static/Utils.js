@@ -58,3 +58,28 @@ String.prototype.replaceRange = function (range, substitute) {
 String.prototype.substringRange = function (range) {
     return this.substring(range.start, range.start + range.length);
 };
+
+function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+    let angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+    return {
+        x: centerX + (radius * Math.cos(angleInRadians)),
+        y: centerY + (radius * Math.sin(angleInRadians))
+    };
+}
+
+function describeArc(x, y, radius, startAngle, endAngle){
+    let start = polarToCartesian(x, y, radius, endAngle);
+    let end = polarToCartesian(x, y, radius, startAngle);
+
+    let largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+    return [
+        "M", start.x, start.y,
+        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+    ].join(" ");
+}
+
+function interpolateWithClip(value, min, max) {
+    if (value >= 1.0) return max;
+    if (value <= 0) return min;
+    return (max - min) * value + min;
+}
