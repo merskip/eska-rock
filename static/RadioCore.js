@@ -166,7 +166,7 @@ Radio.prototype.onTimeUpdate = function(a) {
     }
 };
 
-Radio.prototype.onVolumeChange= function(a, b) {
+Radio.prototype.onVolumeChange = function(a, b) {
     if (typeof a === "boolean" && typeof b === "number") {
         $(this).trigger("on_volume_change", [a, b]);
     }

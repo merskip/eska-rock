@@ -83,6 +83,7 @@ class RadioController {
     }
 
     didChangeVolume(value) {
+        this.radio.muted(false);
         this.radio.volume(value);
     }
 

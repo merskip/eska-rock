@@ -130,6 +130,11 @@ class RadioUI {
     }
 
     setVolume(muted, volume) {
+        this._setVolumeCircles(volume);
+        this._setMutedWithAnimation(muted);
+    }
+
+    _setVolumeCircles(volume) {
         let innerCircle = this.volumeIcon.find(".inner-circle")[0];
         let outerCircle = this.volumeIcon.find(".outer-circle")[0];
 
@@ -143,6 +148,21 @@ class RadioUI {
         outerCircle.setAttribute("d", describeArc(0.55, 0.5, 0.3,
             interpolateWithClip(1 - outerRefValue, 10, 90),
             interpolateWithClip(outerRefValue, 90, 170)));
+    }
+
+    _setMutedWithAnimation(muted) {
+        let state = this.volumeIcon.attr("data-muted-state");
+        let showLine = this.volumeIcon.find("#show-off-line")[0];
+        let hideLine = this.volumeIcon.find("#hide-off-line")[0];
+
+        if (muted && state !== "muted") {
+            this.volumeIcon.attr("data-muted-state", "muted");
+            showLine.beginElement();
+        }
+        else if (!muted && state !== "unmuted") {
+            this.volumeIcon.attr("data-muted-state", "unmuted");
+            hideLine.beginElement();
+        }
     }
 
     setPanelState(state) {
