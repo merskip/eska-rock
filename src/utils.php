@@ -7,7 +7,7 @@ function loadConfigOrDie() {
         return $savedConfig;
     }
 
-    file_exists(CONFIG_FILENAME) or die("Not found file with config");
+    file_exists(CONFIG_FILENAME) or die("Not found file with config at " . CONFIG_FILENAME);
     $config = json_decode(file_get_contents(CONFIG_FILENAME));
 
     $savedConfig = $config;
