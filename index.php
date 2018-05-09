@@ -180,12 +180,13 @@ $config = loadConfigOrDie();
     let favoriteController = new FavoritesController(radioUI, userController, songDetailsController);
 </script>
 <div class="radio-footer">
-    &copy; 2017-2018 Piotr Merski.
+    &copy; 2017-2018 Piotr Merski;
     <?php
-    $lastTaggedVersion = exec("git describe --tags --abbrev=0");
-    $fullVersion = exec("git describe --tags --long");
-    $suffixVersion = str_remove_prefix_ltrim($fullVersion, $lastTaggedVersion);
+    $commitHash = exec("git rev-parse --short HEAD");
+    $lastVersionTag = exec("git describe --tags --abbrev=0 --match v*");
+    $version = ltrim($lastVersionTag, "v");
     ?>
-    Ver. <span class="radio-version-canonical"><?= $lastTaggedVersion ?></span><?= $suffixVersion ?>
+    ver. <span class="radio-version"><?= $version ?></span>
+    rev. <span class="radio-revision"><?= $commitHash ?></span>
 </div>
 </body>

@@ -559,9 +559,13 @@ body {
     padding: 8px;
 }
 
-.radio-footer .radio-version-canonical {
+.radio-footer .radio-version {
     color: #777;
     font-weight: 600;
+}
+
+.radio-footer .radio-revision {
+    font-family: monospace;
 }
 
 /* .radio-favorites-list */
