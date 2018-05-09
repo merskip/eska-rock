@@ -1,6 +1,6 @@
 <?php
 version_compare(PHP_VERSION, '7.0.0', '>=')
-    or die("Required PHP version 7.0 or newer");
+or die("Required PHP version 7.0 or newer");
 
 require_once "src/utils.php";
 $config = loadConfigOrDie();
@@ -74,7 +74,7 @@ $config = loadConfigOrDie();
     <div class="radio-panel-content">
         <div class="radio-toolbar">
 
-            <div class="radio-volume-control">
+            <div class="radio-volume-control" title="Volume control">
                 <svg xmlns="http://www.w3.org/2000/svg" id="radio-volume-icon" class="radio-volume-icon" viewBox="0 0 1 1">
                     <polygon points="0.12 0.35, 0.30 0.35, 0.5 0.15, 0.5 0.85, 0.3 0.65, 0.12 0.65" class="cover"></polygon>
                     <path class="inner-circle" stroke="black" stroke-width="0.08" stroke-linecap="round" fill="none"></path>
@@ -83,19 +83,20 @@ $config = loadConfigOrDie();
                     <rect x="0.25" y="0" width="0.0" height="0.08" transform="rotate(45, 0.1, 0)"
                           class="first-muted-line" fill="black">
                         <animate id="show-first-muted-line" begin="indefinite" attributeName="width" fill="freeze"
-                                 from="0.0" to="1.0" dur="0.2s" ></animate>
+                                 from="0.0" to="1.0" dur="0.2s"></animate>
                         <animate id="hide-first-muted-line" begin="hide-second-muted-line.begin+0.1s" attributeName="width" fill="freeze"
                                  from="1.0" to="0.0" dur="0.2s"></animate>
                     </rect>
                     <rect x="0.285" y="0" width="0.0" height="0.08" transform="rotate(45, 0.21, 0)"
                           class="second-muted-line" fill="white">
                         <animate id="show-second-muted-line" begin="show-first-muted-line.begin+0.1s" attributeName="width" fill="freeze"
-                                 from="0.0" to="1.0" dur="0.2s" ></animate>
+                                 from="0.0" to="1.0" dur="0.2s"></animate>
                         <animate id="hide-second-muted-line" begin="indefinite" attributeName="width" fill="freeze"
-                                 from="1.0" to="0.0" dur="0.2s" ></animate>
+                                 from="1.0" to="0.0" dur="0.2s"></animate>
                     </rect>
                 </svg>
-                <input id="radio-volume-slider" type="range" title="Volume" class="radio-volume-range">
+                <input id="radio-volume-slider" type="range" title="Volume" class="radio-volume-range"
+                       min="0" max="1" step="0.01">
             </div>
 
             <button id="radio-favorite"

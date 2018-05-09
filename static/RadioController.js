@@ -29,6 +29,7 @@ class RadioController {
 
             this.ui.setToggleButtonIsLoading(false);
             this.ui.setPanelState(RadioUI.PanelState.Extended);
+            this.ui.setVolume(this.radio.muted(), this.radio.volume());
         });
 
         this.radio.onTimeUpdate((time) => {

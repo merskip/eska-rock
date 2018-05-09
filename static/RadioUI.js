@@ -84,7 +84,7 @@ class RadioUI {
             this.didSelectToggleMute();
         });
         this.volumeSlider.on("input", (e) => {
-            this.didChangeVolume(e.target.value / 100);
+            this.didChangeVolume(e.target.value);
         });
         this.favoriteBtn.click(() => {
             if (this.favoriteBtn.hasClass("btn-favorite-add")) {
@@ -130,6 +130,7 @@ class RadioUI {
     }
 
     setVolume(muted, volume) {
+        this.volumeSlider.val(volume);
         this._setVolumeCircles(volume);
         this._setMutedWithAnimation(muted);
     }
