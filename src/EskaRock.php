@@ -8,18 +8,20 @@ class EskaRock {
     const PLAYER_URL = "https://www.eskago.pl/radio/eska-rock";
     const STREAM_LINE_PREFIX = "var streamUrl = '";
     const STREAM_LINE_SUFFIX = "'.replace('.aac', '.mp3');";
-    const CACHE_URL_FILENAME = "eska-rock-url";
+    const STREAM_DEFAULT_EXTENSION = ".aac";
+    const STREAM_SUPPORTED_EXTENSIONS = [".aac", ".mp3"];
+    const CACHE_URLS_FILENAME = "eska-rock-url";
 
     private $lastStreamUrl;
     private $lastStreamHeaders;
 
-    function getCachedStreamUrl() {
-        $cachedUrl = Cache::getInstance()->get(EskaRock::CACHE_URL_FILENAME);
-        if ($cachedUrl != null && $this->checkHttpStatusIsOk($cachedUrl)) {
-            return $cachedUrl;
+    function getCachedStreamUrls() {
+        $cachedUrls = Cache::getInstance()->getJson(EskaRock::CACHE_URLS_FILENAME);
+        if ($cachedUrls != null && $this->checkHttpStatusIsOk(reset($cachedUrls))) {
+            return $cachedUrls;
         }
         else {
-            return $this->getStreamAccUrl();
+            return $this->getStreamUrls();
         }
     }
 
@@ -29,16 +31,23 @@ class EskaRock {
     }
     
     function getStreamTitle($url) {
+        if (is_array($url)) {
+            $url = reset($url);
+        }
         $headers = $this->getStreamHeaders($url);
         return $headers["icy-name"];
     }
 
-    function getStreamAccUrl() {
+    function getStreamUrls() {
         $html = file_get_contents(EskaRock::PLAYER_URL);
-        $url = str_find($html, EskaRock::STREAM_LINE_PREFIX, EskaRock::STREAM_LINE_SUFFIX);
+        $aacUrl = str_find($html, EskaRock::STREAM_LINE_PREFIX, EskaRock::STREAM_LINE_SUFFIX);
 
-        Cache::getInstance()->put(EskaRock::CACHE_URL_FILENAME, $url);
-        return $url;
+        $urls = array_map(function ($extension) use ($aacUrl) {
+            return str_replace(EskaRock::STREAM_DEFAULT_EXTENSION, $extension, $aacUrl);
+        }, EskaRock::STREAM_SUPPORTED_EXTENSIONS);
+
+        Cache::getInstance()->putJson(EskaRock::CACHE_URLS_FILENAME, $urls);
+        return $urls;
     }
 
     function requestStreamMetadata() {

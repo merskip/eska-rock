@@ -30,8 +30,8 @@ $config = loadConfigOrDie();
     <?php
     require_once "src/EskaRock.php";
     $eskaRock = new EskaRock();
-    $streamUrl = $eskaRock->getCachedStreamUrl();
-    $streamTitle = $eskaRock->getStreamTitle($streamUrl);
+    $streamUrls = $eskaRock->getCachedStreamUrls();
+    $streamTitle = $eskaRock->getStreamTitle($streamUrls);
     ?>
     <title><?= $streamTitle ?></title>
 </head>
@@ -165,7 +165,7 @@ $config = loadConfigOrDie();
     </div>
 </div>
 <script>
-    let radio = new Radio('radio-stream', "<?= $streamUrl ?>");
+    let radio = new Radio('radio-stream', <?= json_encode($streamUrls, JSON_PRETTY_PRINT) ?>);
     let radioUI = new RadioUI();
     new RadioController(radio, radioUI);
     let songDetailsController = new SongDetailsController(radio, radioUI, {

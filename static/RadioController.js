@@ -53,9 +53,9 @@ class RadioController {
 
             // "HTTP 401 Unauthorized" may means the token is invalid. So we can try refresh the token.
             if (error.httpStatus === 401) {
-                this.requestInvalidAndGetRadioUrl((newUrl) => {
+                this.requestInvalidAndGetStreamUrls((newUrls) => {
 
-                    this.radio.playWithStreamUrl(newUrl);
+                    this.radio.playWithStreamUrls(newUrls);
 
                 }, () => {
                     setStateForPlayRadio();
@@ -88,13 +88,13 @@ class RadioController {
         this.radio.volume(value);
     }
 
-    requestInvalidAndGetRadioUrl(onSuccess, onFailed) {
+    requestInvalidAndGetStreamUrls(onSuccess, onFailed) {
         $.ajax({
             method: "POST",
-            url: "api/invalid_stream_url",
+            url: "api/invalid_stream_urls",
             success: (response) =>  {
-                let newUrl = response["new_url"];
-                onSuccess(newUrl);
+                let newUrls = response["new_urls"];
+                onSuccess(newUrls);
             },
             error: () => {
                 onFailed();

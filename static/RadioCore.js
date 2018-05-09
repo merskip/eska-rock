@@ -1,9 +1,9 @@
 
 class Radio {
 
-    constructor(audioTagId, streamUrl) {
+    constructor(audioTagId, streamUrls) {
         this.stream = document.getElementById(audioTagId);
-        this.url = streamUrl;
+        this._setUrls(streamUrls);
 
         this._bindEvents();
     }
@@ -29,8 +29,8 @@ class Radio {
         };
     }
 
-    playWithStreamUrl(url) {
-        this.url = url;
+    playWithStreamUrls(urls) {
+        this._setUrls(urls);
         this.play();
     }
 
@@ -38,7 +38,7 @@ class Radio {
         this.isBufferingStream = true;
         this.onStartBuffering();
 
-        this._checkHttpIsOk(this.url, () => {
+        this._checkHttpIsOk(this.urls[0], () => {
 
             if (this.isBufferingStream) { // Is false, this means that method "stop" did called
                 this._startPlayStream();
@@ -52,7 +52,8 @@ class Radio {
     }
 
     _startPlayStream() {
-        this.stream.src = this.url;
+        this._setUrls(this.urls);
+        // this.stream.src = this.url;
         this.stream.load();
         this.stream.play().catch(e => {
             this.onFailedPlay({
@@ -60,6 +61,18 @@ class Radio {
                 exception: e
             });
         });
+    }
+
+    _setUrls(urls) {
+        this.stream.innerHTML = ''; // Remove all children
+        urls.map((url) => {
+            let audioElement = document.createElement("source");
+            audioElement.src = url;
+            return audioElement;
+        }).forEach((audioElement) => {
+            this.stream.appendChild(audioElement);
+        });
+        this.urls = urls;
     }
 
     stop() {
