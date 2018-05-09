@@ -73,6 +73,7 @@ $config = loadConfigOrDie();
     </button>
     <div class="radio-panel-content">
         <div class="radio-toolbar">
+
             <div class="radio-volume-control">
                 <svg xmlns="http://www.w3.org/2000/svg" id="radio-volume-icon" class="radio-volume-icon" viewBox="0 0 1 1">
                     <polygon points="0.12 0.35, 0.30 0.35, 0.5 0.15, 0.5 0.85, 0.3 0.65, 0.12 0.65" class="cover"></polygon>
@@ -96,17 +97,17 @@ $config = loadConfigOrDie();
                 </svg>
                 <input id="radio-volume-slider" type="range" title="Volume" class="radio-volume-range">
             </div>
+
+            <button id="radio-favorite"
+                    class="btn-link btn-favorite radio-placeholder"
+                    data-title-unavailable="Nie można dodać tego utworu do ulubionych"
+                    data-title-add="Dodaj do ulubionych"
+                    data-title-remove="Usuń z ulubionych">
+                <i class="material-icons"></i>
+            </button>
         </div>
 
         <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="static/no-image.png" alt="Zdjęcie albumu">
-
-        <button id="radio-favorite"
-                class="btn-link btn-favorite radio-placeholder"
-                data-title-unavailable="Nie można dodać tego utworu do ulubionych"
-                data-title-add="Dodaj do ulubionych"
-                data-title-remove="Usuń z ulubionych">
-            <i class="material-icons"></i>
-        </button>
 
         <div class="radio-panel-section-title">
             <div id="radio-refreshing-countdown-timer"

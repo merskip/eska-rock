@@ -470,9 +470,7 @@ body {
 /* .btn-favorite */
 
 .btn-favorite {
-    float: right;
-    margin-top: -8px;
-    margin-right: 16px;
+
 }
 
 .btn-favorite.radio-placeholder {
@@ -815,8 +813,26 @@ ul.radio-dropdown-menu {
     color: #000;
 }
 
-.radio-toolbar .radio-volume-control > svg {
+/* .radio-volume-control */
+
+.radio-volume-control {
+    display: inline-block;
+}
+
+.radio-volume-control > svg {
     height: 24px;
+}
+
+.radio-volume-control .radio-volume-range {
+    width: 0;
+    opacity: 0;
+    transition: width 300ms ease-out, opacity 150ms ease-in;
+}
+
+.radio-volume-control:hover .radio-volume-range,
+.radio-volume-control .radio-volume-range:active {
+    opacity: 1;
+    width: 100px;
 }
 
 /* .radio-volume-icon */
@@ -826,46 +842,25 @@ ul.radio-dropdown-menu {
 }
 
 .radio-volume-icon .cover {
-    fill: #444;
+    fill: #231f20;
 }
 
 .radio-volume-icon .inner-circle,
 .radio-volume-icon .outer-circle {
-    stroke: #444;
+    stroke: #c21a29;
+}
+
+.radio-volume-icon[data-muted-state=muted] .inner-circle,
+.radio-volume-icon[data-muted-state=muted] .outer-circle {
+    stroke: #231f20;
 }
 
 .radio-volume-icon .first-muted-line {
-    fill: #444;
+    fill: #231f20;
 }
 
 .radio-volume-icon .second-muted-line {
     fill: #fff;
-}
-
-.radio-volume-icon:hover .cover {
-    fill: #111;
-}
-
-.radio-volume-icon:hover .inner-circle,
-.radio-volume-icon:hover .outer-circle {
-    stroke: #111;
-}
-
-.radio-volume-icon:hover .first-muted-line {
-    fill: #111;
-}
-
-.radio-volume-icon:active .cover {
-    fill: #90121b;
-}
-
-.radio-volume-icon:active .inner-circle,
-.radio-volume-icon:active .outer-circle {
-    stroke: #90121b;
-}
-
-.radio-volume-icon:active .first-muted-line {
-    fill: #90121b;
 }
 
 /* .radio-volume-range */
