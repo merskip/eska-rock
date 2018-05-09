@@ -82,15 +82,15 @@ $config = loadConfigOrDie();
                     <rect x="0.25" y="0" width="0.0" height="0.08" transform="rotate(45, 0.1, 0)"
                           class="first-muted-line" fill="black">
                         <animate id="show-first-muted-line" begin="indefinite" attributeName="width" fill="freeze"
-                                 from="0.0" to="1.0" dur="0.2s"></animate>
-                        <animate id="hide-first-muted-line" begin="indefinite" attributeName="width" fill="freeze"
+                                 from="0.0" to="1.0" dur="0.2s" ></animate>
+                        <animate id="hide-first-muted-line" begin="hide-second-muted-line.begin+0.1s" attributeName="width" fill="freeze"
                                  from="1.0" to="0.0" dur="0.2s"></animate>
                     </rect>
                     <rect x="0.285" y="0" width="0.0" height="0.08" transform="rotate(45, 0.21, 0)"
                           class="second-muted-line" fill="white">
                         <animate id="show-second-muted-line" begin="show-first-muted-line.begin+0.1s" attributeName="width" fill="freeze"
                                  from="0.0" to="1.0" dur="0.2s" ></animate>
-                        <animate id="hide-second-muted-line" begin="hide-first-muted-line.begin+0.1s" attributeName="width" fill="freeze"
+                        <animate id="hide-second-muted-line" begin="indefinite" attributeName="width" fill="freeze"
                                  from="1.0" to="0.0" dur="0.2s" ></animate>
                     </rect>
                 </svg>

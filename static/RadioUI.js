@@ -153,7 +153,7 @@ class RadioUI {
     _setMutedWithAnimation(muted) {
         let state = this.volumeIcon.attr("data-muted-state");
         let showLine = this.volumeIcon.find("#show-first-muted-line")[0];
-        let hideLine = this.volumeIcon.find("#hide-first-muted-line")[0];
+        let hideLine = this.volumeIcon.find("#hide-second-muted-line")[0];
 
         if (muted && state !== "muted") {
             this.volumeIcon.attr("data-muted-state", "muted");
