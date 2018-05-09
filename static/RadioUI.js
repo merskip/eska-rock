@@ -54,7 +54,7 @@ class RadioUI {
                     this.text(RadioUI._formatDuration(value));
                 }
             },
-            listeners: $("#radio-listeners")
+            streamDetails: $("#radio-stream-details")
         };
         this.tags = $("#radio-song-tags");
         this.lyrics = {

@@ -24,12 +24,15 @@ class RadioController {
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Stop);
         });
 
-        this.radio.onPlay(() => {
+        this.radio.onPlay((url, mimeType) => {
             console.debug("Radio was started streaming");
 
             this.ui.setToggleButtonIsLoading(false);
             this.ui.setPanelState(RadioUI.PanelState.Extended);
             this.ui.setVolume(this.radio.muted(), this.radio.volume());
+            this.ui.setSongDetails({
+                streamDetails: mimeType
+            });
         });
 
         this.radio.onTimeUpdate((time) => {

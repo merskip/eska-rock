@@ -65,7 +65,7 @@ $config = loadConfigOrDie();
 
 <img src="static/eska-rock-horizontal-logo.png" class="logo" alt="EskaRock">
 <div id="radio-panel" class="radio-panel radio-panel-collapsed">
-    <audio id="radio-stream">
+    <audio id="radio-stream" preload="none">
     </audio>
     <div id="radio-stream-title" class="radio-panel-title"><?= $streamTitle ?></div>
     <button id="radio-toggle-play" class="radio-panel-button radio-toggle-play radio-play-btn">
@@ -132,8 +132,8 @@ $config = loadConfigOrDie();
                 <span id="radio-song-duration" class="radio-placeholder placeholder-short"></span>
             </div>
             <div class="row-item">
-                <div class="radio-panel-section-title radio-placeholder">Liczba słuchaczy</div>
-                <span id="radio-listeners" class="radio-placeholder placeholder-short"></span>
+                <div class="radio-panel-section-title radio-placeholder">Strumień</div>
+                <span id="radio-stream-details" class="radio-placeholder placeholder-short"></span>
             </div>
             <div class="row-item">
                 <div class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
@@ -177,7 +177,7 @@ $config = loadConfigOrDie();
 
     let userUI = new UserUI();
     let userController = new UserController(userUI);
-    let favoriteController = new FavoritesController(radioUI, userController, songDetailsController);
+    new FavoritesController(radioUI, userController, songDetailsController);
 </script>
 <div class="radio-footer">
     &copy; 2017-2018 Piotr Merski;

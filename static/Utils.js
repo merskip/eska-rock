@@ -59,6 +59,15 @@ String.prototype.substringRange = function (range) {
     return this.substring(range.start, range.start + range.length);
 };
 
+function findFirst(dictionary, callback) {
+    for (let key in dictionary) {
+        if (dictionary.hasOwnProperty(key) && callback(key, dictionary[key], this)) {
+            return dictionary[key];
+        }
+    }
+    return undefined;
+}
+
 function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     let angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
     return {

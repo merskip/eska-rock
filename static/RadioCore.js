@@ -1,4 +1,9 @@
 
+let _extToMimeTypeMap = {
+    ".mp3": "audio/mpeg",
+    ".aac": "audio/aac"
+};
+
 class Radio {
 
     constructor(audioTagId, streamUrls) {
@@ -17,7 +22,8 @@ class Radio {
 
                 // Only if currentTime is greater than zero, music is playing, buffering is done
                 if (this.isBufferingStream === true) {
-                    $(this).trigger("on_play");
+                    let mimeType = this._getMimeTypeForUrl(this.stream.currentSrc);
+                    this.onPlay(this.stream.currentSrc, mimeType);
                     this.isBufferingStream = false;
                 }
 
@@ -53,7 +59,6 @@ class Radio {
 
     _startPlayStream() {
         this._setUrls(this.urls);
-        // this.stream.src = this.url;
         this.stream.load();
         this.stream.play().catch(e => {
             this.onFailedPlay({
@@ -68,6 +73,11 @@ class Radio {
         urls.map((url) => {
             let audioElement = document.createElement("source");
             audioElement.src = url;
+
+            let mimeType = this._getMimeTypeForUrl(url);
+            if (mimeType !== undefined) {
+                audioElement.setAttribute("type", mimeType);
+            }
             return audioElement;
         }).forEach((audioElement) => {
             this.stream.appendChild(audioElement);
@@ -78,8 +88,6 @@ class Radio {
     stop() {
         this.stream.pause();
         this.stream.currentTime = 0;
-        this.stream.src = '';
-        this.stream.onpause(null); // bug?
         this.isBufferingStream = false;
     }
 
@@ -121,6 +129,12 @@ class Radio {
         req.open('GET', url, true);
         req.send(null);
     }
+
+    _getMimeTypeForUrl(url) {
+        return findFirst(_extToMimeTypeMap, (extension) => {
+            return url.includes(extension);
+        });
+    }
 }
 
 // Events
@@ -137,12 +151,15 @@ Radio.prototype.onStartBuffering = function(a) {
     }
 };
 
-Radio.prototype.onPlay = function(a) {
-    if (a === undefined) {
-        $(this).trigger("on_play");
+Radio.prototype.onPlay = function(a, b) {
+    if (typeof a === "string") {
+        $(this).trigger("on_play", [a, b]);
     }
     else if (typeof a === "function") {
-        $(this).on("on_play", a);
+        let callback = a;
+        $(this).on("on_play", (event, url, mimeType) => {
+            callback(url, mimeType);
+        });
     }
     else {
         console.error("Excepted 1 parameter function or nothing");

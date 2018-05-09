@@ -48,8 +48,7 @@ class SongDetailsController {
             songTitle: songTitle,
             albumTitle: data["album"] ? data["album"]["title"] : null,
             albumImage: data["album"] ? data["album"]["image"] : null,
-            songDuration: data["songDetails"] ? data["songDetails"]["duration"] : null,
-            listeners: data["listeners"]
+            songDuration: data["songDetails"] ? data["songDetails"]["duration"] : null
         });
         this.ui.setSongTags(data["tags"] ? data["tags"] : []);
 
