@@ -818,3 +818,65 @@ ul.radio-dropdown-menu {
 .radio-toolbar .radio-volume-control > svg {
     height: 24px;
 }
+
+/* .radio-volume-range */
+
+/* clear all styles from browser */
+.radio-volume-range {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+}
+
+.radio-volume-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+.radio-volume-range::-moz-range-thumb {
+
+    -moz-appearance: none;
+}
+
+.radio-volume-range:focus {
+    outline: none;
+}
+
+.radio-volume-range::-ms-track {
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+/* end */
+
+.radio-volume-range {
+    height: 24px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-volume-range::-webkit-slider-runnable-track {
+    background-color: #e0e0e0;
+    height: 4px;
+    border-radius: 4px;
+}
+
+.radio-volume-range::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    background-color: #bbb;
+    border-radius: 100%;
+    transition: 200ms ease-out;
+    transition-property: background-color, transform;
+}
+
+.radio-volume-range:hover::-webkit-slider-thumb {
+    background-color: #c21a29;
+    transform: scale(1.1, 1.1);
+}
+
+.radio-volume-range:active::-webkit-slider-thumb {
+    background-color: #90121b;
+    transform: scale(1.2, 1.2);
+}
+

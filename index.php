@@ -94,7 +94,7 @@ $config = loadConfigOrDie();
                                  from="1.0" to="0.0" dur="0.2s" ></animate>
                     </rect>
                 </svg>
-                <input id="radio-volume-slider" type="range" title="Volume">
+                <input id="radio-volume-slider" type="range" title="Volume" class="radio-volume-range">
             </div>
         </div>
 
