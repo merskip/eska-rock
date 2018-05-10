@@ -3,11 +3,17 @@ version_compare(PHP_VERSION, '7.0.0', '>=')
 or die("Required PHP version 7.0 or newer");
 
 require_once "src/utils.php";
+require_once "src/Build.php";
 $config = loadConfigOrDie();
+$build = Build::fromFileOrGitRepository();
 ?>
 <!doctype html>
 <head lang="pl">
     <meta name="google-signin-client_id" content="<?= $config->gapi->client_id ?>">
+    <meta name="radio-build-version" content="<?= $build->getVersion() ?>">
+    <meta name="radio-build-revision" content="<?= $build->getRevision() ?>">
+    <meta name="radio-build-date" content="<?= $build->getFormattedDate() ?>">
+
     <link rel="icon" href="static/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -181,12 +187,7 @@ $config = loadConfigOrDie();
 </script>
 <div class="radio-footer">
     &copy; 2017-2018 Piotr Merski;
-    <?php
-    $commitHash = exec("git rev-parse --short HEAD");
-    $lastVersionTag = exec("git describe --tags --abbrev=0 --match v*");
-    $version = ltrim($lastVersionTag, "v");
-    ?>
-    ver. <span class="radio-version"><?= $version ?></span>
-    rev. <span class="radio-revision"><?= $commitHash ?></span>
+    ver. <span class="radio-version"><?= $build->getVersion() ?></span>
+    rev. <span class="radio-revision"><?= $build->getRevision() ?></span>
 </div>
 </body>
