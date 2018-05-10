@@ -25,7 +25,7 @@ class Build {
      * @return Build
      */
     public static function fromFileOrGitRepository() {
-        $build = self::fromFile();
+        $build = self::fromJsonFile(Build::BUILD_FILENAME);
         if ($build === null) {
             $build = self::fromGitRepository();
         }
@@ -35,7 +35,7 @@ class Build {
         return $build;
     }
 
-    public static function fromFile($filename = Build::BUILD_FILENAME) {
+    public static function fromJsonFile($filename) {
         if (!file_exists($filename))
             return null;
         $content = file_get_contents($filename);
@@ -58,13 +58,12 @@ class Build {
         return new Build($version, $commitHash, new DateTime());
     }
 
-    public function saveToFile($filename = Build::BUILD_FILENAME) {
-        $json = json_encode([
+    public function toFileContent() {
+        return json_encode([
             "version" => $this->version,
             "revision" => $this->revision,
             "date" => $this->getFormattedDate()
         ], JSON_PRETTY_PRINT);
-        return file_put_contents($filename, $json) !== false;
     }
 
     public function getVersion(): String {
