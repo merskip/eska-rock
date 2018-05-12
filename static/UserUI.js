@@ -52,4 +52,3 @@ class UserUI {
 
 UserUI.prototype.didSelectLogout = () => { };
 UserUI.prototype.didSelectSignIn = () => { };
-UserUI.prototype.didSelectFavoritesList = () => { };

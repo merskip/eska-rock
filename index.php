@@ -1,6 +1,5 @@
 <?php
-version_compare(PHP_VERSION, '7.0.0', '>=')
-or die("Required PHP version 7.0 or newer");
+require_once "src/init.php";
 
 require_once "src/utils.php";
 require_once "src/Build.php";
@@ -8,7 +7,6 @@ require_once "src/Resources.php";
 $config = loadConfigOrDie();
 $build = Build::fromFileOrGitRepository();
 $res = new ResourcesBasedOnBuildVersion($build);
-
 ?>
 <!doctype html>
 <head lang="pl">
@@ -21,6 +19,7 @@ $res = new ResourcesBasedOnBuildVersion($build);
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= $res->get("static/styles.css") ?>" type="text/css">
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://apis.google.com/js/platform.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
@@ -36,6 +35,7 @@ $res = new ResourcesBasedOnBuildVersion($build);
     <script src="<?= $res->get("static/DropdownMenu.js") ?>"></script>
     <script src="<?= $res->get("static/Modal.js") ?>"></script>
     <script src="<?= $res->get("static/Fragments.js") ?>"></script>
+
     <?php
     require_once "src/EskaRock.php";
     $eskaRock = new EskaRock();
