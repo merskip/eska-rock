@@ -83,7 +83,7 @@ $res = new ResourcesBasedOnBuildVersion($build);
     <div class="radio-panel-content">
         <div class="radio-toolbar">
 
-            <div class="radio-volume-control" title="Volume control">
+            <div id="radio-volume-control" class="radio-volume-control" data-title-mute="Wycisz" data-title-unmute="Wyłącz wyciszenie">
                 <svg xmlns="http://www.w3.org/2000/svg" id="radio-volume-icon" class="radio-volume-icon" viewBox="0 0 1 1">
                     <polygon points="0.12 0.35, 0.30 0.35, 0.5 0.15, 0.5 0.85, 0.3 0.65, 0.12 0.65" class="cover"></polygon>
                     <path class="inner-circle" stroke="black" stroke-width="0.08" stroke-linecap="round" fill="none"></path>
@@ -104,7 +104,7 @@ $res = new ResourcesBasedOnBuildVersion($build);
                                  from="1.0" to="0.0" dur="0.2s"></animate>
                     </rect>
                 </svg>
-                <input id="radio-volume-slider" type="range" title="Volume" class="radio-volume-range"
+                <input id="radio-volume-slider" type="range" title="" data-title="Zmień głośność" class="radio-volume-range"
                        min="0" max="1" step="0.01">
             </div>
 

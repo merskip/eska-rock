@@ -31,6 +31,7 @@ class RadioUI {
     constructor() {
         this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
+        this.volumeControl = $("#radio-volume-control");
         this.volumeIcon = $("#radio-volume-icon");
         this.volumeSlider = $("#radio-volume-slider");
         this.playingTimer = $("#radio-timer");
@@ -87,12 +88,11 @@ class RadioUI {
             this.didChangeVolume(e.target.value);
         });
 
-        let volumeControl = $(".radio-volume-control");
-        volumeControl.mouseenter(function (e) {
+        this.volumeControl.mouseenter(function (e) {
             $(e.target).addClass("radio-volume-control-extended");
         });
         $(".radio-toolbar").mouseleave(() => {
-            volumeControl.removeClass("radio-volume-control-extended");
+            this.volumeControl.removeClass("radio-volume-control-extended");
         });
 
         this.favoriteBtn.click(() => {
@@ -142,6 +142,11 @@ class RadioUI {
         this.volumeSlider.val(volume);
         this._setVolumeCircles(volume);
         this._setMutedWithAnimation(muted);
+
+        this.volumeControl.attr("title",
+            muted ? this.volumeControl.attr("data-title-unmute") : this.volumeControl.attr("data-title-mute"));
+        this.volumeSlider.attr("title", this.volumeSlider.attr("data-title") + " (" + (volume * 100.0).toExponential() + "%)");
+
     }
 
     _setVolumeCircles(volume) {
