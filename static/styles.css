@@ -222,16 +222,32 @@ body {
     width: 32px;
 }
 
-.radio-panel .radio-panel-section-title:first-child {
-    margin-top: 16px;
+.radio-panel .radio-panel-right {
+    margin-left: 16px;
+    margin-top: -24px;
+    margin-right: -16px;
+    margin-bottom: -16px;
+    position: relative;
+}
+
+.radio-panel .radio-panel-right:before {
+    content: '';
+    background-color: #eee;
+    border-left: solid 1px #ddd;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .radio-panel .radio-panel-album-image {
-    float: right;
-    margin-top: -24px;
-    margin-right: -16px;
+    display: block;
     width: 256px;
     height: 256px;
+    position: relative;
+    z-index: 2;
 }
 
 .radio-panel .radio-panel-album-image.no-album-image {
@@ -834,7 +850,6 @@ ul.radio-dropdown-menu {
     transition: width 300ms ease-out, opacity 150ms ease-in;
 }
 
-.radio-volume-control:hover .radio-volume-range,
 .radio-volume-control .radio-volume-range:active,
 .radio-volume-control.radio-volume-control-extended .radio-volume-range {
     opacity: 1;

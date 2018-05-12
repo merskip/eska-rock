@@ -82,7 +82,6 @@ $res = new ResourcesBasedOnBuildVersion($build);
     </button>
     <div class="radio-panel-content">
         <div class="radio-toolbar">
-
             <div id="radio-volume-control" class="radio-volume-control" data-title-mute="Wycisz" data-title-unmute="Wyłącz wyciszenie">
                 <svg xmlns="http://www.w3.org/2000/svg" id="radio-volume-icon" class="radio-volume-icon" viewBox="0 0 1 1">
                     <polygon points="0.12 0.35, 0.30 0.35, 0.5 0.15, 0.5 0.85, 0.3 0.65, 0.12 0.65" class="cover"></polygon>
@@ -117,50 +116,57 @@ $res = new ResourcesBasedOnBuildVersion($build);
             </button>
         </div>
 
-        <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="<?= $res->get("static/no-image.png") ?>" alt="Zdjęcie albumu">
-
-        <div class="radio-panel-section-title">
-            <div id="radio-refreshing-countdown-timer"
-                 class="radio-pie radio-pie-indeterminate radio-pie-placeholder">
-                <div class="radio-pie-spinner"></div>
-                <div class="radio-pie-filler"></div>
-                <div class="radio-pie-mask"></div>
-            </div>
-            <span class="radio-pie-label radio-placeholder">
-                Teraz gra
-            </span>
-        </div>
-        <span id="radio-song-title" class="radio-placeholder placeholder-long"></span>
-
-        <div class="radio-panel-section-title radio-placeholder">Z albumu</div>
-        <span id="radio-album-title" class="radio-placeholder"></span>
-
         <div class="row">
             <div class="row-item">
-                <div class="radio-panel-section-title radio-placeholder">Czas trwania</div>
-                <span id="radio-song-duration" class="radio-placeholder placeholder-short"></span>
+                <div class="radio-panel-section-title">
+                    <div id="radio-refreshing-countdown-timer"
+                         class="radio-pie radio-pie-indeterminate radio-pie-placeholder">
+                        <div class="radio-pie-spinner"></div>
+                        <div class="radio-pie-filler"></div>
+                        <div class="radio-pie-mask"></div>
+                    </div>
+                    <span class="radio-pie-label radio-placeholder">
+                Teraz gra
+            </span>
+                </div>
+                <span id="radio-song-title" class="radio-placeholder placeholder-long"></span>
+
+                <div class="radio-panel-section-title radio-placeholder">Z albumu</div>
+                <span id="radio-album-title" class="radio-placeholder"></span>
+
+                <div class="row">
+                    <div class="row-item">
+                        <div class="radio-panel-section-title radio-placeholder">Czas trwania</div>
+                        <span id="radio-song-duration" class="radio-placeholder placeholder-short"></span>
+                    </div>
+                    <div class="row-item">
+                        <div class="radio-panel-section-title radio-placeholder">Strumień</div>
+                        <span id="radio-stream-details" class="radio-placeholder placeholder-short"></span>
+                    </div>
+                    <div class="row-item">
+                        <div class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
+                        <span id="radio-timer" class="radio-placeholder"></span>
+                    </div>
+                </div>
+
+                <div id="radio-song-tags" class="radio-tags"></div>
+
+                <a id="radio-youtube-url" class="radio-url no-url " href="" target="_blank">
+                    YouTube
+                </a>
+                <a id="radio-lyrics-url" class="radio-url no-url" href="" target="_blank">
+                    tekstowo.pl
+                </a>
+                <a id="radio-lyrics-toggle" class="radio-url no-url">
+                    tekst piosenki
+                </a>
             </div>
-            <div class="row-item">
-                <div class="radio-panel-section-title radio-placeholder">Strumień</div>
-                <span id="radio-stream-details" class="radio-placeholder placeholder-short"></span>
-            </div>
-            <div class="row-item">
-                <div class="radio-panel-section-title radio-placeholder">Czas odtwarzania</div>
-                <span id="radio-timer" class="radio-placeholder"></span>
+            <div class="row-item-fit radio-panel-right">
+                <img id="radio-album-image" class="radio-panel-album-image no-album-image"
+                     src="<?= $res->get("static/no-image.png") ?>" alt="Zdjęcie albumu">
             </div>
         </div>
 
-        <div id="radio-song-tags" class="radio-tags"></div>
-
-        <a id="radio-youtube-url" class="radio-url no-url " href="" target="_blank">
-            YouTube
-        </a>
-        <a id="radio-lyrics-url" class="radio-url no-url" href="" target="_blank">
-            tekstowo.pl
-        </a>
-        <a id="radio-lyrics-toggle" class="radio-url no-url">
-            tekst piosenki
-        </a>
     </div>
     <div id="radio-lyrics-panel" class="radio-panel-lyrics collapsed">
         <div class="radio-panel-original">
