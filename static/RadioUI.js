@@ -88,8 +88,8 @@ class RadioUI {
             this.didChangeVolume(e.target.value);
         });
 
-        this.volumeControl.mouseenter(function (e) {
-            $(e.target).addClass("radio-volume-control-extended");
+        this.volumeControl.add(this.volumeSlider).mouseenter(() => {
+            this.volumeControl.addClass("radio-volume-control-extended");
         });
         $(".radio-toolbar").mouseleave(() => {
             this.volumeControl.removeClass("radio-volume-control-extended");
@@ -146,7 +146,6 @@ class RadioUI {
         this.volumeControl.attr("title",
             muted ? this.volumeControl.attr("data-title-unmute") : this.volumeControl.attr("data-title-mute"));
         this.volumeSlider.attr("title", this.volumeSlider.attr("data-title") + " (" + (volume * 100.0).toExponential() + "%)");
-
     }
 
     _setVolumeCircles(volume) {
