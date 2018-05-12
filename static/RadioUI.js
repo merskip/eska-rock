@@ -86,6 +86,15 @@ class RadioUI {
         this.volumeSlider.on("input", (e) => {
             this.didChangeVolume(e.target.value);
         });
+
+        let volumeControl = $(".radio-volume-control");
+        volumeControl.mouseenter(function (e) {
+            $(e.target).addClass("radio-volume-control-extended");
+        });
+        $(".radio-toolbar").mouseleave(() => {
+            volumeControl.removeClass("radio-volume-control-extended");
+        });
+
         this.favoriteBtn.click(() => {
             if (this.favoriteBtn.hasClass("btn-favorite-add")) {
                 let songTitle = this.favoriteBtn.attr("data-song-title");
