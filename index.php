@@ -4,8 +4,11 @@ or die("Required PHP version 7.0 or newer");
 
 require_once "src/utils.php";
 require_once "src/Build.php";
+require_once "src/Resources.php";
 $config = loadConfigOrDie();
 $build = Build::fromFileOrGitRepository();
+$res = new ResourcesBasedOnBuildVersion($build);
+
 ?>
 <!doctype html>
 <head lang="pl">
@@ -14,25 +17,25 @@ $build = Build::fromFileOrGitRepository();
     <meta name="radio-build-revision" content="<?= $build->getRevision() ?>">
     <meta name="radio-build-date" content="<?= $build->getFormattedDate() ?>">
 
-    <link rel="icon" href="static/favicon.png">
+    <link rel="icon" href="<?= $res->get("static/favicon.png") ?>">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="static/styles.css" type="text/css">
+    <link rel="stylesheet" href="<?= $res->get("static/styles.css") ?>" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://apis.google.com/js/platform.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="static/Utils.js"></script>
-    <script src="static/RadioCore.js"></script>
-    <script src="static/RadioUI.js"></script>
-    <script src="static/Timer.js"></script>
-    <script src="static/RadioController.js"></script>
-    <script src="static/SongDetailsController.js"></script>
-    <script src="static/FavoritesController.js"></script>
-    <script src="static/UserUI.js"></script>
-    <script src="static/UserController.js"></script>
-    <script src="static/DropdownMenu.js"></script>
-    <script src="static/Modal.js"></script>
-    <script src="static/Fragments.js"></script>
+    <script src="<?= $res->get("static/Utils.js") ?>"></script>
+    <script src="<?= $res->get("static/RadioCore.js") ?>"></script>
+    <script src="<?= $res->get("static/RadioUI.js") ?>"></script>
+    <script src="<?= $res->get("static/Timer.js") ?>"></script>
+    <script src="<?= $res->get("static/RadioController.js") ?>"></script>
+    <script src="<?= $res->get("static/SongDetailsController.js") ?>"></script>
+    <script src="<?= $res->get("static/FavoritesController.js") ?>"></script>
+    <script src="<?= $res->get("static/UserUI.js") ?>"></script>
+    <script src="<?= $res->get("static/UserController.js") ?>"></script>
+    <script src="<?= $res->get("static/DropdownMenu.js") ?>"></script>
+    <script src="<?= $res->get("static/Modal.js") ?>"></script>
+    <script src="<?= $res->get("static/Fragments.js") ?>"></script>
     <?php
     require_once "src/EskaRock.php";
     $eskaRock = new EskaRock();
@@ -53,7 +56,7 @@ $build = Build::fromFileOrGitRepository();
     <div id="user-panel" <?= $user == null ? Styles::displayNone() : "" ?>>
         <div class="row">
             <div class="row-item">
-                <img src="<?= $user->picture ?? "static/no-image.png" ?>" class="user-image" alt="Awatar użytkownika">
+                <img src="<?= $user->picture ?? $res->get("static/no-image.png") ?>" class="user-image" alt="Awatar użytkownika">
             </div>
             <div class="row-item">
                 <div class="user-name"><?= $user->name ?? "" ?></div>
@@ -69,7 +72,7 @@ $build = Build::fromFileOrGitRepository();
     </div>
 </div>
 
-<img src="static/eska-rock-horizontal-logo.png" class="logo" alt="EskaRock">
+<img src="<?= $res->get("static/eska-rock-horizontal-logo.png") ?>" class="logo" alt="EskaRock">
 <div id="radio-panel" class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream" preload="none">
     </audio>
@@ -114,7 +117,7 @@ $build = Build::fromFileOrGitRepository();
             </button>
         </div>
 
-        <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="static/no-image.png" alt="Zdjęcie albumu">
+        <img id="radio-album-image" class="radio-panel-album-image no-album-image" src="<?= $res->get("static/no-image.png") ?>" alt="Zdjęcie albumu">
 
         <div class="radio-panel-section-title">
             <div id="radio-refreshing-countdown-timer"
