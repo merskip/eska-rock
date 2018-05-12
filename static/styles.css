@@ -143,6 +143,21 @@ body {
     }
 }
 
+.radio-state-message-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 128px;
+}
+
+.radio-state-message {
+    text-align: center;
+    color: #464143;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
 /* .radio-panel */
 
 .radio-panel {

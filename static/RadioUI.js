@@ -31,6 +31,7 @@ class RadioUI {
     constructor() {
         this.panel = $("#radio-panel");
         this.togglePlayBtn = $("#radio-toggle-play");
+        this.startingPlayStateMessage = $("#radio-starting-music-state-message");
         this.volumeControl = $("#radio-volume-control");
         this.volumeIcon = $("#radio-volume-icon");
         this.volumeSlider = $("#radio-volume-slider");
@@ -136,6 +137,15 @@ class RadioUI {
         isLoading
             ? this.togglePlayBtn.addClass("radio-stream-loading")
             : this.togglePlayBtn.removeClass("radio-stream-loading");
+    }
+
+    setStartingPlayStateMessage(message) {
+        if (message !== null) {
+            this.startingPlayStateMessage.show().html(message);
+        }
+        else {
+            this.startingPlayStateMessage.hide().html('');
+        }
     }
 
     setVolume(muted, volume) {

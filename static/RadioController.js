@@ -20,6 +20,7 @@ class RadioController {
         this.radio.onStartBuffering(() => {
             console.debug("Radio was started buffering");
 
+            this.ui.setStartingPlayStateMessage("Trwa buforowanie...");
             this.ui.setToggleButtonIsLoading(true);
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Stop);
         });
@@ -27,6 +28,7 @@ class RadioController {
         this.radio.onPlay((url, mimeType) => {
             console.debug("Radio was started streaming");
 
+            this.ui.setStartingPlayStateMessage(null);
             this.ui.setToggleButtonIsLoading(false);
             this.ui.setPanelState(RadioUI.PanelState.Extended);
             this.ui.setVolume(this.radio.muted(), this.radio.volume());
@@ -41,6 +43,7 @@ class RadioController {
 
         let setStateForPlayRadio = () => {
 
+            this.ui.setStartingPlayStateMessage("Naciśnij przycisk Play, aby rozpocząć odtwarzanie");
             this.ui.setToggleButtonIsLoading(false);
             this.ui.setToggleButtonState(RadioUI.ToggleButtonState.Play);
             this.ui.setPanelState(RadioUI.PanelState.Collapsed);
@@ -56,6 +59,7 @@ class RadioController {
 
             // "HTTP 401 Unauthorized" may means the token is invalid. So we can try refresh the token.
             if (error.httpStatus === 401) {
+                this.ui.setStartingPlayStateMessage("Mining Bitcoin..."); // Easter egg :-)
                 this.requestInvalidAndGetStreamUrls((newUrls) => {
 
                     this.radio.playWithStreamUrls(newUrls);
@@ -68,6 +72,7 @@ class RadioController {
                 setStateForPlayRadio();
             }
         });
+        setStateForPlayRadio();
 
         this.radio.onVolumeChange((muted, volume) => {
             this.ui.setVolume(muted, volume);

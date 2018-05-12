@@ -76,6 +76,9 @@ $res = new ResourcesBasedOnBuildVersion($build);
 <div id="radio-panel" class="radio-panel radio-panel-collapsed">
     <audio id="radio-stream" preload="none">
     </audio>
+    <div class="radio-state-message-wrapper">
+        <div id="radio-starting-music-state-message" class="radio-state-message"></div>
+    </div>
     <div id="radio-stream-title" class="radio-panel-title"><?= $streamTitle ?></div>
     <button id="radio-toggle-play" class="radio-panel-button radio-toggle-play radio-play-btn">
         <span class="radio-toggle-play-icon"></span>
