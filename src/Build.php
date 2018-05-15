@@ -41,8 +41,11 @@ class Build {
         $content = file_get_contents($filename);
         if ($content === false)
             return null;
-        $json = json_decode($content);
+        return self::fromJson($content);
+    }
 
+    public static function fromJson($content) {
+        $json = json_decode($content);
         return new Build($json->version, $json->revision, DateTime::createFromFormat(Build::DATETIME_FORMAT, $json->date));
     }
 
@@ -64,6 +67,10 @@ class Build {
             "revision" => $this->revision,
             "date" => $this->getFormattedDate()
         ], JSON_PRETTY_PRINT);
+    }
+
+    public function getPrettyVersion() {
+        return "v{$this->version}-{$this->revision} ({$this->getFormattedDate()})";
     }
 
     public function getVersion(): String {
